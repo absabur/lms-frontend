@@ -1,9 +1,9 @@
 'use client'
-import { setTestAction } from '@/app/store/Action'
+import { setTestAction } from '@/store/Action'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-const Text = () => {
+const Test = () => {
     const dispatch = useDispatch()
     const content = useSelector(state => state.content)
     useEffect(() => {
@@ -12,8 +12,8 @@ const Text = () => {
     console.log(content)
     
   return (
-    <div>text</div>
+    <div>Test</div>
   )
 }
 
-export default Text
+export default Test
