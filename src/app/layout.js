@@ -27,21 +27,18 @@ export default function RootLayout({ children }) {
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <nav className="bg-red-500 text-white p-4 flex justify-between sticky top-0">
+          <nav className="bg-red-500 text-white p-4 flex justify-between flex-wrap gap-[20px]">
             <Link href="/login">login</Link>
             <Link href="/signup">signup</Link>
 
             <Link href="/login/teacher">Login As Teacher</Link>
             <Link href="/login/student">Login As Student</Link>
-            <Link href="/login/admin">Login As Admin</Link>
 
             <Link href="/signup/teacher">Create Teacher Account</Link>
             <Link href="/signup/student">Create Student Account</Link>
-            <Link href="/signup/admin">Create Admin Account</Link>
 
             <Link href="/register/teacher">Register Teacher</Link>
             <Link href="/register/student">Register Student</Link>
-            <Link href="/register/admin">Register Admin</Link>
           </nav>
           {children}
         </body>

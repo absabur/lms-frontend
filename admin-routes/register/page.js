@@ -10,10 +10,6 @@ const page = () => {
     email: "",
     phone: "",
     nId: "",
-    teacherId: "",
-    department: "",
-    post: "",
-    address: "",
     image: null,
   });
 
@@ -54,10 +50,6 @@ const page = () => {
       <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email" className="" required />
       <input type="text" name="phone" value={formData.phone} onChange={handleChange} placeholder="Phone" className="" required />
       <input type="text" name="nId" value={formData.nId} onChange={handleChange} placeholder="nId" className="" required />
-      <input type="text" name="teacherId" value={formData.teacherId} onChange={handleChange} placeholder="Teacher Id" className="" required />
-      <input type="text" name="post" value={formData.post} onChange={handleChange} placeholder="post" className="" required />
-      <input type="text" name="department" value={formData.department} onChange={handleChange} placeholder="department" className="" required />
-      <textarea name="address" value={formData.address} onChange={handleChange} placeholder="Address" className="" required />
       <input type="file" accept="image/*" onChange={handleFileChange} className="" required />
       <button type="submit" className="">Submit</button>
     </form>
