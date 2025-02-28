@@ -16,7 +16,7 @@ const page = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:8888/api/student/login", {
+      const response = await fetch("https://detailed-renata-lms-bpi-b7c9011f.koyeb.app/api/student/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

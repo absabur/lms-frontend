@@ -34,7 +34,7 @@ const page = () => {
     });
 
     try {
-      const response = await fetch("http://localhost:8888/api/teacher/register", {
+      const response = await fetch("https://detailed-renata-lms-bpi-b7c9011f.koyeb.app/api/teacher/register", {
         method: "POST",
         body: data,
       });

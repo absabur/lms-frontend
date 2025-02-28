@@ -18,7 +18,6 @@ const page = () => {
     technology: "",
     session: "",
     shift: "",
-    group: "",
     district: "",
     upazila: "",
     union: "",
@@ -44,7 +43,7 @@ const page = () => {
     });
 
     try {
-      const response = await fetch("http://localhost:8888/api/student/register", {
+      const response = await fetch("https://detailed-renata-lms-bpi-b7c9011f.koyeb.app/api/student/register", {
         method: "POST",
         body: data,
       });
@@ -72,7 +71,6 @@ const page = () => {
       <input type="text" name="technology" value={formData.technology} onChange={handleChange} placeholder="Technology" className="" required />
       <input type="text" name="session" value={formData.session} onChange={handleChange} placeholder="Session" className="" required />
       <input type="text" name="shift" value={formData.shift} onChange={handleChange} placeholder="Shift" className="" required />
-      <input type="text" name="group" value={formData.group} onChange={handleChange} placeholder="Group" className="" required />
       <input type="text" name="district" value={formData.district} onChange={handleChange} placeholder="District" className="" required />
       <input type="text" name="upazila" value={formData.upazila} onChange={handleChange} placeholder="Upazila" className="" required />
       <input type="text" name="union" value={formData.union} onChange={handleChange} placeholder="Union" className="" required />

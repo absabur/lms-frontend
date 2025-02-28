@@ -5,7 +5,6 @@ const page = () => {
     <div>
         <Link href="/signup/teacher">Create Teacher Account</Link><br />
         <Link href="/signup/student">Create Student Account</Link><br />
-        <Link href="/signup/admin">Create Admin Account</Link>
     </div>
   )
 }
