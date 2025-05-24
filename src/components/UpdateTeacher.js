@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { useParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -13,8 +12,8 @@ const UpdateTeacherPage = () => {
   const fixedValues = useSelector((state) => state.fixedValues);
 
   useEffect(() => {
-      dispatch(fixdeValues());
-  }, []);
+    dispatch(fixdeValues());
+  }, [dispatch]);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -55,38 +54,62 @@ const UpdateTeacherPage = () => {
       <form
         onSubmit={formik.handleSubmit}
         encType="multipart/form-data"
+        noValidate
         className="bg-white w-full max-w-4xl p-8 rounded-lg shadow-lg grid grid-cols-1 md:grid-cols-2 gap-6"
       >
         <h2 className="text-3xl font-bold text-center mb-6 col-span-2">
           Update Profile
         </h2>
 
-        {/* Name */}
+        {/* Inputs: Name, Phone, NID, Teacher ID */}
         {[
           { label: "Name", name: "name", type: "text" },
           { label: "Phone", name: "phone", type: "text" },
           { label: "NID", name: "nId", type: "text" },
           { label: "Teacher ID", name: "teacherId", type: "text" },
-        ].map((field) => (
-          <div key={field.name} className="flex flex-col">
-            <label className="text-sm font-medium text-gray-700 mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2">
-              {field.label}
-            </label>
-            <input
-              type={field.type}
-              name={field.name}
-              value={formik.values[field.name]}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              className="border border-gray-300 rounded-md p-3"
-            />
-            {formik.touched[field.name] && formik.errors[field.name] && (
-              <p className="text-red-500 text-sm mt-1">
-                {formik.errors[field.name]}
-              </p>
-            )}
-          </div>
-        ))}
+        ].map(({ label, name, type }) => {
+          const errorId = `${name}-error`;
+          return (
+            <div key={name} className="flex flex-col">
+              <label
+                htmlFor={name}
+                className="text-sm font-medium text-gray-700 mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2"
+              >
+                {label}
+              </label>
+              <input
+                id={name}
+                name={name}
+                type={type}
+                value={formik.values[name]}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                aria-describedby={
+                  formik.touched[name] && formik.errors[name]
+                    ? errorId
+                    : undefined
+                }
+                aria-invalid={
+                  formik.touched[name] && formik.errors[name] ? "true" : "false"
+                }
+                className={`border rounded-md p-3 ${
+                  formik.touched[name] && formik.errors[name]
+                    ? "border-red-500"
+                    : "border-gray-300"
+                } focus:outline-none focus:ring-2 focus:ring-blue-500`}
+              />
+              {formik.touched[name] && formik.errors[name] && (
+                <p
+                  id={errorId}
+                  className="text-red-500 text-sm mt-1"
+                  role="alert"
+                >
+                  {formik.errors[name]}
+                </p>
+              )}
+            </div>
+          );
+        })}
 
         {/* Post */}
         <div className="flex flex-col">
@@ -102,7 +125,19 @@ const UpdateTeacherPage = () => {
             value={formik.values.post}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            aria-describedby={
+              formik.touched.post && formik.errors.post
+                ? "post-error"
+                : undefined
+            }
+            aria-invalid={
+              formik.touched.post && formik.errors.post ? "true" : "false"
+            }
+            className={`border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+              formik.touched.post && formik.errors.post
+                ? "border-red-500"
+                : "border-gray-300"
+            }`}
           >
             <option value="">-- Select Posts --</option>
             {fixedValues?.posts?.map((option) => (
@@ -111,6 +146,15 @@ const UpdateTeacherPage = () => {
               </option>
             ))}
           </select>
+          {formik.touched.post && formik.errors.post && (
+            <p
+              id="post-error"
+              className="text-red-500 text-sm mt-1"
+              role="alert"
+            >
+              {formik.errors.post}
+            </p>
+          )}
         </div>
 
         {/* Department */}
@@ -127,7 +171,21 @@ const UpdateTeacherPage = () => {
             value={formik.values.department}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            aria-describedby={
+              formik.touched.department && formik.errors.department
+                ? "department-error"
+                : undefined
+            }
+            aria-invalid={
+              formik.touched.department && formik.errors.department
+                ? "true"
+                : "false"
+            }
+            className={`border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+              formik.touched.department && formik.errors.department
+                ? "border-red-500"
+                : "border-gray-300"
+            }`}
           >
             <option value="">-- Select Department --</option>
             {fixedValues?.departments?.map((option) => (
@@ -136,23 +194,54 @@ const UpdateTeacherPage = () => {
               </option>
             ))}
           </select>
+          {formik.touched.department && formik.errors.department && (
+            <p
+              id="department-error"
+              className="text-red-500 text-sm mt-1"
+              role="alert"
+            >
+              {formik.errors.department}
+            </p>
+          )}
         </div>
 
         {/* Address (full width) */}
         <div className="flex flex-col col-span-2">
-          <label className="text-sm font-medium text-gray-700 mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2">
+          <label
+            htmlFor="address"
+            className="text-sm font-medium text-gray-700 mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2"
+          >
             Address
           </label>
           <textarea
+            id="address"
             name="address"
-            rows="3"
+            rows={3}
             value={formik.values.address}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className="border border-gray-300 rounded-md p-3 resize-none"
+            aria-describedby={
+              formik.touched.address && formik.errors.address
+                ? "address-error"
+                : undefined
+            }
+            aria-invalid={
+              formik.touched.address && formik.errors.address ? "true" : "false"
+            }
+            className={`border rounded-md p-3 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+              formik.touched.address && formik.errors.address
+                ? "border-red-500"
+                : "border-gray-300"
+            }`}
           />
           {formik.touched.address && formik.errors.address && (
-            <p className="text-red-500 text-sm mt-1">{formik.errors.address}</p>
+            <p
+              id="address-error"
+              className="text-red-500 text-sm mt-1"
+              role="alert"
+            >
+              {formik.errors.address}
+            </p>
           )}
         </div>
 
@@ -161,9 +250,9 @@ const UpdateTeacherPage = () => {
           {formik.values.image ? (
             <img
               src={URL.createObjectURL(formik.values.image)}
-              alt={`Preview`}
+              alt="Preview"
               className="w-24 h-24 object-cover rounded-md border border-gray-300"
-              onLoad={(e) => URL.revokeObjectURL(e.target.src)}
+              onLoad={(e) => URL.revokeObjectURL(e.currentTarget.src)}
             />
           ) : (
             <img
@@ -176,25 +265,35 @@ const UpdateTeacherPage = () => {
 
         {/* Image Upload (full width) */}
         <div className="flex flex-col col-span-2">
-          <label className="text-sm font-medium text-gray-700 mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2">Image (Upload new image)</label>
+          <label
+            htmlFor="image"
+            className="text-sm font-medium text-gray-700 mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2"
+          >
+            Image (Upload new image)
+          </label>
           <input
-            type="file"
+            id="image"
             name="image"
+            type="file"
             accept="image/*"
             onChange={(event) => {
               formik.setFieldValue("image", event.currentTarget.files[0]);
             }}
-            className="border border-gray-300 rounded-md p-2"
+            className="border border-gray-300 rounded-md p-2 cursor-pointer"
+            aria-describedby="image-help"
           />
+          <p id="image-help" className="text-xs text-gray-500 mt-1">
+            Upload a new image to update your profile picture.
+          </p>
         </div>
 
         {/* Submit Button (full width) */}
         <button
           type="submit"
-          className="col-span-2 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-md font-semibold transition disabled:opacity-50"
           disabled={formik.isSubmitting}
+          className="col-span-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white py-3 rounded-md font-semibold transition"
         >
-          Update Profile
+          {formik.isSubmitting ? "Updating..." : "Update Profile"}
         </button>
       </form>
     </div>

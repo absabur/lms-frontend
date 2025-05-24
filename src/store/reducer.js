@@ -12,7 +12,7 @@ import {
 } from "./constant";
 
 const initialState = {
-  loaded: false,
+  isLoading: false,
   message: {},
   path: "",
   isAuthenticated: false,
@@ -29,7 +29,7 @@ export const reducer = (state = initialState, action) => {
     case LOADING_START:
       return {
         ...state,
-        loaded: false,
+        isLoading: true,
       };
     case AUTHENTICATED:
       return {
@@ -46,7 +46,7 @@ export const reducer = (state = initialState, action) => {
     case LOADING_END:
       return {
         ...state,
-        loaded: true,
+        isLoading: false,
       };
     case MESSAGE:
       return {

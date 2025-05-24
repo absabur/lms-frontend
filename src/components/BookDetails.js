@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getBookBySlug, requestForBook } from "@/store/Action";
 
@@ -8,6 +8,28 @@ const BookDetails = ({ slug }) => {
   const dispatch = useDispatch();
   const role = useSelector((state) => state.role);
   const book = useSelector((state) => state.book);
+  const [isCooldown, setIsCooldown] = useState(false);
+
+  const handleRequest = () => {
+    if (isCooldown) return;
+
+    dispatch(requestForBook(book._id, role));
+    setIsCooldown(true);
+    setTimeout(() => {
+      setIsCooldown(false);
+    }, 5000); // 5 seconds
+  };
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const images = book?.images || [];
+
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  };
 
   useEffect(() => {
     if (slug) {
@@ -71,10 +93,15 @@ const BookDetails = ({ slug }) => {
 
           {book?.available > 0 ? (
             <button
-              onClick={() => dispatch(requestForBook(book._id, role))}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-5 py-2 rounded shadow"
+              onClick={handleRequest}
+              disabled={isCooldown}
+              className={`${
+                isCooldown
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-blue-600 hover:bg-blue-700"
+              } text-white font-medium px-5 py-2 rounded shadow`}
             >
-              Request For this Book
+              {isCooldown ? "Wait 5s..." : "Request For this Book"}
             </button>
           ) : (
             <p>The Book Currently Not Available</p>
@@ -93,16 +120,52 @@ const BookDetails = ({ slug }) => {
         </div>
 
         {/* Right: Book Image */}
-        <div className="flex justify-center items-start">
-          {book?.images?.[0]?.url ? (
-            <img
-              src={book?.images[0].url}
-              alt="Book Cover"
-              className="w-full h-auto max-w-md rounded-xl shadow"
-            />
+        <div className="flex flex-col items-center gap-4">
+          {images.length > 0 ? (
+            <div className="relative w-full max-w-md">
+              <img
+                src={images[currentIndex]?.url}
+                alt={`Book image ${currentIndex + 1}`}
+                className="w-full h-auto rounded-xl shadow object-contain"
+              />
+
+              {/* Prev Button */}
+              <button
+                onClick={handlePrev}
+                className="absolute left-0 top-1/2 -translate-y-1/2 bg-black bg-opacity-30 text-white p-2 rounded-full hover:bg-opacity-60"
+              >
+                ‹
+              </button>
+
+              {/* Next Button */}
+              <button
+                onClick={handleNext}
+                className="absolute right-0 top-1/2 -translate-y-1/2 bg-black bg-opacity-30 text-white p-2 rounded-full hover:bg-opacity-60"
+              >
+                ›
+              </button>
+            </div>
           ) : (
             <div className="w-full max-w-md h-64 bg-gray-100 flex items-center justify-center rounded-xl text-gray-400">
               No Image Available
+            </div>
+          )}
+
+          {/* Thumbnails (Optional) */}
+          {images.length > 1 && (
+            <div className="flex gap-2 flex-wrap justify-center">
+              {images.map((img, i) => (
+                <img
+                  key={i}
+                  src={img.url}
+                  className={`w-16 h-16 object-cover rounded border ${
+                    i === currentIndex
+                      ? "border-blue-500"
+                      : "border-transparent"
+                  } cursor-pointer`}
+                  onClick={() => setCurrentIndex(i)}
+                />
+              ))}
             </div>
           )}
         </div>

@@ -1,4 +1,5 @@
 "use client";
+import { logout } from "@/store/Action";
 import Link from "next/link";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,7 +10,13 @@ const TeacherCard = () => {
   const teacher = useSelector((state) => state.profile);
 
   return (
-    <div className="w-full max-w-3xl mx-auto bg-white shadow-md rounded-2xl p-6 space-y-4">
+    <div className="relative w-full max-w-3xl mx-auto bg-white shadow-md rounded-2xl p-6 space-y-4">
+      <button
+        onClick={() => dispatch(logout(role))}
+        className="absolute top-[20px] right-[20px] bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-1 rounded"
+      >
+        Logout
+      </button>
       {/* Top Section */}
       <div className="flex flex-col md:flex-row md:items-center gap-4">
         {/* Avatar */}

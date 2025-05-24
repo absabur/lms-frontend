@@ -195,6 +195,155 @@ export const login =
     }
   };
 
+export const forgotPassword = (email, role) => async (dispatch) => {
+  dispatch({
+    type: LOADING_START,
+  });
+
+  try {
+    let backend_path;
+    if (role == "teacher") {
+      backend_path = "/api/teacher";
+    } else {
+      backend_path = "/api/student";
+    }
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}${backend_path}/forgate-password`,
+      {
+        method: "POST",
+
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      }
+    );
+
+    const result = await response.json();
+
+    if (result.success) {
+      dispatch({
+        type: MESSAGE,
+        payload: {
+          message: result.message || "An Email send",
+          status: "success",
+          path: `/auth/login`,
+        },
+      });
+    } else {
+      dispatch({
+        type: MESSAGE,
+        payload: {
+          message: result.error || "Somthing wrong",
+          status: "error",
+          path: "",
+        },
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: MESSAGE,
+      payload: {
+        message: error.message || "Something went wrong",
+        status: "error",
+        path: "",
+      },
+    });
+  } finally {
+    dispatch({
+      type: LOADING_END,
+    });
+  }
+};
+export const resetPassword =
+  (newPassword, confirmPassword, token, role) => async (dispatch) => {
+    dispatch({
+      type: LOADING_START,
+    });
+
+    try {
+      let backend_path;
+      if (role == "teacher") {
+        backend_path = "/api/teacher";
+      } else {
+        backend_path = "/api/student";
+      }
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}${backend_path}/reset-password`,
+        {
+          method: "POST",
+
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ newPassword, confirmPassword, token }),
+        }
+      );
+
+      const result = await response.json();
+
+      if (result.success) {
+        dispatch({
+          type: MESSAGE,
+          payload: {
+            message: result.message || "Password Reset Successfull",
+            status: "success",
+            path: `/auth/login`,
+          },
+        });
+      } else {
+        dispatch({
+          type: MESSAGE,
+          payload: {
+            message: result.error || "Somthing wrong",
+            status: "error",
+            path: "",
+          },
+        });
+      }
+    } catch (error) {
+      dispatch({
+        type: MESSAGE,
+        payload: {
+          message: error.message || "Something went wrong",
+          status: "error",
+          path: "",
+        },
+      });
+    } finally {
+      dispatch({
+        type: LOADING_END,
+      });
+    }
+  };
+
+export const logout = (role) => async (dispatch) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/${role}/logout`,
+      {
+        method: "POST",
+        credentials: "include",
+      }
+    );
+
+    if (response.ok) {
+      dispatch({
+        type: MESSAGE,
+        payload: {
+          message: "Logout Success",
+          status: "success",
+          path: "/auth/login",
+        },
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const authenticated = () => async (dispatch) => {
   try {
     dispatch({
@@ -416,7 +565,7 @@ export const completeTeacherProfile = (role, data) => async (dispatch) => {
       dispatch({
         type: MESSAGE,
         payload: {
-          message: result.error || "Failed to update student profile",
+          message: result.error || "Failed to update profile",
           status: "error",
           path: "",
         },
@@ -462,6 +611,15 @@ export const requestForBook = (id, role) => async (dispatch) => {
         payload: {
           message: "Request For this Book Successfull",
           status: "success",
+          path: "/books/my-books",
+        },
+      });
+    } else {
+      dispatch({
+        type: MESSAGE,
+        payload: {
+          message: result.error,
+          status: "error",
           path: "",
         },
       });
@@ -492,7 +650,6 @@ export const gettingRequestCancel = (id, role) => async (dispatch) => {
     );
 
     const result = await response.json();
-    console.log(result);
 
     if (result.success) {
       dispatch({
@@ -504,6 +661,15 @@ export const gettingRequestCancel = (id, role) => async (dispatch) => {
         },
       });
       dispatch(getRequestedBooks({}, role));
+    } else {
+      dispatch({
+        type: MESSAGE,
+        payload: {
+          message: result.error,
+          status: "error",
+          path: "",
+        },
+      });
     }
   } catch (error) {
     console.error("Failed to fetch book by slug:", error);
@@ -541,6 +707,15 @@ export const returnRequest = (id, role) => async (dispatch) => {
         },
       });
       dispatch(getRequestedBooks({}, role));
+    } else {
+      dispatch({
+        type: MESSAGE,
+        payload: {
+          message: result.error || "Somthing Wrong!",
+          status: "error",
+          path: "",
+        },
+      });
     }
   } catch (error) {
     console.error("Failed to fetch book by slug:", error);
@@ -552,7 +727,6 @@ export const cancelReturnRequest = (id, role) => async (dispatch) => {
   dispatch({ type: LOADING_START });
 
   try {
-    console.log(id);
     let backend_path;
     if (role == "teacher") {
       backend_path = `/api/take-book/teacher/book-return-request-cancel/${id}`;
@@ -568,18 +742,26 @@ export const cancelReturnRequest = (id, role) => async (dispatch) => {
     );
 
     const result = await response.json();
-    console.log(result);
 
     if (result.success) {
       dispatch({
         type: MESSAGE,
         payload: {
-          message: "Return Request Successfull",
+          message: "Cancel Return Request Successfull",
           status: "success",
           path: "",
         },
       });
       dispatch(getRequestedBooks({}, role));
+    } else {
+      dispatch({
+        type: MESSAGE,
+        payload: {
+          message: result.error || "Somthing Wrong",
+          status: "error",
+          path: "",
+        },
+      });
     }
   } catch (error) {
     console.error("Failed to fetch book by slug:", error);
@@ -738,7 +920,6 @@ export const updateProfilePassword = (data, role) => async (dispatch) => {
   dispatch({ type: LOADING_START });
 
   try {
-    console.log(data);
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/${role}/update-password`,
       {

@@ -4,7 +4,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { updateProfilePassword } from "@/store/Action"; // You can replace this with changePassword if needed
+import { updateProfilePassword } from "@/store/Action"; // Adjust import as needed
 
 const ChangePasswordPage = () => {
   const role = useSelector((state) => state.role);
@@ -25,8 +25,12 @@ const ChangePasswordPage = () => {
         .oneOf([Yup.ref("newPassword"), null], "Passwords must match")
         .required("Please confirm your new password"),
     }),
-    onSubmit: (values) => {
-      dispatch(updateProfilePassword(values, role));
+    onSubmit: (values, { setSubmitting, resetForm }) => {
+      dispatch(updateProfilePassword(values, role)).finally(() => {
+        setSubmitting(false);
+        // optionally reset form on success
+        // resetForm();
+      });
     },
   });
 
@@ -42,37 +46,42 @@ const ChangePasswordPage = () => {
           { name: "oldPassword", label: "Old Password" },
           { name: "newPassword", label: "New Password" },
           { name: "confirmPassword", label: "Confirm New Password" },
-        ].map((field) => (
-          <div key={field.name} className="flex flex-col">
+        ].map(({ name, label }) => (
+          <div key={name} className="flex flex-col">
             <label
-              htmlFor={field.name}
+              htmlFor={name}
               className="text-sm font-medium text-gray-700 mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2"
             >
-              {field.label}
+              {label}
             </label>
             <input
               type="password"
-              name={field.name}
-              id={field.name}
-              value={formik.values[field.name]}
+              id={name}
+              name={name}
+              value={formik.values[name]}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              className="border border-gray-300 rounded-md p-3"
+              className={`border rounded-md p-3 ${
+                formik.touched[name] && formik.errors[name]
+                  ? "border-red-500"
+                  : "border-gray-300"
+              }`}
+              autoComplete={
+                name === "oldPassword" ? "current-password" : "new-password"
+              }
             />
-            {formik.touched[field.name] && formik.errors[field.name] && (
-              <p className="text-red-500 text-sm mt-1">
-                {formik.errors[field.name]}
-              </p>
+            {formik.touched[name] && formik.errors[name] && (
+              <p className="text-red-500 text-sm mt-1">{formik.errors[name]}</p>
             )}
           </div>
         ))}
 
         <button
           type="submit"
-          // disabled={formik.isSubmitting}
+          disabled={formik.isSubmitting}
           className="bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-md font-semibold transition disabled:opacity-50"
         >
-          Update Password
+          {formik.isSubmitting ? "Updating..." : "Update Password"}
         </button>
       </form>
     </div>

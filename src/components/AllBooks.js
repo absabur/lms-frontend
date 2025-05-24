@@ -30,7 +30,7 @@ const AllBooks = ({role}) => {
       <BooksFilterFrom />
 
       {books?.books?.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 mt-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-6 mt-8">
           {books.books.map((book, index) => (
             <Link
               key={index}
@@ -41,7 +41,7 @@ const AllBooks = ({role}) => {
                 <img
                   src={book.images[0].url}
                   alt={book.bookName}
-                  className="w-full h-48 object-cover"
+                  className="w-full h-48 object-contain bg-black"
                 />
               ) : (
                 <div className="w-full h-48 bg-gray-100 flex items-center justify-center text-gray-400 italic">

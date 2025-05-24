@@ -5,6 +5,7 @@ import { StoreProvider } from "@/store/StoreProvider.jsx";
 import Link from "next/link";
 import Toast from "@/components/Toast";
 import Authentication from "@/components/Authentication";
+import Loading from "@/components/Loading";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,6 +30,7 @@ export default function RootLayout({ children }) {
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
+          <Loading />
           <Toast />
           <Authentication />
           <div className="p-4">{children}</div>
