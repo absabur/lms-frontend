@@ -9,15 +9,14 @@ const Loading = () => {
 
   return (
     <>
-      {isLoading ||
-        (!auth_loaded && (
-          <div className="loading-overlay">
-            <div className="loader">
-              <div className="spinner" />
-              <p>Loading...</p>
-            </div>
+      {(isLoading || !auth_loaded) && (
+        <div className="loading-overlay">
+          <div className="loader">
+            <div className="spinner" />
+            <p>Loading...</p>
           </div>
-        ))}
+        </div>
+      )}
     </>
   );
 };
