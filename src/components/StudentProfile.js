@@ -1,0 +1,102 @@
+"use client";
+import Link from "next/link";
+import React from "react";
+import { useSelector } from "react-redux";
+
+const StudentCard = () => {
+  const role = useSelector((state) => state.role);
+  const student = useSelector((state) => state.profile);
+  
+  return (
+    <div className="w-full max-w-3xl mx-auto bg-white shadow-md rounded-2xl p-6 space-y-4">
+      {/* Top Section */}
+      <div className="flex flex-col md:flex-row md:items-center gap-4">
+        {/* Avatar */}
+        <img
+          src={student?.avatar?.url}
+          alt="Avatar"
+          className="w-24 h-24 rounded-full border object-cover mx-auto md:mx-0"
+        />
+
+        {/* Info */}
+        <div className="flex-1 text-center md:text-left">
+          <h2 className="text-2xl font-bold text-gray-800">{student?.name}</h2>
+          <p className="text-sm text-gray-500">{student?.department}</p>
+        </div>
+      </div>
+
+      {/* Contact Info */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <Info label="Email" value={student?.email} />
+        <Info label="Phone" value={student?.phone} />
+        <Info label="Bangla Name" value={student?.banglaName || "N/A"} />
+        <Info label="Fathers name" value={student?.fathersName || "N/A"} />
+        <Info label="Mothers Name" value={student?.mothersName || "N/A"} />
+        <Info label="addmissionRoll" value={student?.addmissionRoll || "N/A"} />
+        <Info label="boardRoll" value={student?.boardRoll || "N/A"} />
+        <Info label="registration" value={student?.registration || "N/A"} />
+        <Info label="department" value={student?.department || "N/A"} />
+        <Info label="session" value={student?.session || "N/A"} />
+        <Info label="shift" value={student?.shift || "N/A"} />
+        <Info label="district" value={student?.district || "N/A"} />
+        <Info label="upazila" value={student?.upazila || "N/A"} />
+        <Info label="union" value={student?.union || "N/A"} />
+        <Info label="village" value={student?.village || "N/A"} />
+        <Info label="address" value={student?.address || "N/A"} />
+      </div>
+
+      {/* Status Tags */}
+      <div className="flex gap-4 flex-wrap">
+        <StatusBadge label="Approved" active={student?.isApproved} />
+        <StatusBadge label="Banned" active={student?.isBan} inverse />
+      </div>
+
+      {/* Metadata */}
+      <div className="text-xs text-gray-500">
+        <p>Created: {student?.createDate?.date || "N/A"}</p>
+        <p>Updated: {student?.updateDate?.date || "N/A"}</p>
+        <p>Updated By: {student?.updatedBy || "N/A"}</p>
+      </div>
+      <div className="flex gap-3">
+        <Link
+          href={`/profile/update`}
+          className="bg-yellow-400 hover:bg-yellow-500 hover:shadow-xl text-black px-3 py-1 rounded text-xs"
+        >
+          Edit
+        </Link>
+        <Link
+          href={`/profile/change-password`}
+          className="bg-yellow-400 hover:bg-yellow-500 hover:shadow-xl text-black px-3 py-1 rounded text-xs"
+        >
+          Change Password
+        </Link>
+      </div>
+    </div>
+  );
+};
+
+// Helper Components
+const Info = ({ label, value }) => (
+  <div>
+    <p className="text-gray-600 text-sm font-medium">{label}</p>
+    <p className="text-gray-800 font-semibold">{value}</p>
+  </div>
+);
+
+const StatusBadge = ({ label, active, inverse = false }) => {
+  const color = inverse
+    ? active
+      ? "bg-red-100 text-red-600"
+      : "bg-gray-100 text-gray-400"
+    : active
+    ? "bg-green-100 text-green-600"
+    : "bg-gray-100 text-gray-400";
+
+  return (
+    <span className={`text-xs px-3 py-1 rounded-full font-medium ${color}`}>
+      {label}: {active ? "Yes" : "No"}
+    </span>
+  );
+};
+
+export default StudentCard;
