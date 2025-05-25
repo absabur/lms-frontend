@@ -3,12 +3,14 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getBookBySlug, requestForBook } from "@/store/Action";
+import BookModal from "./BookModal";
 
 const BookDetails = ({ slug }) => {
   const dispatch = useDispatch();
   const role = useSelector((state) => state.role);
   const book = useSelector((state) => state.book);
   const [isCooldown, setIsCooldown] = useState(false);
+  const [modal, setModal] = useState(false);
 
   const handleRequest = () => {
     if (isCooldown) return;
@@ -52,6 +54,16 @@ const BookDetails = ({ slug }) => {
             </div>
           </div>
 
+          <h2 className="mb-6">
+            <button
+              onClick={() => setModal(true)}
+              className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-300"
+            >
+              Read This Book
+            </button>
+          </h2>
+
+          <BookModal images={book.images} isOpen={modal} setIsOpen={setModal} />
           {/* Description */}
           <div>
             <h2 className="text-lg font-semibold text-gray-700 mb-1">
