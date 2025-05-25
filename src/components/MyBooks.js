@@ -174,7 +174,6 @@ const MyBooks = () => {
                       <button
                         onClick={() => {
                           dispatch(cancelReturnRequest(item?._id, role));
-                          dispatch(returnRequest(item?._id, role));
                           setActiveFilter("all");
                         }}
                         className="bg-red-600 hover:bg-red-700 text-white font-medium px-5 py-2 rounded shadow"
