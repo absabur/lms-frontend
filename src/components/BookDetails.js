@@ -122,17 +122,17 @@ const BookDetails = ({ slug }) => {
         {/* Right: Book Image */}
         <div className="flex flex-col items-center gap-4">
           {images.length > 0 ? (
-            <div className="relative w-full max-w-md">
+            <div className="relative w-full max-w-md mx-auto aspect-[3/5]">
               <img
                 src={images[currentIndex]?.url}
                 alt={`Book image ${currentIndex + 1}`}
-                className="w-full h-auto rounded-xl shadow object-contain"
+                className="absolute top-0 left-0 w-full h-full object-contain rounded-xl shadow-xl"
               />
 
               {/* Prev Button */}
               <button
                 onClick={handlePrev}
-                className="absolute left-0 top-1/2 -translate-y-1/2 bg-black bg-opacity-30 text-white p-2 rounded-full hover:bg-opacity-60"
+                className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-black bg-opacity-30 text-white p-2 rounded-full hover:bg-opacity-60"
               >
                 ‹
               </button>
@@ -140,7 +140,7 @@ const BookDetails = ({ slug }) => {
               {/* Next Button */}
               <button
                 onClick={handleNext}
-                className="absolute right-0 top-1/2 -translate-y-1/2 bg-black bg-opacity-30 text-white p-2 rounded-full hover:bg-opacity-60"
+                className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-black bg-opacity-30 text-white p-2 rounded-full hover:bg-opacity-60"
               >
                 ›
               </button>
