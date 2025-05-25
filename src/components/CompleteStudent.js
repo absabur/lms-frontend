@@ -45,16 +45,35 @@ const CompleteStudent = () => {
       banglaName: Yup.string().required("Bangla Name is required"),
       fathersName: Yup.string().required("Father's Name is required"),
       mothersName: Yup.string().required("Mother's Name is required"),
-      addmissionRoll: Yup.string().required("Admission Roll is required"),
-      boardRoll: Yup.string().required("Board Roll is required"),
-      registration: Yup.string().required("Registration is required"),
+      admissionRoll: Yup.string(),
+      boardRoll: Yup.string(),
+      registration: Yup.string(),
       session: Yup.string().required("Session is required"),
       shift: Yup.string().required("Shift is required"),
       district: Yup.string().required("District is required"),
       upazila: Yup.string().required("Upazila is required"),
       union: Yup.string().required("Union is required"),
       village: Yup.string().required("Village is required"),
-    }),
+    }).test(
+      "custom-roll-validation",
+      "Fill either Admission Roll, or both Board Roll and Registration",
+      function (values) {
+        const { admissionRoll, boardRoll, registration } = values;
+
+        const hasAdmission = !!admissionRoll?.trim();
+        const hasBoard = !!boardRoll?.trim();
+        const hasReg = !!registration?.trim();
+
+        if (hasAdmission && !hasBoard && !hasReg) return true;
+        if (!hasAdmission && hasBoard && hasReg) return true;
+
+        return this.createError({
+          path: "admissionRoll",
+          message:
+            "Fill either Admission Roll, or both Board Roll and Registration",
+        });
+      }
+    ),
     onSubmit: (values) => {
       const formData = new FormData();
       for (const key in values) {
@@ -64,7 +83,7 @@ const CompleteStudent = () => {
           formData.append(key, values[key]);
         }
       }
-    dispatch(completeStudentProfile(role, formData));
+      dispatch(completeStudentProfile(role, formData));
     },
   });
 

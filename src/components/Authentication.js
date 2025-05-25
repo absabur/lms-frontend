@@ -44,7 +44,7 @@ const Authentication = () => {
       }
 
       if (profile.name && pathname === "/profile/complete") {
-        router.push("/books", { scroll: false });
+        router.push("/profile/update", { scroll: false });
         return;
       }
     }

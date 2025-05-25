@@ -82,8 +82,9 @@ const UpdateTeacherPage = () => {
                 name={name}
                 type={type}
                 value={formik.values[name]}
-                onChange={formik.handleChange}
+                onChange={(e) => !profile[name] && formik.handleChange(e)}
                 onBlur={formik.handleBlur}
+                disabled={profile[name]}
                 aria-describedby={
                   formik.touched[name] && formik.errors[name]
                     ? errorId
@@ -123,8 +124,9 @@ const UpdateTeacherPage = () => {
             id="post"
             name="post"
             value={formik.values.post}
-            onChange={formik.handleChange}
+            onChange={(e) => !profile["post"] && formik.handleChange(e)}
             onBlur={formik.handleBlur}
+            disabled={profile["post"]}
             aria-describedby={
               formik.touched.post && formik.errors.post
                 ? "post-error"
@@ -169,8 +171,9 @@ const UpdateTeacherPage = () => {
             id="department"
             name="department"
             value={formik.values.department}
-            onChange={formik.handleChange}
+            onChange={(e) => !profile["department"] && formik.handleChange(e)}
             onBlur={formik.handleBlur}
+            disabled={profile["department"]}
             aria-describedby={
               formik.touched.department && formik.errors.department
                 ? "department-error"
@@ -218,8 +221,9 @@ const UpdateTeacherPage = () => {
             name="address"
             rows={3}
             value={formik.values.address}
-            onChange={formik.handleChange}
+            onChange={(e) => !profile["address"] && formik.handleChange(e)}
             onBlur={formik.handleBlur}
+            disabled={profile["address"]}
             aria-describedby={
               formik.touched.address && formik.errors.address
                 ? "address-error"
@@ -277,8 +281,11 @@ const UpdateTeacherPage = () => {
             type="file"
             accept="image/*"
             onChange={(event) => {
-              formik.setFieldValue("image", event.currentTarget.files[0]);
+              if (!profile.avatar.url) {
+                formik.setFieldValue("image", event.currentTarget.files[0]);
+              }
             }}
+            disabled={profile.avatar.url}
             className="border border-gray-300 rounded-md p-2 cursor-pointer"
             aria-describedby="image-help"
           />

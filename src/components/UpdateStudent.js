@@ -45,16 +45,37 @@ const UpdateStudentPage = () => {
       banglaName: Yup.string().required("Bangla Name is required"),
       fathersName: Yup.string().required("Father's Name is required"),
       mothersName: Yup.string().required("Mother's Name is required"),
-      addmissionRoll: Yup.string().required("Admission Roll is required"),
-      boardRoll: Yup.string().required("Board Roll is required"),
-      registration: Yup.string().required("Registration is required"),
+
+      admissionRoll: Yup.string(),
+      boardRoll: Yup.string(),
+      registration: Yup.string(),
+
       session: Yup.string().required("Session is required"),
       shift: Yup.string().required("Shift is required"),
       district: Yup.string().required("District is required"),
       upazila: Yup.string().required("Upazila is required"),
       union: Yup.string().required("Union is required"),
       village: Yup.string().required("Village is required"),
-    }),
+    }).test(
+      "custom-roll-validation",
+      "Fill either Admission Roll, or both Board Roll and Registration",
+      function (values) {
+        const { admissionRoll, boardRoll, registration } = values;
+
+        const hasAdmission = !!admissionRoll?.trim();
+        const hasBoard = !!boardRoll?.trim();
+        const hasReg = !!registration?.trim();
+
+        if (hasAdmission && !hasBoard && !hasReg) return true;
+        if (!hasAdmission && hasBoard && hasReg) return true;
+
+        return this.createError({
+          path: "admissionRoll",
+          message:
+            "Fill either Admission Roll, or both Board Roll and Registration",
+        });
+      }
+    ),
     onSubmit: (values) => {
       const formData = new FormData();
       for (const key in values) {
@@ -106,9 +127,10 @@ const UpdateStudentPage = () => {
               name={name}
               required
               value={formik.values[name]}
-              onChange={formik.handleChange}
+              onChange={(e) => !profile[name] && formik.handleChange(e)}
               onBlur={formik.handleBlur}
               aria-describedby={`${name}-error`}
+              disabled={profile[name]}
               className={`border rounded-md p-3 transition 
                 ${
                   formik.touched[name] && formik.errors[name]
@@ -159,9 +181,10 @@ const UpdateStudentPage = () => {
               name={name}
               required
               value={formik.values[name]}
-              onChange={formik.handleChange}
+              onChange={(e) => !profile[name] && formik.handleChange(e)}
               onBlur={formik.handleBlur}
               aria-describedby={`${name}-error`}
+              disabled={profile[name]}
               className={`border rounded-md px-3 py-2 transition
                 ${
                   formik.touched[name] && formik.errors[name]
@@ -207,10 +230,11 @@ const UpdateStudentPage = () => {
               name={name}
               required
               value={formik.values[name]}
-              onChange={formik.handleChange}
+              onChange={(e) => !profile[name] && formik.handleChange(e)}
               onBlur={formik.handleBlur}
               placeholder={`Select ${label}`}
               aria-describedby={`${name}-error`}
+              disabled={profile[name]}
               className={`border rounded-md px-3 py-2 transition
                 ${
                   formik.touched[name] && formik.errors[name]
@@ -250,9 +274,10 @@ const UpdateStudentPage = () => {
             rows="4"
             required
             value={formik.values.address}
-            onChange={formik.handleChange}
+            onChange={(e) => !profile["address"] && formik.handleChange(e)}
             onBlur={formik.handleBlur}
             aria-describedby="address-error"
+            disabled={profile.address}
             className={`border rounded-md p-3 resize-none transition
               ${
                 formik.touched.address && formik.errors.address
@@ -305,8 +330,11 @@ const UpdateStudentPage = () => {
             name="image"
             type="file"
             accept="image/*"
+            disabled={profile.avatar.url}
             onChange={(event) => {
-              formik.setFieldValue("image", event.currentTarget.files[0]);
+              if (!profile.avatar.url) {
+                formik.setFieldValue("image", event.currentTarget.files[0]);
+              }
             }}
             className="w-full cursor-pointer rounded border border-gray-300 p-2"
           />

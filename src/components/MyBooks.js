@@ -16,12 +16,20 @@ const MyBooks = () => {
   const dispatch = useDispatch();
   const myBooks = useSelector((state) => state.myBooks);
   const role = useSelector((state) => state.role);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   useEffect(() => {
     if (role) {
       dispatch(getRequestedBooks(filters, role));
     }
   }, [role, filters]);
+
+  const handleClick = (action) => {
+    if (isButtonDisabled) return;
+    setIsButtonDisabled(true); // disable all buttons
+    setTimeout(() => setIsButtonDisabled(false), 5000); // enable after 5s
+    action(); // run the action (dispatch, etc.)
+  };
 
   return (
     <div className="min-h-screen px-4 py-6 md:px-8 bg-gray-50">
@@ -142,14 +150,20 @@ const MyBooks = () => {
                   <span className="text-base font-medium text-green-700">
                     ৳{item?.book?.mrp}
                   </span>
-
                   {item?.takingApproveBy == null && (
                     <button
-                      onClick={() => {
-                        dispatch(gettingRequestCancel(item?._id, role));
-                        setActiveFilter("all");
-                      }}
-                      className="bg-red-600 hover:bg-red-700 text-white font-medium px-5 py-2 rounded shadow"
+                      onClick={() =>
+                        handleClick(() => {
+                          dispatch(gettingRequestCancel(item?._id, role));
+                          setActiveFilter("all");
+                        })
+                      }
+                      disabled={isButtonDisabled}
+                      className={`${
+                        isButtonDisabled
+                          ? "bg-gray-400"
+                          : "bg-red-600 hover:bg-red-700"
+                      } text-white font-medium px-5 py-2 rounded shadow`}
                     >
                       Cancel Getting Request
                     </button>
@@ -159,24 +173,39 @@ const MyBooks = () => {
                     !item?.returnApproveBy &&
                     !item?.returnRequestDate && (
                       <button
-                        onClick={() => {
-                          dispatch(returnRequest(item?._id, role));
-                          setActiveFilter("all");
-                        }}
-                        className="bg-red-600 hover:bg-red-700 text-white font-medium px-5 py-2 rounded shadow"
+                        onClick={() =>
+                          handleClick(() => {
+                            dispatch(returnRequest(item?._id, role));
+                            setActiveFilter("all");
+                          })
+                        }
+                        disabled={isButtonDisabled}
+                        className={`${
+                          isButtonDisabled
+                            ? "bg-gray-400"
+                            : "bg-red-600 hover:bg-red-700"
+                        } text-white font-medium px-5 py-2 rounded shadow`}
                       >
                         Return Book
                       </button>
                     )}
+
                   {item?.takingApproveBy &&
                     !item?.returnApproveBy &&
                     item?.returnRequestDate && (
                       <button
-                        onClick={() => {
-                          dispatch(cancelReturnRequest(item?._id, role));
-                          setActiveFilter("all");
-                        }}
-                        className="bg-red-600 hover:bg-red-700 text-white font-medium px-5 py-2 rounded shadow"
+                        onClick={() =>
+                          handleClick(() => {
+                            dispatch(cancelReturnRequest(item?._id, role));
+                            setActiveFilter("all");
+                          })
+                        }
+                        disabled={isButtonDisabled}
+                        className={`${
+                          isButtonDisabled
+                            ? "bg-gray-400"
+                            : "bg-red-600 hover:bg-red-700"
+                        } text-white font-medium px-5 py-2 rounded shadow`}
                       >
                         Cancel Return Request
                       </button>
