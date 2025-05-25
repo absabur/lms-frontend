@@ -56,26 +56,7 @@ const UpdateStudentPage = () => {
       upazila: Yup.string().required("Upazila is required"),
       union: Yup.string().required("Union is required"),
       village: Yup.string().required("Village is required"),
-    }).test(
-      "custom-roll-validation",
-      "Fill either Admission Roll, or both Board Roll and Registration",
-      function (values) {
-        const { admissionRoll, boardRoll, registration } = values;
-
-        const hasAdmission = !!admissionRoll?.trim();
-        const hasBoard = !!boardRoll?.trim();
-        const hasReg = !!registration?.trim();
-
-        if (hasAdmission && !hasBoard && !hasReg) return true;
-        if (!hasAdmission && hasBoard && hasReg) return true;
-
-        return this.createError({
-          path: "admissionRoll",
-          message:
-            "Fill either Admission Roll, or both Board Roll and Registration",
-        });
-      }
-    ),
+    }),
     onSubmit: (values) => {
       const formData = new FormData();
       for (const key in values) {
