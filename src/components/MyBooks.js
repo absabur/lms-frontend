@@ -145,9 +145,10 @@ const MyBooks = () => {
 
                   {item?.takingApproveBy == null && (
                     <button
-                      onClick={() =>
-                        dispatch(gettingRequestCancel(item?._id, role))
-                      }
+                      onClick={() => {
+                        dispatch(gettingRequestCancel(item?._id, role));
+                        setActiveFilter("all");
+                      }}
                       className="bg-red-600 hover:bg-red-700 text-white font-medium px-5 py-2 rounded shadow"
                     >
                       Cancel Getting Request
@@ -158,7 +159,10 @@ const MyBooks = () => {
                     !item?.returnApproveBy &&
                     !item?.returnRequestDate && (
                       <button
-                        onClick={() => dispatch(returnRequest(item?._id, role))}
+                        onClick={() => {
+                          dispatch(returnRequest(item?._id, role));
+                          setActiveFilter("all");
+                        }}
                         className="bg-red-600 hover:bg-red-700 text-white font-medium px-5 py-2 rounded shadow"
                       >
                         Return Book
@@ -168,9 +172,11 @@ const MyBooks = () => {
                     !item?.returnApproveBy &&
                     item?.returnRequestDate && (
                       <button
-                        onClick={() =>
-                          dispatch(cancelReturnRequest(item?._id, role))
-                        }
+                        onClick={() => {
+                          dispatch(cancelReturnRequest(item?._id, role));
+                          dispatch(returnRequest(item?._id, role));
+                          setActiveFilter("all");
+                        }}
                         className="bg-red-600 hover:bg-red-700 text-white font-medium px-5 py-2 rounded shadow"
                       >
                         Cancel Return Request
