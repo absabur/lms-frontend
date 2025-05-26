@@ -1,12 +1,13 @@
 "use client";
 import { CLEAR_MESSAGE, CLEAR_PATH } from "@/store/constant";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Toast = () => {
+  const pathname = usePathname();
   const message = useSelector((state) => state.message);
   const path = useSelector((state) => state.path);
   const router = useRouter();
@@ -23,6 +24,21 @@ const Toast = () => {
         progress: undefined,
         theme: "light",
       });
+      if (message?.message === "You must login first.") {
+        // Redirect to login with "next" as current route
+        router.push(`/auth/login?next=${encodeURIComponent(pathname)}`);
+      }
+      if (message?.message === "Your account is not approved.") {
+        // Redirect to login with "next" as current route
+        router.push(`/not-approved`);
+      }
+      if (
+        message?.message ===
+        "Unfortunately you are ban now, please contact to author."
+      ) {
+        // Redirect to login with "next" as current route
+        router.push(`/ban`);
+      }
       dispatch({
         type: CLEAR_MESSAGE,
       });

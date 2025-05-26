@@ -2,7 +2,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 import { StoreProvider } from "@/store/StoreProvider.jsx";
-import Link from "next/link";
 import Toast from "@/components/Toast";
 import Authentication from "@/components/Authentication";
 import Loading from "@/components/Loading";

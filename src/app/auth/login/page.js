@@ -5,9 +5,12 @@ import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useSearchParams } from "next/navigation";
 
 export default function Login() {
   const dispatch = useDispatch();
+  const searchParams = useSearchParams();
+  const next = searchParams.get("next") || "/books";
 
   const formik = useFormik({
     initialValues: {
@@ -28,7 +31,7 @@ export default function Login() {
     }),
     onSubmit: (values, { setSubmitting }) => {
       dispatch(
-        login({ email: values.email, password: values.password }, values.role)
+        login({ email: values.email, password: values.password }, values.role, next)
       ).finally(() => setSubmitting(false));
     },
   });

@@ -1,15 +1,18 @@
-"use client";
-
+// app/books/[slug]/page.js
 import BookDetails from "@/components/BookDetails";
-import { useParams } from "next/navigation";
 
-const page = () => {
-  const { slug } = useParams();
+export default async function Page({ params }) {
+  const { slug } = await params;
 
-  return (
-    <BookDetails slug={slug}/>
+  // Example API call using slug
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/book/get-book/${slug}`,
+    {
+      cache: "no-store",
+    }
   );
-};
 
+  const book = await res.json();
 
-export default page;
+  return <BookDetails book={{ ...book.data[0], available: book.available }} />;
+}

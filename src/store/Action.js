@@ -132,7 +132,7 @@ export const register =
     }
   };
 export const login =
-  ({ email, password }, role) =>
+  ({ email, password }, role, next) =>
   async (dispatch) => {
     dispatch({
       type: LOADING_START,
@@ -166,9 +166,10 @@ export const login =
           payload: {
             message: result.message || "Login Succesfull",
             status: "success",
-            path: `/books`,
+            path: next,
           },
         });
+        dispatch(authenticated());
       } else {
         dispatch({
           type: MESSAGE,
@@ -335,9 +336,10 @@ export const logout = (role) => async (dispatch) => {
         payload: {
           message: "Logout Success",
           status: "success",
-          path: "/auth/login",
+          path: "",
         },
       });
+      dispatch(authenticated());
     }
   } catch (error) {
     console.log(error);

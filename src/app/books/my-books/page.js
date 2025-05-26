@@ -1,11 +1,8 @@
-"use client"
-import MyBooks from '@/components/MyBooks'
-import React from 'react'
+import MyBooks from "@/components/MyBooks";
+import React from "react";
 
 const page = () => {
-  return (
-    <MyBooks/>
-  )
-}
+  return <MyBooks />;
+};
 
-export default page
+export default page;

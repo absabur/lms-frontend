@@ -1,8 +1,5 @@
-import Test from '@/components/Test.jsx'
+import { redirect } from "next/navigation";
+
 export default function Home() {
-  return (
-    <div className="">
-      <Test />
-    </div>
-  );
+  redirect("/books");
 }

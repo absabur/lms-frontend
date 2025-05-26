@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getBooks } from "@/store/Action.js";
 import BooksFilterFrom from "@/components/BooksFilterFrom";
 
-const AllBooks = ({role}) => {
+const AllBooks = () => {
   const dispatch = useDispatch();
   const books = useSelector((state) => state.books);
 
