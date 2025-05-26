@@ -58,10 +58,10 @@ const BookDetails = ({ book }) => {
             </div>
           )}
 
-          {book?.available > 0 ? (
+          {book?.quantity > 0 ? (
             <RequestForBook id={book?._id} />
           ) : (
-            <p>The Book Currently Not Available</p>
+            <p className="text-red-500">The Book Currently Not Available</p>
           )}
           {/* Created & Updated Info */}
           <div className="grid sm:grid-cols-2 gap-4">

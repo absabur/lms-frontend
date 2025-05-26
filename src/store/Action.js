@@ -482,7 +482,7 @@ export const getBookBySlug = (slug) => async (dispatch) => {
     if (result.success) {
       dispatch({
         type: GET_SINGLE_BOOK,
-        payload: { book: { ...result.data[0], available: result.available } },
+        payload: { book: { ...result.data[0] } },
       });
     }
   } catch (error) {

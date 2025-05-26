@@ -14,5 +14,5 @@ export default async function Page({ params }) {
 
   const book = await res.json();
 
-  return <BookDetails book={{ ...book.data[0], available: book.available }} />;
+  return <BookDetails book={{ ...book.data[0] }} />;
 }
