@@ -22,8 +22,8 @@ const UpdateTeacherPage = () => {
       phone: profile?.phone || "",
       nId: profile?.nId || "",
       teacherId: profile?.teacherId || "",
-      department: profile?.department || "",
-      post: profile?.post || "",
+      department: profile?.department?._id || "",
+      post: profile?.post?._id || "",
       address: profile?.address || "",
       image: null,
     },
@@ -143,7 +143,7 @@ const UpdateTeacherPage = () => {
           >
             <option value="">-- Select Posts --</option>
             {fixedValues?.posts?.map((option) => (
-              <option key={option._id} value={option.name}>
+              <option key={option._id} value={option._id}>
                 {option.name}
               </option>
             ))}
@@ -192,7 +192,7 @@ const UpdateTeacherPage = () => {
           >
             <option value="">-- Select Department --</option>
             {fixedValues?.departments?.map((option) => (
-              <option key={option._id} value={option.name}>
+              <option key={option._id} value={option._id}>
                 {option.name}
               </option>
             ))}

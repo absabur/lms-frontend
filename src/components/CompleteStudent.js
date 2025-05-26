@@ -130,7 +130,7 @@ const CompleteStudent = () => {
           >
             <option value="">-- Select Session --</option>
             {fixedValues?.sessions?.map((option) => (
-              <option key={option._id} value={option.name}>
+              <option key={option._id} value={option._id}>
                 {option.name}
               </option>
             ))}
@@ -153,7 +153,7 @@ const CompleteStudent = () => {
           >
             <option value="">-- Select Shift --</option>
             {fixedValues?.shifts?.map((option) => (
-              <option key={option._id} value={option.name}>
+              <option key={option._id} value={option._id}>
                 {option.name}
               </option>
             ))}
@@ -178,7 +178,7 @@ const CompleteStudent = () => {
           >
             <option value="">-- Select Department --</option>
             {fixedValues?.departments?.map((option) => (
-              <option key={option._id} value={option.name}>
+              <option key={option._id} value={option._id}>
                 {option.name}
               </option>
             ))}
@@ -206,7 +206,7 @@ const CompleteStudent = () => {
               />
               <datalist id={`${name}-options`}>
                 {options?.map((option) => (
-                  <option key={option._id} value={option.name} />
+                  <option key={option._id} value={option._id}>{option.className}</option>
                 ))}
               </datalist>
             </div>
@@ -234,7 +234,7 @@ const CompleteStudent = () => {
               <datalist id={`${name}-options`}>
                 {options?.map((option) => {
                   if (option?.districtId?.name == formik.values.district) {
-                    return <option key={option._id} value={option.name} />;
+                    return <option key={option._id} value={option._id}>{option.name}</option>;
                   }
                 })}
               </datalist>

@@ -26,14 +26,13 @@ const UpdateStudentPage = () => {
       addmissionRoll: profile?.addmissionRoll || "",
       boardRoll: profile?.boardRoll || "",
       registration: profile?.registration || "",
-      session: profile?.session || "",
-      shift: profile?.shift || "",
-      district: profile?.district || "",
-      upazila: profile?.upazila || "",
+      session: profile?.session?._id || "",
+      shift: profile?.shift?._id || "",
+      district: profile?.district?._id || "",
+      upazila: profile?.upazila?._id || "",
       union: profile?.union || "",
       village: profile?.village || "",
-      department: profile?.department || "",
-      post: profile?.post || "",
+      department: profile?.department?._id || "",
       address: profile?.address || "",
       image: null,
     },
@@ -176,7 +175,7 @@ const UpdateStudentPage = () => {
             >
               <option value="">-- Select {label} --</option>
               {options.map((option) => (
-                <option key={option._id} value={option.name}>
+                <option key={option._id} value={option._id}>
                   {option.name}
                 </option>
               ))}
@@ -226,7 +225,9 @@ const UpdateStudentPage = () => {
             />
             <datalist id={`${name}-options`}>
               {options?.map((option) => (
-                <option key={option._id} value={option.name} />
+                <option key={option._id} value={option._id}>
+                  {option.name}
+                </option>
               ))}
             </datalist>
             {formik.touched[name] && formik.errors[name] && (

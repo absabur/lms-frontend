@@ -106,7 +106,7 @@ const CompleteTeacherProfile = () => {
           >
             <option value="">-- Select Posts --</option>
             {fixedValues?.posts?.map((option) => (
-              <option key={option._id} value={option.name}>
+              <option key={option._id} value={option._id}>
                 {option.name}
               </option>
             ))}
@@ -131,7 +131,7 @@ const CompleteTeacherProfile = () => {
           >
             <option value="">-- Select Department --</option>
             {fixedValues?.departments?.map((option) => (
-              <option key={option._id} value={option.name}>
+              <option key={option._id} value={option._id}>
                 {option.name}
               </option>
             ))}

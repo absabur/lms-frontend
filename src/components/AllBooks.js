@@ -61,7 +61,7 @@ const AllBooks = ({role}) => {
                     ৳{book.mrp}
                   </span>
                   <span className="text-xs text-gray-400">
-                    {book.department}
+                    {book?.department?.name}
                   </span>
                 </div>
               </div>

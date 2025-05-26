@@ -143,7 +143,7 @@ const MyBooks = () => {
                     Author: {item?.book?.bookAuthor}
                   </p>
                   <p className="text-sm text-gray-500">
-                    Department: {item?.book?.department}
+                    Department: {item?.book?.department?.name}
                   </p>
                 </div>
                 <div className="pt-4 flex justify-between items-center">
