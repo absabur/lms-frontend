@@ -109,12 +109,12 @@ const BooksFilterFrom = ({ filters, setFilters }) => {
                       type="button"
                       onClick={() =>
                         handleInputChange({
-                          target: { name, value: option.name },
+                          target: { name, value: option._id },
                         })
                       }
                       className={`flex-auto w-max p-[5px] text-[15px] text-center rounded-[10px] shadow-[0_0_3px_#00000012] transition-all
                 ${
-                  filters[name] === option.name
+                  filters[name] === option._id
                     ? "bg-blue-600 text-white border-blue-600"
                     : "bg-white text-gray-700 border-gray-300 hover:bg-blue-100"
                 }
