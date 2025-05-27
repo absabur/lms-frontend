@@ -31,10 +31,20 @@ const BooksFilterFrom = ({ filters, setFilters }) => {
         <div className="flex justify-between items-center">
           <h2 className="text-xl">Filters</h2>
           <button
-            className="lg:hidden rounded-full border-none shadow-xl text-4xl absolute right-[-50px]"
+            className="lg:hidden rounded-full border-none shadow-[0_0_10px_#00000036] px-2 flex items-center gap-2 fixed top-[108px] right-[5px]"
             onClick={() => setCollaps(!collaps)}
           >
-            {collaps ? <FaChevronCircleRight /> : <FaChevronCircleLeft />}
+            {collaps ? (
+              <>
+                Filters
+                <FaChevronCircleRight />
+              </>
+            ) : (
+              <>
+                Filters
+                <FaChevronCircleLeft />
+              </>
+            )}
           </button>
         </div>
 
