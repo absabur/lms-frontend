@@ -64,8 +64,6 @@ const AllBooks = () => {
     }
   }, []);
 
-  console.log(books);
-
   return (
     <div className="min-h-screen px-4 py-6 md:px-8">
       <h1 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-6">
@@ -80,7 +78,7 @@ const AllBooks = () => {
               <Link
                 key={index}
                 href={`/books/${book.slug}`}
-                className="w-[300px] bg-white border rounded-xl shadow-md hover:shadow-xl transition-transform duration-300 hover:scale-[1.02] overflow-hidden flex flex-col w-full h-[340px]"
+                className="max-w-[300px] bg-white border rounded-xl shadow-md hover:shadow-xl transition-transform duration-300 hover:scale-[1.02] overflow-hidden flex flex-col w-full h-[340px]"
               >
                 {book?.images?.[0]?.url ? (
                   <img
