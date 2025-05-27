@@ -2,64 +2,16 @@
 import { fixdeValues, getBooks } from "@/store/Action";
 import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
-import ReactPaginate from "react-paginate";
-import { FaChevronCircleDown, FaChevronCircleUp } from "react-icons/fa";
+import { FaChevronCircleRight, FaChevronCircleLeft } from "react-icons/fa";
 
-const BooksFilterFrom = () => {
+const BooksFilterFrom = ({ filters, setFilters }) => {
   const fixedValues = useSelector((state) => state.fixedValues);
-  const books = useSelector((state) => state.books);
   const dispatch = useDispatch();
   const [collaps, setCollaps] = useState(true);
 
   useEffect(() => {
     dispatch(fixdeValues());
   }, []);
-
-  const [filters, setFilters] = useState(() => {
-    if (typeof window !== "undefined") {
-      const stored = localStorage.getItem("bookFilters");
-      return stored
-        ? JSON.parse(stored)
-        : {
-            bookName: "",
-            bookAuthor: "",
-            publisher: "",
-            language: "",
-            department: "",
-            country: "",
-            shelf: "",
-            edition: "",
-            mrpMin: "",
-            mrpMax: "",
-            quantityMin: "",
-            quantityMax: "",
-            search: "",
-            sortBy: "",
-            sortOrder: "",
-            page: 1,
-            limit: 10,
-          };
-    }
-    return {
-      bookName: "",
-      bookAuthor: "",
-      publisher: "",
-      language: "",
-      department: "",
-      country: "",
-      shelf: "",
-      edition: "",
-      mrpMin: "",
-      mrpMax: "",
-      quantityMin: "",
-      quantityMax: "",
-      search: "",
-      sortBy: "",
-      sortOrder: "",
-      page: 1,
-      limit: 10,
-    };
-  });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -69,266 +21,237 @@ const BooksFilterFrom = () => {
     dispatch(getBooks(newFilters));
   };
 
-  const changePage = (newPage) => {
-    const newFilters = { ...filters, page: newPage };
-    setFilters(newFilters);
-    localStorage.setItem("bookFilters", JSON.stringify(newFilters));
-    dispatch(getBooks(newFilters));
-  };
-
-  const handleFilterSubmit = (e) => {
-    e.preventDefault();
-  };
   return (
     <>
-      <form
-        onSubmit={handleFilterSubmit}
-        className="relative bg-white p-6 rounded-xl shadow-lg space-y-6 mb-3 overflow-hidden transition-all duration-300"
-        style={{
-          maxHeight: collaps ? "90px" : "2200px", // Set 1000px or a large enough value to cover content
-        }}
+      <div
+        className={`z-40 absolute lg:relative bg-white p-6 rounded-xl shadow-[0_0_10px_#00000035] space-y-6 mb-3 transition-all duration-300 w-[300px] ${
+          collaps ? "left-[-310px]" : "left-[5px]"
+        } lg:left-[0] lg:w-[30%]`}
       >
         <div className="flex justify-between items-center">
           <h2 className="text-xl">Filters</h2>
           <button
-            className="rounded-full border-none shadow-xl text-4xl"
+            className="lg:hidden rounded-full border-none shadow-xl text-4xl absolute right-[-50px]"
             onClick={() => setCollaps(!collaps)}
           >
-            {collaps ? <FaChevronCircleDown /> : <FaChevronCircleUp />}
+            {collaps ? <FaChevronCircleRight /> : <FaChevronCircleLeft />}
           </button>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {[
-            ["bookName", "Book Name"],
-            ["bookAuthor", "Author"],
-            ["publisher", "Publisher"],
-            //   ["edition", "Edition"],
-          ].map(([name, label]) => (
-            <div key={name} className="flex flex-col">
-              <label
-                htmlFor={name}
-                className="text-sm font-medium text-gray-700 mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2"
-              >
-                {label}
-              </label>
-              <input
-                type="text"
-                id={name}
-                name={name}
-                value={filters[name]}
-                onChange={handleInputChange}
-                className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder={`Enter ${label}`}
-              />
-            </div>
-          ))}
+        <div className="space-y-8">
+          {/* Search Inputs + Button Filters + Slider */}
+          <div className="grid grid-cols-1 gap-2">
+            {/* Text Inputs */}
+            {[
+              ["bookName", "Book Name"],
+              ["bookAuthor", "Author"],
+              ["publisher", "Publisher"],
+            ].map(([name, label]) => (
+              <div key={name} className="flex flex-col">
+                <label
+                  htmlFor={name}
+                  className="text-sm font-semibold text-gray-800 mb-2"
+                >
+                  {label}
+                </label>
+                <input
+                  id={name}
+                  name={name}
+                  value={filters[name]}
+                  onChange={handleInputChange}
+                  placeholder={`Enter ${label}`}
+                  className="border border-gray-300 rounded-md px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                />
+              </div>
+            ))}
+            <hr className="border-t border-dashed border-gray-400 mt-3" />
+            {/* Button Filters */}
+            {[
+              ["country", "Country", fixedValues?.countries],
+              ["language", "Language", fixedValues?.languages],
+              ["shelf", "Shelf", fixedValues?.shelves],
+              ["department", "Department", fixedValues?.departments],
+            ].map(([name, label, options]) => (
+              <div key={name} className="flex flex-col">
+                <label className="text-sm font-semibold text-gray-800 mb-2">
+                  {label}
+                </label>
+                <div className="w-full flex items-center justify-center flex-wrap gap-2">
+                  <button
+                    type="button"
+                    onClick={() =>
+                      handleInputChange({ target: { name, value: "" } })
+                    }
+                    className={`flex-auto w-max p-[5px] text-[15px] text-center rounded-[10px] shadow-[0_0_3px_#00000012] transition-all
+              ${
+                filters[name] === ""
+                  ? "bg-blue-600 text-white border-blue-600"
+                  : "bg-white text-gray-700 border-gray-300 hover:bg-blue-100"
+              }
+            `}
+                    aria-pressed={filters[name] === ""}
+                  >
+                    All
+                  </button>
+                  {options?.map((option) => (
+                    <button
+                      key={option._id}
+                      type="button"
+                      onClick={() =>
+                        handleInputChange({
+                          target: { name, value: option.name },
+                        })
+                      }
+                      className={`flex-auto w-max p-[5px] text-[15px] text-center rounded-[10px] shadow-[0_0_3px_#00000012] transition-all
+                ${
+                  filters[name] === option.name
+                    ? "bg-blue-600 text-white border-blue-600"
+                    : "bg-white text-gray-700 border-gray-300 hover:bg-blue-100"
+                }
+              `}
+                      aria-pressed={filters[name] === option.name}
+                    >
+                      {option.name}
+                    </button>
+                  ))}
+                </div>
+                <hr className="border-t border-dashed border-gray-400 mt-3" />
+              </div>
+            ))}
 
-          {/* Select Dropdowns */}
-          {[
-            ["country", "Country", fixedValues?.countries],
-            ["language", "Language", fixedValues?.languages],
-            ["shelf", "Shelf", fixedValues?.shelves],
-            ["department", "Department", fixedValues?.departments],
-          ].map(([name, label, options]) => (
-            <div key={name} className="flex flex-col">
-              <label
-                htmlFor={name}
-                className="text-sm font-medium text-gray-700 mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2"
-              >
-                {label}
+            {/* MRP Range Slider */}
+            <div className="flex flex-col">
+              <label className="text-sm font-semibold text-gray-800 mb-2">
+                MRP Range
               </label>
-              <select
-                id={name}
-                name={name}
-                value={filters[name]}
-                onChange={handleInputChange}
-                className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="">-- Select {label} --</option>
-                {options?.map((option) => (
-                  <option key={option._id} value={option.name}>
-                    {option.name}
-                  </option>
-                ))}
-              </select>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between text-xs text-gray-600">
+                  <span>Min: {filters.mrpMin || 0}</span>
+                  <span>Max: {filters.mrpMax || 1000}</span>
+                </div>
+                <div className="flex flex-col gap-3">
+                  <input
+                    type="range"
+                    name="mrpMin"
+                    min={0}
+                    max={filters.mrpMax || 1000}
+                    value={filters.mrpMin}
+                    onChange={handleInputChange}
+                    className="w-full h-2 rounded-lg cursor-pointer accent-blue-600"
+                  />
+                  <input
+                    type="range"
+                    name="mrpMax"
+                    min={filters.mrpMin || 0}
+                    max={1000}
+                    value={filters.mrpMax}
+                    onChange={handleInputChange}
+                    className="w-full h-2 rounded-lg cursor-pointer accent-blue-600"
+                  />
+                </div>
+              </div>
             </div>
-          ))}
-
-          {/* Min/Max Inputs */}
-          {[
-            ["mrpMin", "Min MRP"],
-            ["mrpMax", "Max MRP"],
-            //   ["quantityMin", "Min Qty"],
-            //   ["quantityMax", "Max Qty"],
-          ].map(([name, label]) => (
-            <div key={name} className="flex flex-col">
-              <label
-                htmlFor={name}
-                className="text-sm font-medium text-gray-700 mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2"
-              >
-                {label}
-              </label>
-              <input
-                type="number"
-                id={name}
-                name={name}
-                value={filters[name]}
-                onChange={handleInputChange}
-                placeholder={label}
-                className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-          ))}
-
-          {/* Global Search Field */}
-          <div className="flex flex-col sm:col-span-2 lg:col-span-3 xl:col-span-4">
-            <label
-              htmlFor="search"
-              className="text-sm font-medium text-gray-700 mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2"
-            >
-              Search Anything
-            </label>
-            <input
-              type="text"
-              id="search"
-              name="search"
-              placeholder="Search by any field"
-              value={filters.search}
-              onChange={handleInputChange}
-              className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
           </div>
-        </div>
 
-        {/* Buttons */}
-        <div className="w-full flex flex-col gap-1">
+          <hr className="border-t border-dashed border-gray-400" />
           {/* Sort Options */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="flex flex-col">
-              <label
-                htmlFor="sortBy"
-                className="text-sm font-medium text-gray-700 mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2"
-              >
+          <div className="flex flex-col flex-row items-start justify-between gap-2">
+            {/* Sort By */}
+            <fieldset className="flex flex-col sm:flex-row sm:items-center gap-2">
+              <legend className="text-sm font-semibold text-gray-800">
                 Sort By
-              </label>
-              <select
-                id="sortBy"
-                name="sortBy"
-                value={filters.sortBy}
-                onChange={handleInputChange}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="">Select Field</option>
-                <option value="bookName">Book Name</option>
-                <option value="bookAuthor">Author</option>
-                <option value="publisher">Publisher</option>
-                <option value="mrp">MRP</option>
-                <option value="quantity">Quantity</option>
-                <option value="edition">Edition</option>
-              </select>
-            </div>
+              </legend>
+              <div className="flex flex-wrap gap-2 sm:mt-0">
+                {[
+                  { label: "Book", value: "bookName" },
+                  { label: "Author", value: "bookAuthor" },
+                  { label: "Publisher", value: "publisher" },
+                  { label: "MRP", value: "mrp" },
+                  { label: "Qty", value: "quantity" },
+                  { label: "Edition", value: "edition" },
+                ].map(({ label, value }) => (
+                  <label
+                    key={value}
+                    className="flex items-center gap-2 cursor-pointer text-sm select-none"
+                  >
+                    <input
+                      type="radio"
+                      name="sortBy"
+                      value={value}
+                      checked={filters.sortBy === value}
+                      onChange={handleInputChange}
+                      className="text-blue-600 focus:ring-2 focus:ring-blue-400"
+                    />
+                    {label}
+                  </label>
+                ))}
+              </div>
+            </fieldset>
 
-            <div className="flex flex-col">
-              <label
-                htmlFor="sortOrder"
-                className="text-sm font-medium text-gray-700 mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2"
-              >
+            {/* Sort Order */}
+            <fieldset className="flex flex-col flex-row sm:items-center gap-4">
+              <legend className="text-sm font-semibold text-gray-800">
                 Sort Order
-              </label>
-              <select
-                id="sortOrder"
-                name="sortOrder"
-                value={filters.sortOrder}
-                onChange={handleInputChange}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="">Select Order</option>
-                <option value="asc">Ascending</option>
-                <option value="desc">Descending</option>
-              </select>
-            </div>
-          </div>
-
-          {/* Pagination & Limit Selector */}
-          {books?.total > 0 && (
-            <div className="flex m-auto flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mt-4">
-              <ReactPaginate
-                breakLabel="..."
-                nextLabel="Next →"
-                onPageChange={({ selected }) => changePage(selected + 1)}
-                pageRangeDisplayed={2}
-                marginPagesDisplayed={1}
-                pageCount={Math.ceil(books.total / filters.limit)}
-                forcePage={filters.page - 1}
-                previousLabel="← Previous"
-                containerClassName="flex flex-wrap gap-2 items-center justify-center sm:justify-start"
-                pageClassName="px-3 py-1 rounded bg-gray-200 text-sm"
-                activeClassName="bg-green-100 text-black"
-                previousClassName="px-3 py-1 rounded bg-gray-300 text-sm"
-                nextClassName="px-3 py-1 rounded bg-gray-300 text-sm"
-                breakClassName="px-3 py-1 rounded bg-gray-100"
-                disabledClassName="opacity-50 cursor-not-allowed"
-              />
-            </div>
-          )}
-
-          {/* Reset Button */}
-          <div className="flex justify-center pt-3">
-            <button
-              type="button"
-              className="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-md font-medium shadow border-none"
-              onClick={() => {
-                const defaultFilters = {
-                  bookName: "",
-                  bookAuthor: "",
-                  publisher: "",
-                  language: "",
-                  department: "",
-                  country: "",
-                  shelf: "",
-                  edition: "",
-                  mrpMin: "",
-                  mrpMax: "",
-                  quantityMin: "",
-                  quantityMax: "",
-                  search: "",
-                  sortBy: "",
-                  sortOrder: "",
-                  page: 1,
-                  limit: 10, // make sure you include `limit` and `page`
-                };
-                setFilters(defaultFilters);
-                localStorage.removeItem("bookFilters");
-                dispatch(getBooks(defaultFilters)); // <-- fix here
-              }}
-            >
-              Reset Filters
-            </button>
+              </legend>
+              <div className="flex gap-6 mt-2 sm:mt-0">
+                {[
+                  { label: "Ascending", value: "asc" },
+                  { label: "Descending", value: "desc" },
+                ].map(({ label, value }) => (
+                  <label
+                    key={value}
+                    className="flex items-center gap-2 cursor-pointer text-sm select-none"
+                  >
+                    <input
+                      type="radio"
+                      name="sortOrder"
+                      value={value}
+                      checked={filters.sortOrder === value}
+                      onChange={handleInputChange}
+                      className="text-blue-600 focus:ring-2 focus:ring-blue-400"
+                    />
+                    {label}
+                  </label>
+                ))}
+              </div>
+            </fieldset>
           </div>
         </div>
-      </form>
-      {collaps && books?.total > 0 && (
-        <div className="pb-2">
-          <ReactPaginate
-            breakLabel="..."
-            nextLabel="Next →"
-            onPageChange={({ selected }) => changePage(selected + 1)}
-            pageRangeDisplayed={2}
-            marginPagesDisplayed={1}
-            pageCount={Math.ceil(books.total / filters.limit)}
-            forcePage={filters.page - 1}
-            previousLabel="← Previous"
-            containerClassName="flex flex-wrap gap-2 items-center justify-center"
-            pageClassName="px-3 py-1 rounded bg-gray-200 text-sm"
-            activeClassName="bg-green-100 text-black"
-            previousClassName="px-3 py-1 rounded bg-gray-300 text-sm"
-            nextClassName="px-3 py-1 rounded bg-gray-300 text-sm"
-            breakClassName="px-3 py-1 rounded bg-gray-100"
-            disabledClassName="opacity-50 cursor-not-allowed"
-          />
+
+        {/* Reset Button */}
+        <div className="pt-4 flex justify-center">
+          <button
+            type="button"
+            className="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-md shadow"
+            onClick={() => {
+              const defaultFilters = {
+                bookName: "",
+                bookAuthor: "",
+                publisher: "",
+                language: "",
+                department: "",
+                country: "",
+                shelf: "",
+                edition: "",
+                mrpMin: "",
+                mrpMax: "",
+                quantityMin: "",
+                quantityMax: "",
+                search: "",
+                sortBy: "",
+                sortOrder: "",
+                page: 1,
+                limit: 10,
+              };
+              setFilters(defaultFilters);
+              localStorage.removeItem("bookFilters");
+              dispatch(getBooks(defaultFilters));
+            }}
+          >
+            Reset Filters
+          </button>
         </div>
-      )}
+      </div>
     </>
   );
 };

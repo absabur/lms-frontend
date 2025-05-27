@@ -452,6 +452,7 @@ export const getBooks =
       );
 
       const result = await response.json();
+
       if (result.success) {
         dispatch({
           type: GET_BOOKS,

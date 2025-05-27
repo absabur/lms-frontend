@@ -12,7 +12,6 @@ import {
 const MyBooks = () => {
   const [filters, setFilters] = useState({});
   const [activeFilter, setActiveFilter] = useState("all");
-
   const dispatch = useDispatch();
   const myBooks = useSelector((state) => state.myBooks);
   const role = useSelector((state) => state.role);
@@ -26,197 +25,231 @@ const MyBooks = () => {
 
   const handleClick = (action) => {
     if (isButtonDisabled) return;
-    setIsButtonDisabled(true); // disable all buttons
-    setTimeout(() => setIsButtonDisabled(false), 5000); // enable after 5s
-    action(); // run the action (dispatch, etc.)
+    setIsButtonDisabled(true);
+    setTimeout(() => setIsButtonDisabled(false), 5000);
+    action();
   };
-
+  
   return (
-    <div className="min-h-screen px-4 py-6 md:px-8 bg-gray-50">
-      <div className="flex flex-wrap justify-center md:justify-start items-center gap-2 mb-8">
-        <button
-          onClick={() => {
-            setFilters({});
-            setActiveFilter("all");
-          }}
-          className={`px-4 py-2 rounded-full border transition-colors duration-300 ${
-            activeFilter === "all"
-              ? "bg-blue-600 text-white border-blue-600"
-              : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
-          }`}
-        >
-          All
-        </button>
+    <div className="min-h-screen max-w-7xl mx-auto">
+      {/* Header */}
+      <div className="mb-8">
+        <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
+          My Books
+        </h1>
 
-        <button
-          onClick={() => {
-            setFilters({ takingApproveBy: false });
-            setActiveFilter("gettingRequested");
-          }}
-          className={`px-4 py-2 rounded-full border transition-colors duration-300 ${
-            activeFilter === "gettingRequested"
-              ? "bg-blue-600 text-white border-blue-600"
-              : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
-          }`}
-        >
-          Getting Requested
-        </button>
-
-        <button
-          onClick={() => {
-            setFilters({ takingApproveBy: true, returnApproveBy: false });
-            setActiveFilter("inCollection");
-          }}
-          className={`px-4 py-2 rounded-full border transition-colors duration-300 ${
-            activeFilter === "inCollection"
-              ? "bg-blue-600 text-white border-blue-600"
-              : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
-          }`}
-        >
-          In My Collection
-        </button>
-        <button
-          onClick={() => {
-            setFilters({
-              takingApproveBy: true,
-              returnRequestDate: true,
-              returnApproveBy: false,
-            });
-            setActiveFilter("returnRequested");
-          }}
-          className={`px-4 py-2 rounded-full border transition-colors duration-300 ${
-            activeFilter === "returnRequested"
-              ? "bg-blue-600 text-white border-blue-600"
-              : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
-          }`}
-        >
-          Return Requested
-        </button>
-
-        <button
-          onClick={() => {
-            setFilters({ takingApproveBy: true, returnApproveBy: true });
-            setActiveFilter("alreadyRead");
-          }}
-          className={`px-4 py-2 rounded-full border transition-colors duration-300 ${
-            activeFilter === "alreadyRead"
-              ? "bg-blue-600 text-white border-blue-600"
-              : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
-          }`}
-        >
-          Already Returned
-        </button>
+        {/* Filter Buttons - Responsive */}
+        <div className="flex flex-wrap gap-2 overflow-x-auto pb-2">
+          {[
+            { id: "all", label: "All" },
+            {
+              id: "gettingRequested",
+              label: "Getting Requested",
+              filter: { takingApproveBy: false },
+            },
+            {
+              id: "inCollection",
+              label: "In My Collection",
+              filter: { takingApproveBy: true, returnApproveBy: false },
+            },
+            {
+              id: "returnRequested",
+              label: "Return Requested",
+              filter: {
+                takingApproveBy: true,
+                returnRequestDate: true,
+                returnApproveBy: false,
+              },
+            },
+            {
+              id: "alreadyRead",
+              label: "Already Returned",
+              filter: { takingApproveBy: true, returnApproveBy: true },
+            },
+          ].map(({ id, label, filter }) => (
+            <button
+              key={id}
+              onClick={() => {
+                setFilters(filter || {});
+                setActiveFilter(id);
+              }}
+              className={`px-4 py-2 rounded-full text-sm md:text-base whitespace-nowrap transition-all duration-200 ${
+                activeFilter === id
+                  ? "bg-blue-600 text-white shadow-md"
+                  : "bg-white text-gray-700 border border-gray-200 hover:bg-gray-50"
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
       </div>
 
+      {/* Book List */}
       {myBooks?.bookTeachers?.length || myBooks?.bookStudents?.length > 0 ? (
-        <div className="space-y-6 mt-8">
+        <div className="flex flex-row flex-wrap gap-3 justify-center">
           {(role === "teacher"
             ? myBooks?.bookTeachers
             : myBooks?.bookStudents
           )?.map((item, index) => (
             <div
               key={index}
-              className="bg-white border rounded-xl shadow-md transition-transform duration-300 flex flex-col md:flex-row overflow-hidden"
+              className="max-w-[600px] w-full bg-white rounded-lg shadow-lg hover:bg-gray-100 transition-all duration-300 overflow-hidden border border-gray-100"
             >
-              {/* Book Image */}
-              {item?.book?.images?.[0]?.url ? (
-                <img
-                  src={item?.book?.images[0].url}
-                  alt={item?.book?.bookName}
-                  className="w-full md:w-48 h-64 md:h-auto object-cover"
-                />
-              ) : (
-                <div className="w-full md:w-48 h-64 md:h-auto bg-gray-100 flex items-center justify-center text-gray-400 italic">
-                  No Image
-                </div>
-              )}
-
-              {/* Book Details */}
-              <div className="p-4 flex flex-col justify-between flex-1">
-                <div>
-                  <h2 className="text-xl font-semibold text-gray-800 mb-1">
-                    <Link href={`/books/${item?.book?.slug}`}>
-                      {item?.book?.bookName}
-                    </Link>
-                  </h2>
-                  <p className="text-sm text-gray-600 mb-2">
-                    Author: {item?.book?.bookAuthor}
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    Department: {item?.book?.department?.name}
-                  </p>
-                </div>
-                <div className="pt-4 flex justify-between items-center">
-                  <span className="text-base font-medium text-green-700">
-                    ৳{item?.book?.mrp}
-                  </span>
-                  {item?.takingApproveBy == null && (
-                    <button
-                      onClick={() =>
-                        handleClick(() => {
-                          dispatch(gettingRequestCancel(item?._id, role));
-                          setActiveFilter("all");
-                        })
-                      }
-                      disabled={isButtonDisabled}
-                      className={`${
-                        isButtonDisabled
-                          ? "bg-gray-400"
-                          : "bg-red-600 hover:bg-red-700"
-                      } text-white font-medium px-5 py-2 rounded shadow`}
-                    >
-                      Cancel Getting Request
-                    </button>
+              <div className="flex flex-col md:flex-row items-center">
+                {/* Book Image */}
+                <div className="w-[130px] flex items-center h-auto bg-gray-100 flex-shrink-0">
+                  {item?.book?.images?.[0]?.url ? (
+                    <img
+                      src={item?.book?.images[0].url}
+                      alt={item?.book?.bookName}
+                      className="w-full object-contain"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-gray-400">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-12 w-12"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={1}
+                          d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                        />
+                      </svg>
+                    </div>
                   )}
+                </div>
 
-                  {item?.takingApproveBy &&
-                    !item?.returnApproveBy &&
-                    !item?.returnRequestDate && (
-                      <button
-                        onClick={() =>
-                          handleClick(() => {
-                            dispatch(returnRequest(item?._id, role));
-                            setActiveFilter("all");
-                          })
-                        }
-                        disabled={isButtonDisabled}
-                        className={`${
-                          isButtonDisabled
-                            ? "bg-gray-400"
-                            : "bg-red-600 hover:bg-red-700"
-                        } text-white font-medium px-5 py-2 rounded shadow`}
-                      >
-                        Return Book
-                      </button>
-                    )}
+                {/* Book Details */}
+                <div className="p-4 flex-1 flex flex-col">
+                  <div className="flex-1">
+                    <h2 className="text-lg md:text-xl font-semibold text-gray-800 mb-1 hover:text-blue-600 transition-colors">
+                      <Link href={`/books/${item?.book?.slug}`}>
+                        {item?.book?.bookName}
+                      </Link>
+                    </h2>
+                    <p className="text-sm text-gray-600 mb-2">
+                      <span className="font-semibold">Author:</span>{" "}
+                      {item?.book?.bookAuthor}
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      <span className="font-semibold">Book Number:</span>{" "}
+                      {item?.bookNumber}
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      <span className="font-semibold">Department:</span>{" "}
+                      {item?.book?.department?.name}
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      <span className="font-semibold">সংগ্রহের তারিখ:</span>{" "}
+                      {item?.takingRequestDate?.date}
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      <span className="font-semibold">ফেরতের তারিখ:</span>{" "}
+                      {item?.returnApproveDate?.date || "N/A"}
+                    </p>
+                  </div>
 
-                  {item?.takingApproveBy &&
-                    !item?.returnApproveBy &&
-                    item?.returnRequestDate && (
-                      <button
-                        onClick={() =>
-                          handleClick(() => {
-                            dispatch(cancelReturnRequest(item?._id, role));
-                            setActiveFilter("all");
-                          })
-                        }
-                        disabled={isButtonDisabled}
-                        className={`${
-                          isButtonDisabled
-                            ? "bg-gray-400"
-                            : "bg-red-600 hover:bg-red-700"
-                        } text-white font-medium px-5 py-2 rounded shadow`}
-                      >
-                        Cancel Return Request
-                      </button>
-                    )}
+                  <div className="pt-3 border-t border-gray-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                    <span className="text-base font-medium text-green-700">
+                      ৳{item?.book?.mrp}
+                    </span>
+
+                    {/* Action Buttons */}
+                    <div className="flex flex-wrap gap-2">
+                      {item?.takingApproveBy == null && (
+                        <button
+                          onClick={() =>
+                            handleClick(() => {
+                              dispatch(gettingRequestCancel(item?._id, role));
+                              setActiveFilter("all");
+                            })
+                          }
+                          disabled={isButtonDisabled}
+                          className={`px-4 py-2 rounded text-sm font-medium transition-colors ${
+                            isButtonDisabled
+                              ? "bg-gray-300 cursor-not-allowed"
+                              : "bg-red-600 hover:bg-red-700 text-white"
+                          }`}
+                        >
+                          সংগ্রহের অনুরোধ বাতিল করুন
+                        </button>
+                      )}
+
+                      {item?.takingApproveBy &&
+                        !item?.returnApproveBy &&
+                        !item?.returnRequestDate && (
+                          <button
+                            onClick={() =>
+                              handleClick(() => {
+                                dispatch(returnRequest(item?._id, role));
+                                setActiveFilter("all");
+                              })
+                            }
+                            disabled={isButtonDisabled}
+                            className={`px-4 py-2 rounded text-sm font-medium transition-colors ${
+                              isButtonDisabled
+                                ? "bg-gray-300 cursor-not-allowed"
+                                : "bg-blue-600 hover:bg-blue-700 text-white"
+                            }`}
+                          >
+                            ফেরত দিন
+                          </button>
+                        )}
+
+                      {item?.takingApproveBy &&
+                        !item?.returnApproveBy &&
+                        item?.returnRequestDate && (
+                          <button
+                            onClick={() =>
+                              handleClick(() => {
+                                dispatch(cancelReturnRequest(item?._id, role));
+                                setActiveFilter("all");
+                              })
+                            }
+                            disabled={isButtonDisabled}
+                            className={`px-4 py-2 rounded text-sm font-medium transition-colors ${
+                              isButtonDisabled
+                                ? "bg-gray-300 cursor-not-allowed"
+                                : "bg-red-600 hover:bg-red-700 text-white"
+                            }`}
+                          >
+                            ফেরত বাদ দিন
+                          </button>
+                        )}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           ))}
         </div>
       ) : (
-        <p className="text-center text-gray-500 mt-10">No books found.</p>
+        <div className="flex flex-col items-center justify-center py-12 text-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-16 w-16 text-gray-400 mb-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={1}
+              d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+            />
+          </svg>
+          <h3 className="text-lg font-medium text-gray-700 mb-1">
+            No books found
+          </h3>
+          <p className="text-gray-500 text-sm">Try changing your filters</p>
+        </div>
       )}
     </div>
   );

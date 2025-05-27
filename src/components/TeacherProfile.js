@@ -49,11 +49,6 @@ const TeacherCard = () => {
         <StatusBadge label="Banned" active={teacher?.isBan} inverse />
       </div>
 
-      {/* Metadata */}
-      <div className="text-xs text-gray-500">
-        <p>Created: {teacher?.createDate?.date || "N/A"}</p>
-        <p>Updated: {teacher?.updateDate?.date || "N/A"}</p>
-      </div>
       <div className="flex gap-3">
         <Link
           href={`/profile/update`}

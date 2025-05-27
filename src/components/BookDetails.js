@@ -17,7 +17,7 @@ const BookDetails = ({ book }) => {
               <p className="text-sm text-gray-500">by {book?.bookAuthor}</p>
             </div>
           </div>
-          <ReadBook images={book?.images} />
+          {book?.images?.length > 1 && <ReadBook images={book?.images} />}
 
           {/* Description */}
           <div>
