@@ -24,12 +24,12 @@ const BooksFilterFrom = ({ filters, setFilters }) => {
   return (
     <>
       <div
-        className={`z-40 absolute lg:relative bg-white p-6 rounded-xl shadow-[0_0_10px_#00000035] space-y-6 mb-3 transition-all duration-300 w-[300px] ${
-          collaps ? "left-[-310px]" : "left-[5px]"
-        } lg:left-[0] lg:w-[30%]`}
+        className={`z-40 absolute lg:static bg-white p-6 rounded-xl shadow-[0_0_10px_#00000035] space-y-6 mb-3 transition-all duration-300 w-[90vw] ${
+          collaps ? "left-[-90vw] top-[80px]" : "left-[5px] top-[80px]"
+        } lg:w-[30%] h-[calc(100vh-90px)] lg:h-[calc(100vh-220px)] overflow-auto custom-scrollbar`}
       >
-        <div className="flex justify-between items-center">
-          <h2 className="text-xl">Filters</h2>
+        <div className="flex justify-center items-center">
+          <h2 className="text-2xl">Filters</h2>
           <button
             className="lg:hidden rounded-full border-none shadow-[0_0_10px_#00000036] px-2 flex items-center gap-2 fixed top-[108px] right-[5px]"
             onClick={() => setCollaps(!collaps)}
@@ -48,15 +48,84 @@ const BooksFilterFrom = ({ filters, setFilters }) => {
           </button>
         </div>
 
-        <div className="space-y-8">
+        <div className="">
           {/* Search Inputs + Button Filters + Slider */}
           <div className="grid grid-cols-1 gap-2">
+            <div className="w-full bg-white rounded-2xl flex flex-wrap sm:items-start sm:justify-between gap-3">
+              {/* Sort By */}
+              <fieldset className="w-full sm:w-auto">
+                <legend className="mb-2 text-sm font-semibold text-gray-700">
+                  Sort By
+                </legend>
+                <div className="flex flex-wrap gap-2 justify-start">
+                  {[
+                    { label: "Book", value: "bookName" },
+                    { label: "Author", value: "bookAuthor" },
+                    { label: "Publisher", value: "publisher" },
+                    { label: "MRP", value: "mrp" },
+                    { label: "Qty", value: "quantity" },
+                    { label: "Edition", value: "edition" },
+                  ].map(({ label, value }) => (
+                    <label
+                      key={value}
+                      className={`text-sm flex items-center justify-center px-4 py-2 rounded-full border cursor-pointer transition 
+            ${
+              filters.sortBy === value
+                ? "bg-blue-600 text-white border-blue-600"
+                : "bg-gray-100 text-gray-700 hover:bg-blue-100 border-gray-300"
+            }`}
+                    >
+                      <input
+                        type="radio"
+                        name="sortBy"
+                        value={value}
+                        checked={filters.sortBy === value}
+                        onChange={handleInputChange}
+                        className="hidden"
+                      />
+                      {label}
+                    </label>
+                  ))}
+                </div>
+              </fieldset>
+
+              {/* Sort Order */}
+              <fieldset className="w-full sm:w-auto">
+                <legend className="mb-2 text-sm font-semibold text-gray-700">
+                  Sort Order
+                </legend>
+                <div className="flex gap-4">
+                  {[
+                    { label: "Ascending", value: "asc" },
+                    { label: "Descending", value: "desc" },
+                  ].map(({ label, value }) => (
+                    <label
+                      key={value}
+                      className={`text-sm flex items-center justify-center px-4 py-2 rounded-full border cursor-pointer transition 
+            ${
+              filters.sortOrder === value
+                ? "bg-green-600 text-white border-green-600"
+                : "bg-gray-100 text-gray-700 hover:bg-green-100 border-gray-300"
+            }`}
+                    >
+                      <input
+                        type="radio"
+                        name="sortOrder"
+                        value={value}
+                        checked={filters.sortOrder === value}
+                        onChange={handleInputChange}
+                        className="hidden"
+                      />
+                      {label}
+                    </label>
+                  ))}
+                </div>
+              </fieldset>
+            </div>
+
+            <hr className="border-t border-dashed border-gray-400 mt-3" />
             {/* Text Inputs */}
-            {[
-              ["bookName", "Book Name"],
-              ["bookAuthor", "Author"],
-              ["publisher", "Publisher"],
-            ].map(([name, label]) => (
+            {[["search", "Search"]].map(([name, label]) => (
               <div key={name} className="flex flex-col">
                 <label
                   htmlFor={name}
@@ -77,10 +146,10 @@ const BooksFilterFrom = ({ filters, setFilters }) => {
             <hr className="border-t border-dashed border-gray-400 mt-3" />
             {/* Button Filters */}
             {[
+              ["department", "Department", fixedValues?.departments],
+              ["shelf", "Shelf", fixedValues?.shelves],
               ["country", "Country", fixedValues?.countries],
               ["language", "Language", fixedValues?.languages],
-              ["shelf", "Shelf", fixedValues?.shelves],
-              ["department", "Department", fixedValues?.departments],
             ].map(([name, label, options]) => (
               <div key={name} className="flex flex-col">
                 <label className="text-sm font-semibold text-gray-800 mb-2">
@@ -137,14 +206,14 @@ const BooksFilterFrom = ({ filters, setFilters }) => {
               <div className="space-y-3">
                 <div className="flex items-center justify-between text-xs text-gray-600">
                   <span>Min: {filters.mrpMin || 0}</span>
-                  <span>Max: {filters.mrpMax || 1000}</span>
+                  <span>Max: {filters.mrpMax || 3000}</span>
                 </div>
                 <div className="flex flex-col gap-3">
                   <input
                     type="range"
                     name="mrpMin"
                     min={0}
-                    max={filters.mrpMax || 1000}
+                    max={filters.mrpMax || 3000}
                     value={filters.mrpMin}
                     onChange={handleInputChange}
                     className="w-full h-2 rounded-lg cursor-pointer accent-blue-600"
@@ -153,7 +222,7 @@ const BooksFilterFrom = ({ filters, setFilters }) => {
                     type="range"
                     name="mrpMax"
                     min={filters.mrpMin || 0}
-                    max={1000}
+                    max={3000}
                     value={filters.mrpMax}
                     onChange={handleInputChange}
                     className="w-full h-2 rounded-lg cursor-pointer accent-blue-600"
@@ -163,69 +232,8 @@ const BooksFilterFrom = ({ filters, setFilters }) => {
             </div>
           </div>
 
-          <hr className="border-t border-dashed border-gray-400" />
+          <hr className="border-t border-dashed border-gray-400 m-3" />
           {/* Sort Options */}
-          <div className="flex flex-col flex-row items-start justify-between gap-2">
-            {/* Sort By */}
-            <fieldset className="flex flex-col sm:flex-row sm:items-center gap-2">
-              <legend className="text-sm font-semibold text-gray-800">
-                Sort By
-              </legend>
-              <div className="flex flex-wrap gap-2 sm:mt-0">
-                {[
-                  { label: "Book", value: "bookName" },
-                  { label: "Author", value: "bookAuthor" },
-                  { label: "Publisher", value: "publisher" },
-                  { label: "MRP", value: "mrp" },
-                  { label: "Qty", value: "quantity" },
-                  { label: "Edition", value: "edition" },
-                ].map(({ label, value }) => (
-                  <label
-                    key={value}
-                    className="flex items-center gap-2 cursor-pointer text-sm select-none"
-                  >
-                    <input
-                      type="radio"
-                      name="sortBy"
-                      value={value}
-                      checked={filters.sortBy === value}
-                      onChange={handleInputChange}
-                      className="text-blue-600 focus:ring-2 focus:ring-blue-400"
-                    />
-                    {label}
-                  </label>
-                ))}
-              </div>
-            </fieldset>
-
-            {/* Sort Order */}
-            <fieldset className="flex flex-col flex-row sm:items-center gap-4">
-              <legend className="text-sm font-semibold text-gray-800">
-                Sort Order
-              </legend>
-              <div className="flex gap-6 mt-2 sm:mt-0">
-                {[
-                  { label: "Ascending", value: "asc" },
-                  { label: "Descending", value: "desc" },
-                ].map(({ label, value }) => (
-                  <label
-                    key={value}
-                    className="flex items-center gap-2 cursor-pointer text-sm select-none"
-                  >
-                    <input
-                      type="radio"
-                      name="sortOrder"
-                      value={value}
-                      checked={filters.sortOrder === value}
-                      onChange={handleInputChange}
-                      className="text-blue-600 focus:ring-2 focus:ring-blue-400"
-                    />
-                    {label}
-                  </label>
-                ))}
-              </div>
-            </fieldset>
-          </div>
         </div>
 
         {/* Reset Button */}
@@ -238,6 +246,7 @@ const BooksFilterFrom = ({ filters, setFilters }) => {
                 bookName: "",
                 bookAuthor: "",
                 publisher: "",
+                search: "",
                 language: "",
                 department: "",
                 country: "",

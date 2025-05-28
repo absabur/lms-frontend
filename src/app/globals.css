@@ -13,7 +13,7 @@
     --foreground: #000000;
     --color1: #00ff37;
     --color2: #ff00ea;
-    --max-width: 1440px
+    --max-width: 1440px;
   }
 }
 
@@ -23,6 +23,35 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-input, textarea, button{
+input,
+textarea,
+button {
   border: 1px solid #000000;
+}
+
+@layer utilities {
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #1b7aff; /* Tailwind gray-700 */
+    border-radius: 9999px;
+    border: 2px solid #f1f1f1;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #1f2937; /* Tailwind gray-900 */
+  }
+
+  /* Firefox support */
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #1b7aff #f1f1f1;
+  }
 }

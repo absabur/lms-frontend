@@ -19,6 +19,7 @@ const AllBooks = () => {
             bookName: "",
             bookAuthor: "",
             publisher: "",
+            search: "",
             language: "",
             department: "",
             country: "",
@@ -38,6 +39,7 @@ const AllBooks = () => {
       bookName: "",
       bookAuthor: "",
       publisher: "",
+      search: "",
       language: "",
       department: "",
       country: "",
@@ -65,7 +67,7 @@ const AllBooks = () => {
   }, []);
 
   return (
-    <div className="min-h-screen px-4 py-6 md:px-8">
+    <div className="px-4 py-6 md:px-8">
       <h1 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-6">
         📚 Books
       </h1>
@@ -73,7 +75,7 @@ const AllBooks = () => {
         <BooksFilterFrom filters={filters} setFilters={setFilters} />
 
         {books?.books?.length > 0 ? (
-          <div className="w-full lg:w-[70%] flex flex-wrap justify-center lg:justify-start gap-6">
+          <div className="w-full lg:w-[70%] flex flex-wrap justify-center gap-6">
             {books.books.map((book, index) => (
               <Link
                 key={index}
@@ -117,7 +119,7 @@ const AllBooks = () => {
             ))}
           </div>
         ) : (
-          <div className="flex w-full flex-col items-center justify-center py-12 text-center">
+          <div className="flex w-full lg:w-[70%] flex-col items-center justify-center py-12 text-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-16 w-16 text-gray-400 mb-4"
