@@ -13,7 +13,7 @@ export default async function Home() {
   return (
     <main className=" bg-gradient-to-br from-indigo-50 via-white to-purple-50 text-gray-800 font-sans">
       {/* Hero Section */}
-      <DepartmentTabs activeDepartment={""} />
+      <DepartmentTabs activeDepartment={"all"} />
       <section className="flex flex-col-reverse md:flex-row items-center max-w-7xl mx-auto px-6 py-20 gap-10">
         {/* Left Content */}
         <div className="flex-1 space-y-6">

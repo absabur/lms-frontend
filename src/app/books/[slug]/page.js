@@ -15,7 +15,7 @@ export default async function Page({ params }) {
 
   const book = await res.json();
   if (book.data.length <= 0) {
-    notFound();
+    return notFound();
   }
 
   return <BookDetails book={{ ...book.data[0] }} />;

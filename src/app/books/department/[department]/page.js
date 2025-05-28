@@ -15,7 +15,7 @@ export default async function Page({ params }) {
   );
   const result = await response.json();
   if (result.departments.length <= 0) {
-    notFound();
+    return notFound();
   }
 
   return (
