@@ -9,7 +9,7 @@ const BookPagination = ({ filters, setFilters, books }) => {
   const changePage = (newPage) => {
     const newFilters = { ...filters, page: newPage };
     setFilters(newFilters);
-    localStorage.setItem("bookFilters", JSON.stringify(newFilters));
+    sessionStorage.setItem("bookFilters", JSON.stringify(newFilters));
     dispatch(getBooks(newFilters));
   };
   return (

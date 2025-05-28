@@ -5,6 +5,7 @@ import { StoreProvider } from "@/store/StoreProvider.jsx";
 import Toast from "@/components/Toast";
 import Authentication from "@/components/Authentication";
 import Loading from "@/components/Loading";
+import Link from "next/link";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,7 +33,26 @@ export default function RootLayout({ children }) {
           <Loading />
           <Toast />
           <Authentication />
-          <div className="p-4">{children}</div>
+          <main className="min-h-screen">{children}</main>
+          <footer className="bg-indigo-900 text-indigo-100 py-6 text-center text-sm space-y-2">
+            <p>
+              © {new Date().getFullYear()} Bogura Polytechnic Institute Digital
+              Library. All rights reserved.
+            </p>
+            <p>
+              Managed by the Library Committee, BPI | Email:
+              bogra_poly@yahoo.com
+            </p>
+            <p>
+              Developed by{" "}
+              <Link
+                href="/developers"
+                className="text-purple-300 hover:underline"
+              >
+                CST Department
+              </Link>
+            </p>
+          </footer>
         </body>
       </StoreProvider>
     </html>

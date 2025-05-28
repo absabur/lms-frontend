@@ -37,7 +37,7 @@ export default function Login() {
   });
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
+    <div className="flex items-center justify-center px-4 sm:px-6 lg:px-8">
       <form
         onSubmit={formik.handleSubmit}
         className="w-full max-w-md bg-white rounded-2xl shadow-2xl p-8 sm:p-10"

@@ -392,14 +392,23 @@ export const authenticated = () => async (dispatch) => {
   }
 };
 
-export const fixdeValues = () => async (dispatch) => {
+export const fixdeValues = (filters) => async (dispatch) => {
   dispatch({
     type: LOADING_START,
   });
 
   try {
+    const params = new URLSearchParams();
+
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value !== undefined && value !== "") {
+        params.append(key, value);
+      }
+    });
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/fixed-values/all-values`,
+      `${
+        process.env.NEXT_PUBLIC_BACKEND_URL
+      }/api/fixed-values/all-values?${params.toString()}`,
       {
         method: "GET",
         credentials: "include",

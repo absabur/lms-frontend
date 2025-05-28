@@ -40,18 +40,32 @@ button {
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: #1b7aff; /* Tailwind gray-700 */
+    background-color: #1b7aff;
     border-radius: 9999px;
     border: 2px solid #f1f1f1;
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background-color: #1f2937; /* Tailwind gray-900 */
+    background-color: #1f2937;
   }
 
-  /* Firefox support */
+  /* Firefox */
   .custom-scrollbar {
     scrollbar-width: thin;
     scrollbar-color: #1b7aff #f1f1f1;
+    direction: rtl; /* Scrollbar appears on the left in WebKit browsers */
   }
+
+  /* Force content to render normally while direction is rtl */
+  .custom-scrollbar > * {
+    direction: ltr;
+  }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

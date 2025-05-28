@@ -12,7 +12,15 @@ const UpdateStudentPage = () => {
   const fixedValues = useSelector((state) => state.fixedValues);
 
   useEffect(() => {
-    dispatch(fixdeValues());
+    dispatch(
+      fixdeValues({
+        sessions: true,
+        shifts: true,
+        districts: true,
+        upazilas: true,
+        departments: true,
+      })
+    );
   }, [dispatch]);
 
   const formik = useFormik({
@@ -70,7 +78,7 @@ const UpdateStudentPage = () => {
   });
 
   return (
-    <div className="min-h-screen flex justify-center items-start bg-gray-50 py-8 px-4">
+    <div className=" flex justify-center items-start bg-gray-50 py-8 px-4">
       <form
         onSubmit={formik.handleSubmit}
         encType="multipart/form-data"

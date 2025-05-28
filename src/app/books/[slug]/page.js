@@ -1,5 +1,6 @@
 // app/books/[slug]/page.js
 import BookDetails from "@/components/BookDetails";
+import { notFound } from "next/navigation";
 
 export default async function Page({ params }) {
   const { slug } = await params;
@@ -13,6 +14,9 @@ export default async function Page({ params }) {
   );
 
   const book = await res.json();
+  if (book.data.length <= 0) {
+    notFound();
+  }
 
   return <BookDetails book={{ ...book.data[0] }} />;
 }

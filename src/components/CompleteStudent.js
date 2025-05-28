@@ -13,7 +13,15 @@ const CompleteStudent = () => {
   const fixedValues = useSelector((state) => state.fixedValues);
 
   useEffect(() => {
-    dispatch(fixdeValues());
+    dispatch(
+      fixdeValues({
+        departments: true,
+        sessions: true,
+        shifts: true,
+        districts: true,
+        upazilas: true,
+      })
+    );
   }, []);
 
   const formik = useFormik({
@@ -69,7 +77,7 @@ const CompleteStudent = () => {
   });
 
   return (
-    <div className="min-h-screen flex justify-center items-start bg-gray-50 py-8 px-4">
+    <div className=" flex justify-center items-start bg-gray-50 py-8 px-4">
       <form
         onSubmit={formik.handleSubmit}
         encType="multipart/form-data"
@@ -206,7 +214,9 @@ const CompleteStudent = () => {
               />
               <datalist id={`${name}-options`}>
                 {options?.map((option) => (
-                  <option key={option._id} value={option._id}>{option.className}</option>
+                  <option key={option._id} value={option._id}>
+                    {option.className}
+                  </option>
                 ))}
               </datalist>
             </div>
@@ -234,7 +244,11 @@ const CompleteStudent = () => {
               <datalist id={`${name}-options`}>
                 {options?.map((option) => {
                   if (option?.districtId?.name == formik.values.district) {
-                    return <option key={option._id} value={option._id}>{option.name}</option>;
+                    return (
+                      <option key={option._id} value={option._id}>
+                        {option.name}
+                      </option>
+                    );
                   }
                 })}
               </datalist>

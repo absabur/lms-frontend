@@ -9,8 +9,6 @@ const Authentication = () => {
   const dispatch = useDispatch();
 
   const isAuthenticated = useSelector((state) => state.isAuthenticated);
-  const auth_loaded = useSelector((state) => state.auth_loaded);
-  const isLoading = useSelector((state) => state.isLoading);
   const profile = useSelector((state) => state.profile);
 
   useEffect(() => {
@@ -18,7 +16,7 @@ const Authentication = () => {
   }, []);
 
   return (
-    <nav className="sticky top-0 z-50 bg-blue-600 text-white px-4 py-3 shadow-md">
+    <nav className="sticky top-0 z-[30] lg:z-[50] bg-blue-600 text-white px-4 py-3 shadow-md">
       <div className="max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-4">
         <div className="flex p-1 items-center gap-2">
           <Link
@@ -56,6 +54,12 @@ const Authentication = () => {
           </>
         ) : (
           <div className="flex items-center gap-6">
+            <Link
+              href="/books"
+              className="hover:text-gray-200 transition-colors"
+            >
+              Books
+            </Link>
             <Link
               href="/auth/login"
               className="hover:text-gray-200 transition-colors"

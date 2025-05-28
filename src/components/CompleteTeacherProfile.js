@@ -13,7 +13,12 @@ const CompleteTeacherProfile = () => {
   const fixedValues = useSelector((state) => state.fixedValues);
 
   useEffect(() => {
-      dispatch(fixdeValues());
+    dispatch(
+      fixdeValues({
+        departments: true,
+        posts: true,
+      })
+    );
   }, []);
 
   const formik = useFormik({
@@ -51,7 +56,7 @@ const CompleteTeacherProfile = () => {
   });
 
   return (
-    <div className="min-h-screen flex justify-center items-start bg-gray-50 py-8 px-4">
+    <div className=" flex justify-center items-start bg-gray-50 py-8 px-4">
       <form
         onSubmit={formik.handleSubmit}
         encType="multipart/form-data"
@@ -170,7 +175,9 @@ const CompleteTeacherProfile = () => {
 
         {/* Image Upload (full width) */}
         <div className="flex flex-col col-span-2">
-          <label className="text-sm font-medium text-gray-700 mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2">Image (Upload new image)</label>
+          <label className="text-sm font-medium text-gray-700 mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2">
+            Image (Upload new image)
+          </label>
           <input
             type="file"
             name="image"

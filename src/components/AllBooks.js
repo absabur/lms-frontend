@@ -12,7 +12,7 @@ const AllBooks = () => {
 
   const [filters, setFilters] = useState(() => {
     if (typeof window !== "undefined") {
-      const stored = localStorage.getItem("bookFilters");
+      const stored = sessionStorage.getItem("bookFilters");
       return stored
         ? JSON.parse(stored)
         : {
@@ -57,7 +57,7 @@ const AllBooks = () => {
   });
 
   useEffect(() => {
-    const savedFilters = localStorage.getItem("bookFilters");
+    const savedFilters = sessionStorage.getItem("bookFilters");
     if (savedFilters) {
       const parsedFilters = JSON.parse(savedFilters);
       dispatch(getBooks(parsedFilters));
@@ -67,7 +67,7 @@ const AllBooks = () => {
   }, []);
 
   return (
-    <div className="px-4 py-6 md:px-8">
+    <div className="">
       <h1 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-6">
         📚 Books
       </h1>

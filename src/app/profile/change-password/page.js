@@ -35,7 +35,7 @@ const ChangePasswordPage = () => {
   });
 
   return (
-    <div className="min-h-screen flex justify-center items-start bg-gray-50 py-12 px-4">
+    <div className=" flex justify-center items-start bg-gray-50 py-12 px-4">
       <form
         onSubmit={formik.handleSubmit}
         className="bg-white w-full max-w-xl p-8 rounded-lg shadow-lg flex flex-col gap-6"

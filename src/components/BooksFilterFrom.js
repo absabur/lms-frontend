@@ -10,28 +10,58 @@ const BooksFilterFrom = ({ filters, setFilters }) => {
   const [collaps, setCollaps] = useState(true);
 
   useEffect(() => {
-    dispatch(fixdeValues());
+    dispatch(
+      fixdeValues({
+        departments: true,
+        shelves: true,
+        countries: true,
+        languages: true,
+      })
+    );
   }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     const newFilters = { ...filters, [name]: value, page: 1 };
     setFilters(newFilters);
-    localStorage.setItem("bookFilters", JSON.stringify(newFilters));
+    sessionStorage.setItem("bookFilters", JSON.stringify(newFilters));
     dispatch(getBooks(newFilters));
   };
 
+  useEffect(() => {
+    if (!collaps) {
+      const all = document.querySelectorAll("body, html, #__next, main"); // add others if needed
+      all.forEach((el) => (el.style.overflow = "hidden"));
+    } else {
+      const all = document.querySelectorAll("body, html, #__next, main");
+      all.forEach((el) => (el.style.overflow = ""));
+    }
+
+    return () => {
+      const all = document.querySelectorAll("body, html, #__next, main");
+      all.forEach((el) => (el.style.overflow = ""));
+    };
+  }, [collaps]);
+
   return (
     <>
+      {!collaps && (
+        <div
+          onClick={() => setCollaps(true)}
+          className="fixed top-0 left-0 w-[100vw] h-[100vh] bg-black opacity-80 z-[38] transition-all"
+        ></div>
+      )}
       <div
-        className={`z-40 absolute lg:static bg-white p-6 rounded-xl shadow-[0_0_10px_#00000035] space-y-6 mb-3 transition-all duration-300 w-[90vw] ${
-          collaps ? "left-[-90vw] top-[80px]" : "left-[5px] top-[80px]"
-        } lg:w-[30%] h-[calc(100vh-90px)] lg:h-[calc(100vh-220px)] overflow-auto custom-scrollbar`}
+        className={`z-[40] absolute lg:static bg-white p-6 lg:rounded-xl shadow-[0_0_10px_#00000035] space-y-6 mb-3 transition-all duration-300 w-[80vw] ${
+          collaps
+            ? "left-[-80vw] top-[64px] rounded-none"
+            : "left-[0px] top-[64px] rounded-none"
+        } lg:w-[30%] h-[calc(100vh-64px)] lg:h-[calc(100vh-220px)] overflow-auto custom-scrollbar`}
       >
         <div className="flex justify-center items-center">
           <h2 className="text-2xl">Filters</h2>
           <button
-            className="lg:hidden rounded-full border-none shadow-[0_0_10px_#00000036] px-2 flex items-center gap-2 fixed top-[108px] right-[5px]"
+            className="z-[42] lg:hidden rounded-full border-none bg-white shadow-[0_0_10px_#00000036] px-2 flex items-center gap-2 fixed top-[93px] right-[5px]"
             onClick={() => setCollaps(!collaps)}
           >
             {collaps ? (
@@ -263,7 +293,7 @@ const BooksFilterFrom = ({ filters, setFilters }) => {
                 limit: 10,
               };
               setFilters(defaultFilters);
-              localStorage.removeItem("bookFilters");
+              sessionStorage.removeItem("bookFilters");
               dispatch(getBooks(defaultFilters));
             }}
           >
