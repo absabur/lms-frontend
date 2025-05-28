@@ -264,29 +264,6 @@ export default async function Home() {
           ))}
         </div>
       </section>
-
-      {/* Testimonials */}
-      <section className="bg-purple-50 py-16">
-        <div className="max-w-4xl mx-auto px-6 text-center space-y-12">
-          <h2 className="text-3xl font-bold text-indigo-900">
-            What Our Readers Say
-          </h2>
-          <blockquote className="text-lg italic text-indigo-700 max-w-3xl mx-auto relative before:absolute before:-left-6 before:top-0 before:text-7xl before:text-purple-300 before:font-serif before:content-['“'] before:select-none">
-            “This library made studying so much easier — instant access and no
-            hassle. It’s a blessing for all students and teachers.”
-            <footer className="mt-4 font-semibold text-purple-600">
-              — Sarah M., Computer Science Student
-            </footer>
-          </blockquote>
-          <blockquote className="text-lg italic text-indigo-700 max-w-3xl mx-auto relative before:absolute before:-left-6 before:top-0 before:text-7xl before:text-purple-300 before:font-serif before:content-['“'] before:select-none">
-            “I love how I can find materials from all departments in one place.
-            It’s simple, fast, and completely free!”
-            <footer className="mt-4 font-semibold text-purple-600">
-              — Dr. James L., Math Professor
-            </footer>
-          </blockquote>
-        </div>
-      </section>
     </main>
   );
 }

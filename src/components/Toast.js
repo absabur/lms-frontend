@@ -28,6 +28,11 @@ const Toast = () => {
         // Redirect to login with "next" as current route
         router.push(`/auth/login?next=${encodeURIComponent(pathname)}`);
       }
+      if (message?.message?.includes("Complete Your Profile")) {
+        // Redirect to login with "next" as current route
+        router.push(`/profile/complete`);
+      }
+
       if (message?.message === "Your account is not approved.") {
         // Redirect to login with "next" as current route
         router.push(`/not-approved`);

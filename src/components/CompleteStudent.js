@@ -46,22 +46,74 @@ const CompleteStudent = () => {
       image: null,
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Name is required"),
-      phone: Yup.string().required("Phone is required"),
-      department: Yup.string().required("Department is required"),
-      address: Yup.string().required("Address is required"),
+      name: Yup.string()
+        .min(3, "Name must be at least 3 characters")
+        .max(100, "Name can't exceed 100 characters")
+        .required("Name is required"),
+
+      phone: Yup.string()
+        .matches(/^01[3-9]\d{8}$/, "Invalid Bangladeshi phone number")
+        .required("Phone is required"),
+
       banglaName: Yup.string().required("Bangla Name is required"),
-      fathersName: Yup.string().required("Father's Name is required"),
-      mothersName: Yup.string().required("Mother's Name is required"),
-      admissionRoll: Yup.string(),
-      boardRoll: Yup.string(),
-      registration: Yup.string(),
+
+      fathersName: Yup.string()
+        .min(3, "Father's Name must be at least 3 characters")
+        .required("Father's Name is required"),
+
+      mothersName: Yup.string()
+        .min(3, "Mother's Name must be at least 3 characters")
+        .required("Mother's Name is required"),
+
+      addmissionRoll: Yup.string()
+        .matches(/^\d{4,10}$/, "Admission Roll should be a number")
+        .notRequired(),
+
+      boardRoll: Yup.string()
+        .matches(/^\d{4,10}$/, "Board Roll should be a number")
+        .notRequired(),
+
+      registration: Yup.string()
+        .matches(/^\d{6,12}$/, "Invalid Registration Number")
+        .notRequired(),
+
       session: Yup.string().required("Session is required"),
+
       shift: Yup.string().required("Shift is required"),
+
       district: Yup.string().required("District is required"),
+
       upazila: Yup.string().required("Upazila is required"),
-      union: Yup.string().required("Union is required"),
-      village: Yup.string().required("Village is required"),
+
+      union: Yup.string()
+        .min(2, "Union must be at least 2 characters")
+        .required("Union is required"),
+
+      village: Yup.string()
+        .min(2, "Village must be at least 2 characters")
+        .required("Village is required"),
+
+      department: Yup.string().required("Department is required"),
+
+      address: Yup.string()
+        .min(10, "Address must be at least 10 characters")
+        .required("Address is required"),
+
+      image: Yup.mixed()
+        .nullable()
+        .test(
+          "fileSize",
+          "File too large (max 2MB)",
+          (value) => !value || (value && value.size <= 2 * 1024 * 1024)
+        )
+        .test(
+          "fileType",
+          "Unsupported file format",
+          (value) =>
+            !value ||
+            (value &&
+              ["image/jpeg", "image/png", "image/jpg"].includes(value.type))
+        ),
     }),
     onSubmit: (values) => {
       const formData = new FormData();
@@ -198,60 +250,68 @@ const CompleteStudent = () => {
             <div key={name} className="flex flex-col">
               <label
                 htmlFor={name}
-                className="text-sm font-medium text-gray-700 mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2"
+                className="text-sm font-medium text-gray-700 mb-1"
               >
                 {label}
               </label>
-              <input
-                list={`${name}-options`}
+              <select
                 id={name}
                 name={name}
                 value={formik.values[name]}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder={`Select ${label}`}
-              />
-              <datalist id={`${name}-options`}>
+              >
+                <option value="">Select {label}</option>
                 {options?.map((option) => (
                   <option key={option._id} value={option._id}>
-                    {option.className}
+                    {option.name || option.className}
                   </option>
                 ))}
-              </datalist>
+              </select>
+              {formik.touched[name] && formik.errors[name] && (
+                <div className="text-red-500 text-sm">
+                  {formik.errors[name]}
+                </div>
+              )}
             </div>
           )
         )}
+
         {[["upazila", "Upazila", fixedValues?.upazilas]].map(
           ([name, label, options]) => (
             <div key={name} className="flex flex-col">
               <label
                 htmlFor={name}
-                className="text-sm font-medium text-gray-700 mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2"
+                className="text-sm font-medium text-gray-700 mb-1"
               >
                 {label}
               </label>
-              <input
-                list={`${name}-options`}
+              <select
                 id={name}
                 name={name}
                 value={formik.values[name]}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder={`Select ${label}`}
-              />
-              <datalist id={`${name}-options`}>
-                {options?.map((option) => {
-                  if (option?.districtId?.name == formik.values.district) {
-                    return (
-                      <option key={option._id} value={option._id}>
-                        {option.name}
-                      </option>
-                    );
-                  }
-                })}
-              </datalist>
+              >
+                <option value="">Select {label}</option>
+                {options
+                  ?.filter(
+                    (option) =>
+                      option?.districtId?._id === formik.values.district
+                  )
+                  .map((option) => (
+                    <option key={option._id} value={option._id}>
+                      {option.name}
+                    </option>
+                  ))}
+              </select>
+              {formik.touched[name] && formik.errors[name] && (
+                <div className="text-red-500 text-sm">
+                  {formik.errors[name]}
+                </div>
+              )}
             </div>
           )
         )}
