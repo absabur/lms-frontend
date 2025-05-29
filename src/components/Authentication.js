@@ -16,12 +16,12 @@ const Authentication = () => {
   }, []);
 
   return (
-    <nav className="sticky top-0 z-[30] lg:z-[50] bg-blue-600 text-white px-4 py-3 shadow-md">
+    <nav className="sticky top-0 z-[30] lg:z-[50] bg-white text-black px-4 py-3 shadow-md">
       <div className="max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-4">
         <div className="flex p-1 items-center gap-2">
           <Link
             href="/"
-            className="text-2xl font-bold text-white hover:text-gray-200 transition-colors"
+            className="text-2xl font-bold text-black hover:text-blue-600 transition-colors"
           >
             LMS
           </Link>
@@ -31,13 +31,13 @@ const Authentication = () => {
             <div className="flex items-center gap-6">
               <Link
                 href="/books"
-                className="hover:text-gray-200 transition-colors"
+                className="hover:text-blue-600 transition-colors"
               >
                 Books
               </Link>
               <Link
                 href="/books/my-books"
-                className="hover:text-gray-200 transition-colors"
+                className="hover:text-blue-600 transition-colors"
               >
                 My Books
               </Link>
@@ -47,7 +47,7 @@ const Authentication = () => {
                 <img
                   src={profile?.avatar?.url || "/default-avatar.png"}
                   alt="Avatar"
-                  className="w-10 h-10 rounded-full border-2 border-white object-cover hover:scale-105 transition-transform"
+                  className="hover:shadow-[0_0_10px_rgba(0,0,200,0.9)] w-10 h-10 rounded-full object-cover transition-all"
                 />
               </Link>
             </div>
@@ -56,19 +56,19 @@ const Authentication = () => {
           <div className="flex items-center gap-6">
             <Link
               href="/books"
-              className="hover:text-gray-200 transition-colors"
+              className="hover:text-blue-600 transition-colors"
             >
               Books
             </Link>
             <Link
               href="/auth/login"
-              className="hover:text-gray-200 transition-colors"
+              className="hover:text-blue-600 transition-colors"
             >
               Login
             </Link>
             <Link
               href="/auth/register"
-              className="hover:text-gray-200 transition-colors"
+              className="hover:text-blue-600 transition-colors"
             >
               Register
             </Link>

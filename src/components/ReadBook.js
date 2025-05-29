@@ -5,14 +5,12 @@ const ReadBook = ({ images }) => {
   const [modal, setModal] = useState(false);
   return (
     <>
-      <h2 className="mb-6">
-        <button
-          onClick={() => setModal(true)}
-          className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-300"
-        >
-          একটু পড়ে দেখুন
-        </button>
-      </h2>
+      <button
+        onClick={() => setModal(true)}
+        className="px-6 py-3 bg-[rgba(100,230,0,0.6)] text-black font-semibold rounded-lg shadow-md border-none hover:bg-[rgba(100,230,0,1)] transition-all duration-300"
+      >
+        একটু পড়ে দেখুন
+      </button>
 
       {modal && (
         <div

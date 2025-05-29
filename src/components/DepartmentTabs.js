@@ -1,4 +1,5 @@
-'use client';
+"use client";
+import { fixdeValues } from "@/store/Action";
 import { useRef, useEffect, useState } from "react";
 
 const DepartmentTabs = ({ activeDepartment }) => {
@@ -98,67 +99,99 @@ const DepartmentTabs = ({ activeDepartment }) => {
   }, []);
 
   return (
-    <div className="bg-white shadow-lg mb-4 flex items-center select-none">
-      {/* Left scroll button (hidden on small screens) */}
-      <button
-        onClick={() => scrollBy(-150)}
-        disabled={!canScrollLeft}
-        aria-label="Scroll left"
-        className={`hidden lg:flex items-center justify-center px-3 py-2 mr-2 rounded-md border border-gray-300 bg-white hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed`}
-      >
-        <svg
-          className="w-5 h-5 text-gray-600"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7"></path>
-        </svg>
-      </button>
+    <>
+      {departments.length <= 0 ? (
+        <div className="bg-white shadow-lg mb-4 flex items-center select-none py-2">
+          {/* Left scroll button skeleton (hidden on small screens) */}
+          <div className="hidden lg:flex items-center justify-center px-3 py-2 mr-2 rounded-md border border-gray-300 bg-gray-100 animate-pulse w-[40px] h-[40px]" />
 
-      <div
-        ref={scrollRef}
-        className="overflow-x-auto no-scrollbar cursor-grab flex-1"
-        style={{ scrollBehavior: "smooth" }}
-      >
-        <div className="flex whitespace-nowrap gap-10 px-4 py-3">
-          {departments.map(({ name, _id }) => (
-            <a
-              key={_id}
-              href={`/books/department/${name}`}
-              className={`pb-2 border-b-2 ${
-                activeDepartment === name
-                  ? "border-blue-500"
-                  : "border-transparent text-gray-700 hover:text-blue-600 hover:border-blue-400"
-              } transition-colors duration-200`}
-            >
-              {name}
-            </a>
-          ))}
+          {/* Scrollable area skeleton */}
+          <div className="overflow-x-auto no-scrollbar flex-1">
+            <div className="flex whitespace-nowrap gap-10 px-4 py-3">
+              {[...Array(10)].map((_, i) => (
+                <div
+                  key={i}
+                  className="h-4 w-[150px] bg-gray-200 rounded animate-pulse"
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Right scroll button skeleton (hidden on small screens) */}
+          <div className="hidden lg:flex items-center justify-center px-3 py-2 ml-2 rounded-md border border-gray-300 bg-gray-100 animate-pulse w-[40px] h-[40px]" />
         </div>
-      </div>
+      ) : (
+        <div className="bg-white shadow-lg mb-4 flex items-center select-none">
+          {/* Left scroll button (hidden on small screens) */}
+          <button
+            onClick={() => scrollBy(-150)}
+            disabled={!canScrollLeft}
+            aria-label="Scroll left"
+            className={`hidden lg:flex items-center justify-center px-3 py-2 mr-2 rounded-md border border-gray-300 bg-white hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed`}
+          >
+            <svg
+              className="w-5 h-5 text-gray-600"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15 19l-7-7 7-7"
+              ></path>
+            </svg>
+          </button>
 
-      {/* Right scroll button (hidden on small screens) */}
-      <button
-        onClick={() => scrollBy(150)}
-        disabled={!canScrollRight}
-        aria-label="Scroll right"
-        className={`hidden lg:flex items-center justify-center px-3 py-2 ml-2 rounded-md border border-gray-300 bg-white hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed`}
-      >
-        <svg
-          className="w-5 h-5 text-gray-600"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"></path>
-        </svg>
-      </button>
-    </div>
+          <div
+            ref={scrollRef}
+            className="overflow-x-auto no-scrollbar cursor-grab flex-1"
+            style={{ scrollBehavior: "smooth" }}
+          >
+            <div className="flex whitespace-nowrap gap-10 px-4 py-3">
+              {departments.map(({ name, _id }) => (
+                <a
+                  key={_id}
+                  href={`/books/department/${name}`}
+                  className={`pb-2 border-b-2 ${
+                    activeDepartment === name
+                      ? "border-blue-500"
+                      : "border-transparent text-gray-700 hover:text-blue-600 hover:border-blue-400"
+                  } transition-colors duration-200`}
+                >
+                  {name}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Right scroll button (hidden on small screens) */}
+          <button
+            onClick={() => scrollBy(150)}
+            disabled={!canScrollRight}
+            aria-label="Scroll right"
+            className={`hidden lg:flex items-center justify-center px-3 py-2 ml-2 rounded-md border border-gray-300 bg-white hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed`}
+          >
+            <svg
+              className="w-5 h-5 text-gray-600"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M9 5l7 7-7 7"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      )}
+    </>
   );
 };
 

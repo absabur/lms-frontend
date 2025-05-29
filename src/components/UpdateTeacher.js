@@ -302,7 +302,7 @@ const UpdateTeacherPage = () => {
         {/* Submit Button (full width) */}
         <button
           type="submit"
-          disabled={formik.isSubmitting}
+          disabled={formik.isSubmitting || true}
           className="col-span-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white py-3 rounded-md font-semibold transition"
         >
           {formik.isSubmitting ? "Updating..." : "Update Profile"}

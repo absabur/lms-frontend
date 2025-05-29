@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 const ProfileRedirect = () => {
   const isAuthenticated = useSelector((state) => state.isAuthenticated);
+  const auth_loaded = useSelector((state) => state.auth_loaded);
+  const isLoading = useSelector((state) => state.isLoading);
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -15,10 +17,10 @@ const ProfileRedirect = () => {
   }, []);
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!isAuthenticated && auth_loaded && isLoading) {
       router.push("/auth/login");
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, auth_loaded, isLoading]);
 
   return <></>;
 };

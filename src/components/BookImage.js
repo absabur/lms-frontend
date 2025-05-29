@@ -13,9 +13,9 @@ const BookImage = ({ images }) => {
   };
   return (
     <>
-      <div className="flex flex-col items-center gap-4">
+      <div className="flex flex-col items-center gap-4 w-[100%] md:w-[48%]">
         {images?.length > 0 ? (
-          <div className="relative w-full max-w-md mx-auto aspect-[3/5]">
+          <div className="relative w-full max-w-md mx-auto aspect-[4/5]">
             <img
               src={images[currentIndex]?.url}
               alt={`Book image ${currentIndex + 1}`}

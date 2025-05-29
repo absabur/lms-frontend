@@ -25,9 +25,9 @@ const RequestForBook = ({ id }) => {
         isCooldown
           ? "bg-gray-400 cursor-not-allowed"
           : "bg-blue-600 hover:bg-blue-700"
-      } text-white font-medium px-5 py-2 rounded shadow`}
+      } px-6 py-3 bg-blue-600 border-none text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-300`}
     >
-      {isCooldown ? "Wait 5s..." : "বইটি সংগ্রহের জন্য অনুরোধ করুন"}
+      {isCooldown ? "Wait 5s..." : "বইটি সংগ্রহ করুন"}
     </button>
   );
 };

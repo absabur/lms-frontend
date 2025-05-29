@@ -212,32 +212,32 @@ const UpdateStudentPage = () => {
             >
               {label}
             </label>
-            <input
-              list={`${name}-options`}
+            <select
               id={name}
               name={name}
               required
               value={formik.values[name]}
               onChange={(e) => !profile[name] && formik.handleChange(e)}
               onBlur={formik.handleBlur}
-              placeholder={`Select ${label}`}
               aria-describedby={`${name}-error`}
               disabled={profile[name]}
-              className={`border rounded-md px-3 py-2 transition
-                ${
-                  formik.touched[name] && formik.errors[name]
-                    ? "border-red-500 focus:ring-red-500"
-                    : "border-gray-300 focus:ring-blue-500"
-                }
-              `}
-            />
-            <datalist id={`${name}-options`}>
+              className={`border rounded-md px-3 py-2 transition bg-white
+        ${
+          formik.touched[name] && formik.errors[name]
+            ? "border-red-500 focus:ring-red-500"
+            : "border-gray-300 focus:ring-blue-500"
+        }
+      `}
+            >
+              <option value="" disabled>
+                Select {label}
+              </option>
               {options?.map((option) => (
                 <option key={option._id} value={option._id}>
                   {option.name}
                 </option>
               ))}
-            </datalist>
+            </select>
             {formik.touched[name] && formik.errors[name] && (
               <p
                 id={`${name}-error`}
@@ -334,7 +334,7 @@ const UpdateStudentPage = () => {
         <button
           type="submit"
           className="col-span-1 md:col-span-2 bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 transition font-semibold text-lg"
-          disabled={formik.isSubmitting}
+          disabled={formik.isSubmitting || true}
         >
           Update
         </button>
