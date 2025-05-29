@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 import { XCircle } from "lucide-react"; // Optional: icon library
 import { useDispatch, useSelector } from "react-redux";
 import { authenticated } from "@/store/Action";
-import { MESSAGE } from "@/store/constant";
 import { useRouter } from "next/navigation";
 
 const page = () => {

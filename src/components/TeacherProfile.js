@@ -1,7 +1,7 @@
 "use client";
 import { logout } from "@/store/Action";
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const TeacherCard = () => {

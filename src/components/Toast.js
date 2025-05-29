@@ -1,10 +1,9 @@
 "use client";
-import { CLEAR_MESSAGE, CLEAR_PATH } from "@/store/constant";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { CLEAR_MESSAGE, CLEAR_PATH } from "@/store/constant";
+import { Toaster, toast } from "sonner";
 
 const Toast = () => {
   const pathname = usePathname();
@@ -12,50 +11,34 @@ const Toast = () => {
   const path = useSelector((state) => state.path);
   const router = useRouter();
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (message?.status) {
-      toast[message?.status](message?.message, {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-      if (message?.message === "You must login first.") {
-        // Redirect to login with "next" as current route
-        router.push(`/auth/login?next=${encodeURIComponent(pathname)}`);
-      }
-      if (message?.message?.includes("Complete Your Profile")) {
-        // Redirect to login with "next" as current route
-        router.push(`/profile/complete`);
-      }
+      toast[message?.status || "info"](message?.message);
 
-      if (message?.message === "Your account is not approved.") {
-        // Redirect to login with "next" as current route
+      if (message?.message === "You must login first.") {
+        router.push(`/auth/login?next=${encodeURIComponent(pathname)}`);
+      } else if (message?.message?.includes("Complete Your Profile")) {
+        router.push(`/profile/complete`);
+      } else if (message?.message === "Your account is not approved.") {
         router.push(`/not-approved`);
-      }
-      if (
+      } else if (
         message?.message ===
         "Unfortunately you are ban now, please contact to author."
       ) {
-        // Redirect to login with "next" as current route
         router.push(`/ban`);
       }
-      dispatch({
-        type: CLEAR_MESSAGE,
-      });
+
+      dispatch({ type: CLEAR_MESSAGE });
     }
+
     if (path) {
-      let pushto = path;
       dispatch({ type: CLEAR_PATH });
-      router.push(pushto, { scroll: false });
+      router.push(path, { scroll: false });
     }
   }, [message, path]);
 
-  return <ToastContainer />;
+  return <Toaster richColors position="top-right" />;
 };
 
 export default Toast;
