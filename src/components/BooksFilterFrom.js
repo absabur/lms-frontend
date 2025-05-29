@@ -1,10 +1,11 @@
 "use client";
-import { fixdeValues, getBooks } from "@/store/Action";
+
 import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
 import { FaChevronCircleRight, FaChevronCircleLeft } from "react-icons/fa";
+import { fixdeValues } from "@/store/Action";
 
-const BooksFilterFrom = ({ filters, setFilters }) => {
+const BooksFilterFrom = ({ filters, setFilters, getBooks }) => {
   const fixedValues = useSelector((state) => state.fixedValues);
   const dispatch = useDispatch();
   const [collaps, setCollaps] = useState(true);
@@ -25,7 +26,7 @@ const BooksFilterFrom = ({ filters, setFilters }) => {
     const newFilters = { ...filters, [name]: value, page: 1 };
     setFilters(newFilters);
     sessionStorage.setItem("bookFilters", JSON.stringify(newFilters));
-    dispatch(getBooks(newFilters));
+    getBooks(newFilters);
   };
 
   useEffect(() => {
@@ -294,7 +295,7 @@ const BooksFilterFrom = ({ filters, setFilters }) => {
               };
               setFilters(defaultFilters);
               sessionStorage.removeItem("bookFilters");
-              dispatch(getBooks(defaultFilters));
+              getBooks(defaultFilters);
             }}
           >
             Reset Filters

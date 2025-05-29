@@ -2,9 +2,7 @@ import {
   AUTHENTICATED,
   CLEAR_MESSAGE,
   CLEAR_PATH,
-  GET_BOOKS,
   GET_FIXED_VALUES,
-  GET_SINGLE_BOOK,
   LOADING_END,
   LOADING_START,
   MESSAGE,
@@ -19,8 +17,6 @@ const initialState = {
   auth_loaded: false,
   role: "",
   fixedValues: {},
-  books: {},
-  book: {},
   myBooks: {},
 };
 
@@ -72,16 +68,6 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         fixedValues: action.payload,
-      };
-    case GET_BOOKS:
-      return {
-        ...state,
-        books: action.payload,
-      };
-    case GET_SINGLE_BOOK:
-      return {
-        ...state,
-        book: action.payload.book,
       };
     case MY_BOOKS:
       return {

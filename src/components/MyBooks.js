@@ -29,12 +29,12 @@ const MyBooks = () => {
     setTimeout(() => setIsButtonDisabled(false), 5000);
     action();
   };
-  
+
   return (
     <div className=" max-w-7xl mx-auto">
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
+      <div className="mb-8 mt-6">
+        <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4 text-center">
           My Books
         </h1>
 
@@ -87,7 +87,7 @@ const MyBooks = () => {
 
       {/* Book List */}
       {myBooks?.bookTeachers?.length || myBooks?.bookStudents?.length > 0 ? (
-        <div className="flex flex-row flex-wrap gap-3 justify-center">
+        <div className="flex flex-row flex-wrap gap-3 justify-center mb-3">
           {(role === "teacher"
             ? myBooks?.bookTeachers
             : myBooks?.bookStudents
@@ -128,7 +128,7 @@ const MyBooks = () => {
                 {/* Book Details */}
                 <div className="p-4 flex-1 flex flex-col">
                   <div className="flex-1">
-                    <h2 className="text-lg md:text-xl font-semibold text-gray-800 mb-1 hover:text-blue-600 transition-colors">
+                    <h2 className="line-clamp-1 text-lg md:text-xl font-semibold text-gray-800 mb-1 hover:text-blue-600 transition-colors">
                       <Link href={`/books/${item?.book?.slug}`}>
                         {item?.book?.bookName}
                       </Link>
@@ -166,8 +166,9 @@ const MyBooks = () => {
                         <button
                           onClick={() =>
                             handleClick(() => {
-                              dispatch(gettingRequestCancel(item?._id, role));
-                              setActiveFilter("all");
+                              dispatch(
+                                gettingRequestCancel(item?._id, role, filters)
+                              );
                             })
                           }
                           disabled={isButtonDisabled}
@@ -187,8 +188,9 @@ const MyBooks = () => {
                           <button
                             onClick={() =>
                               handleClick(() => {
-                                dispatch(returnRequest(item?._id, role));
-                                setActiveFilter("all");
+                                dispatch(
+                                  returnRequest(item?._id, role, filters)
+                                );
                               })
                             }
                             disabled={isButtonDisabled}
@@ -208,8 +210,9 @@ const MyBooks = () => {
                           <button
                             onClick={() =>
                               handleClick(() => {
-                                dispatch(cancelReturnRequest(item?._id, role));
-                                setActiveFilter("all");
+                                dispatch(
+                                  cancelReturnRequest(item?._id, role, filters)
+                                );
                               })
                             }
                             disabled={isButtonDisabled}

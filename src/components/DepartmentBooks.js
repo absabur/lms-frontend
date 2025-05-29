@@ -29,7 +29,7 @@ const DepartmentBooks = ({ departmentPath }) => {
     const newFilters = { ...filters, [name]: value, page: 1 };
     setFilters(newFilters);
     sessionStorage.setItem("bookFiltersDepartment", JSON.stringify(newFilters));
-    getDepartmentBooks(newFilters, setBooks);
+    getDepartmentBooks(newFilters, setBooks, dispatch);
   };
 
   const [filters, setFilters] = useState(() => {
@@ -82,9 +82,9 @@ const DepartmentBooks = ({ departmentPath }) => {
     const savedFilters = sessionStorage.getItem("bookFiltersDepartment");
     if (savedFilters) {
       const parsedFilters = JSON.parse(savedFilters);
-      getDepartmentBooks(parsedFilters, setBooks);
+      getDepartmentBooks(parsedFilters, setBooks, dispatch);
     } else {
-      getDepartmentBooks({ department: departmentPath }, setBooks);
+      getDepartmentBooks({ department: departmentPath }, setBooks, dispatch);
     }
   }, []);
 
@@ -92,7 +92,7 @@ const DepartmentBooks = ({ departmentPath }) => {
     const newFilters = { ...filters, page: newPage };
     setFilters(newFilters);
     sessionStorage.setItem("bookFiltersDepartment", JSON.stringify(newFilters));
-    getDepartmentBooks(newFilters, setBooks);
+    getDepartmentBooks(newFilters, setBooks, dispatch);
   };
 
   useEffect(() => {
@@ -364,7 +364,7 @@ const DepartmentBooks = ({ departmentPath }) => {
                 };
                 setFilters(defaultFilters);
                 sessionStorage.removeItem("bookFiltersDepartment");
-                getDepartmentBooks(defaultFilters, setBooks);
+                getDepartmentBooks(defaultFilters, setBooks, dispatch);
               }}
             >
               Reset Filters
@@ -466,9 +466,11 @@ const DepartmentBooks = ({ departmentPath }) => {
 
 export default DepartmentBooks;
 
-const getDepartmentBooks = async (filters = {}, setBooks) => {
+const getDepartmentBooks = async (filters = {}, setBooks, dispatch) => {
   try {
-    // Convert filters object to query string
+    dispatch({ type: LOADING_START });
+    // Convert filters object to q
+    // uery string
     const params = new URLSearchParams();
 
     Object.entries(filters).forEach(([key, value]) => {
@@ -495,5 +497,7 @@ const getDepartmentBooks = async (filters = {}, setBooks) => {
     setBooks(result);
   } catch (error) {
     console.error("Error fetching books:", error);
+  } finally {
+    dispatch({ type: LOADING_END });
   }
 };

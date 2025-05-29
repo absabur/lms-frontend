@@ -2,13 +2,13 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getBooks } from "@/store/Action.js";
 import BooksFilterFrom from "@/components/BooksFilterFrom";
 import BookPagination from "./BookPagination";
+import { LOADING_END, LOADING_START } from "@/store/constant";
 
 const AllBooks = () => {
   const dispatch = useDispatch();
-  const books = useSelector((state) => state.books);
+  const [books, setBooks] = useState({});
 
   const [filters, setFilters] = useState(() => {
     if (typeof window !== "undefined") {
@@ -60,9 +60,9 @@ const AllBooks = () => {
     const savedFilters = sessionStorage.getItem("bookFilters");
     if (savedFilters) {
       const parsedFilters = JSON.parse(savedFilters);
-      dispatch(getBooks(parsedFilters));
+      getBooks(parsedFilters, dispatch, setBooks);
     } else {
-      dispatch(getBooks({}));
+      getBooks({}, dispatch, setBooks);
     }
   }, []);
 
@@ -72,7 +72,11 @@ const AllBooks = () => {
         📚 Books
       </h1>
       <div className="flex flex-row gap-6 items-start">
-        <BooksFilterFrom filters={filters} setFilters={setFilters} />
+        <BooksFilterFrom
+          filters={filters}
+          setFilters={setFilters}
+          getBooks={getBooks}
+        />
 
         {books?.books?.length > 0 ? (
           <div className="w-full lg:w-[70%] flex flex-wrap justify-center gap-6">
@@ -141,9 +145,50 @@ const AllBooks = () => {
           </div>
         )}
       </div>
-      <BookPagination filters={filters} setFilters={setFilters} books={books} />
+      <BookPagination
+        filters={filters}
+        setFilters={setFilters}
+        books={books}
+        getBooks={getBooks}
+      />
     </div>
   );
 };
 
 export default AllBooks;
+
+const getBooks = async (filters = {}, dispatch, setBooks) => {
+  dispatch({ type: LOADING_START });
+
+  try {
+    // Convert filters object to query string
+    const params = new URLSearchParams();
+
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value !== undefined && value !== "") {
+        params.append(key, value);
+      }
+    });
+
+    // You can set page/limit dynamically if needed
+    params.set("page", filters.page || 1);
+    params.set("limit", filters.limit || 10);
+
+    const response = await fetch(
+      `${
+        process.env.NEXT_PUBLIC_BACKEND_URL
+      }/api/book/all-books?${params.toString()}`,
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
+
+    const result = await response.json();
+    setBooks(result);
+  } catch (error) {
+    console.error("Error fetching books:", error);
+  } finally {
+    dispatch({ type: LOADING_END });
+  }
+};

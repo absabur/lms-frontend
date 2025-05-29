@@ -1,16 +1,13 @@
 "use client";
-import { getBooks } from "@/store/Action";
 import React from "react";
 import ReactPaginate from "react-paginate";
-import { useDispatch } from "react-redux";
 
-const BookPagination = ({ filters, setFilters, books }) => {
-  const dispatch = useDispatch();
+const BookPagination = ({ filters, setFilters, books, getBooks }) => {
   const changePage = (newPage) => {
     const newFilters = { ...filters, page: newPage };
     setFilters(newFilters);
     sessionStorage.setItem("bookFilters", JSON.stringify(newFilters));
-    dispatch(getBooks(newFilters));
+    getBooks(newFilters);
   };
   return (
     <>

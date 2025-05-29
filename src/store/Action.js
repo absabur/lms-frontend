@@ -1,8 +1,6 @@
 import {
   AUTHENTICATED,
-  GET_BOOKS,
   GET_FIXED_VALUES,
-  GET_SINGLE_BOOK,
   LOADING_END,
   LOADING_START,
   MESSAGE,
@@ -431,77 +429,6 @@ export const fixdeValues = (filters) => async (dispatch) => {
   }
 };
 
-export const getBooks =
-  (filters = {}) =>
-  async (dispatch) => {
-    dispatch({ type: LOADING_START });
-
-    try {
-      // Convert filters object to query string
-      const params = new URLSearchParams();
-
-      Object.entries(filters).forEach(([key, value]) => {
-        if (value !== undefined && value !== "") {
-          params.append(key, value);
-        }
-      });
-
-      // You can set page/limit dynamically if needed
-      params.set("page", filters.page || 1);
-      params.set("limit", filters.limit || 10);
-
-      const response = await fetch(
-        `${
-          process.env.NEXT_PUBLIC_BACKEND_URL
-        }/api/book/all-books?${params.toString()}`,
-        {
-          method: "GET",
-          credentials: "include",
-        }
-      );
-
-      const result = await response.json();
-
-      if (result.success) {
-        dispatch({
-          type: GET_BOOKS,
-          payload: result,
-        });
-      }
-    } catch (error) {
-      console.error("Error fetching books:", error);
-    } finally {
-      dispatch({ type: LOADING_END });
-    }
-  };
-
-export const getBookBySlug = (slug) => async (dispatch) => {
-  dispatch({ type: LOADING_START });
-
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/book/get-book/${slug}`,
-      {
-        method: "GET",
-        credentials: "include",
-      }
-    );
-
-    const result = await response.json();
-
-    if (result.success) {
-      dispatch({
-        type: GET_SINGLE_BOOK,
-        payload: { book: { ...result.data[0] } },
-      });
-    }
-  } catch (error) {
-    console.error("Failed to fetch book by slug:", error);
-  } finally {
-    dispatch({ type: LOADING_END });
-  }
-};
-
 export const completeStudentProfile = (role, data) => async (dispatch) => {
   dispatch({ type: LOADING_START });
 
@@ -643,7 +570,7 @@ export const requestForBook = (id, role) => async (dispatch) => {
   }
 };
 
-export const gettingRequestCancel = (id, role) => async (dispatch) => {
+export const gettingRequestCancel = (id, role, filters) => async (dispatch) => {
   dispatch({ type: LOADING_START });
 
   try {
@@ -672,7 +599,7 @@ export const gettingRequestCancel = (id, role) => async (dispatch) => {
           path: "",
         },
       });
-      dispatch(getRequestedBooks({}, role));
+      dispatch(getRequestedBooks(filters, role));
     } else {
       dispatch({
         type: MESSAGE,
@@ -689,7 +616,7 @@ export const gettingRequestCancel = (id, role) => async (dispatch) => {
     dispatch({ type: LOADING_END });
   }
 };
-export const returnRequest = (id, role) => async (dispatch) => {
+export const returnRequest = (id, role, filters) => async (dispatch) => {
   dispatch({ type: LOADING_START });
 
   try {
@@ -718,7 +645,7 @@ export const returnRequest = (id, role) => async (dispatch) => {
           path: "",
         },
       });
-      dispatch(getRequestedBooks({}, role));
+      dispatch(getRequestedBooks(filters, role));
     } else {
       dispatch({
         type: MESSAGE,
@@ -735,7 +662,7 @@ export const returnRequest = (id, role) => async (dispatch) => {
     dispatch({ type: LOADING_END });
   }
 };
-export const cancelReturnRequest = (id, role) => async (dispatch) => {
+export const cancelReturnRequest = (id, role, filters) => async (dispatch) => {
   dispatch({ type: LOADING_START });
 
   try {
@@ -764,7 +691,7 @@ export const cancelReturnRequest = (id, role) => async (dispatch) => {
           path: "",
         },
       });
-      dispatch(getRequestedBooks({}, role));
+      dispatch(getRequestedBooks(filters, role));
     } else {
       dispatch({
         type: MESSAGE,
