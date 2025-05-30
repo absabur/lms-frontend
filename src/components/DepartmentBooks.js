@@ -118,7 +118,7 @@ const DepartmentBooks = ({ departmentPath }) => {
           className="fixed top-0 left-0 w-[100vw] h-[100vh] bg-black opacity-80 z-[38] transition-all"
         ></div>
       )}
-      <h1 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-6">
+      <h1 className="text-2xl sm:text-3xl font-bold text-center text-textl dark:text-textd mb-6">
         📚 {departmentPath}
       </h1>
       <div className="flex flex-row gap-6 items-start">
@@ -127,10 +127,10 @@ const DepartmentBooks = ({ departmentPath }) => {
             collaps
               ? "left-[-80vw] top-[64px] rounded-none"
               : "left-[0px] top-[64px] rounded-none"
-          } lg:w-[30%] h-[calc(100dvh-64px)] lg:h-[calc(100dvh-220px)] overflow-auto custom-scrollbar`}
+          } lg:w-[30%] h-[calc(100dvh-64px)] lg:h-[calc(100dvh-220px)] overflow-auto custom-scrollbar bg-bgl1 dark:bg-bgd2 border dark:border-bord dark:shadow-shadl`}
         >
           <div className="flex justify-center items-center">
-            <h2 className="text-2xl">Filters</h2>
+            <h2 className="text-2xl text-textl dark:text-textd">Filters</h2>
             <button
               className="lg:hidden rounded-full border-none bg-white shadow-[0_0_10px_#00000036] px-2 flex items-center gap-2 fixed top-[93px] right-[5px]"
               onClick={() => setCollaps(!collaps)}
@@ -152,10 +152,10 @@ const DepartmentBooks = ({ departmentPath }) => {
           <div className="">
             {/* Search Inputs + Button Filters + Slider */}
             <div className="grid grid-cols-1 gap-2">
-              <div className="w-full bg-white rounded-2xl flex flex-wrap sm:items-start sm:justify-between gap-3">
+              <div className="w-full rounded-2xl flex flex-wrap sm:items-start sm:justify-between gap-3">
                 {/* Sort By */}
                 <fieldset className="w-full sm:w-auto">
-                  <legend className="mb-2 text-sm font-semibold text-gray-700">
+                  <legend className="mb-2 text-sm font-semibold text-textl dark:text-textd">
                     Sort By
                   </legend>
                   <div className="flex flex-wrap gap-2 justify-start">
@@ -172,8 +172,8 @@ const DepartmentBooks = ({ departmentPath }) => {
                         className={`text-sm flex items-center justify-center px-4 py-2 rounded-full border cursor-pointer transition 
             ${
               filters.sortBy === value
-                ? "bg-blue-600 text-white border-blue-600"
-                : "bg-gray-100 text-gray-700 hover:bg-blue-100 border-gray-300"
+                ? "bg-buttonp text-textd border-bord"
+                : "hover:bg-blue-100 bg-bgl2 dark:bg-bgd1 text-textl dark:text-textd border border-borl dark:border-bord"
             }`}
                       >
                         <input
@@ -192,7 +192,7 @@ const DepartmentBooks = ({ departmentPath }) => {
 
                 {/* Sort Order */}
                 <fieldset className="w-full sm:w-auto">
-                  <legend className="mb-2 text-sm font-semibold text-gray-700">
+                  <legend className="mb-2 text-sm font-semibold text-textl dark:text-textd">
                     Sort Order
                   </legend>
                   <div className="flex gap-4">
@@ -205,8 +205,8 @@ const DepartmentBooks = ({ departmentPath }) => {
                         className={`text-sm flex items-center justify-center px-4 py-2 rounded-full border cursor-pointer transition 
             ${
               filters.sortOrder === value
-                ? "bg-green-600 text-white border-green-600"
-                : "bg-gray-100 text-gray-700 hover:bg-green-100 border-gray-300"
+                ? "bg-buttonp text-textd border-bord"
+                : "hover:bg-blue-100 bg-bgl2 dark:bg-bgd1 text-textl dark:text-textd border border-borl dark:border-bord"
             }`}
                       >
                         <input
@@ -230,7 +230,7 @@ const DepartmentBooks = ({ departmentPath }) => {
                 <div key={name} className="flex flex-col">
                   <label
                     htmlFor={name}
-                    className="text-sm font-semibold text-gray-800 mb-2"
+                    className="text-sm font-semibold text-textl dark:text-textd mb-2"
                   >
                     {label}
                   </label>
@@ -252,7 +252,7 @@ const DepartmentBooks = ({ departmentPath }) => {
                 ["language", "Language", fixedValues?.languages],
               ].map(([name, label, options]) => (
                 <div key={name} className="flex flex-col">
-                  <label className="text-sm font-semibold text-gray-800 mb-2">
+                  <label className="text-sm font-semibold text-textl dark:text-textd mb-2">
                     {label}
                   </label>
                   <div className="w-full flex items-center justify-center flex-wrap gap-2">
@@ -264,8 +264,8 @@ const DepartmentBooks = ({ departmentPath }) => {
                       className={`flex-auto w-max p-[5px] text-[15px] text-center rounded-[10px] shadow-[0_0_3px_#00000012] transition-all
               ${
                 filters[name] === ""
-                  ? "bg-blue-600 text-white border-blue-600"
-                  : "bg-white text-gray-700 border-gray-300 hover:bg-blue-100"
+                  ? "bg-buttonp text-textd border-bord"
+                  : "hover:bg-blue-100 bg-bgl2 dark:bg-bgd1 text-textl dark:text-textd border border-borl dark:border-bord"
               }
             `}
                       aria-pressed={filters[name] === ""}
@@ -284,8 +284,8 @@ const DepartmentBooks = ({ departmentPath }) => {
                         className={`flex-auto w-max p-[5px] text-[15px] text-center rounded-[10px] shadow-[0_0_3px_#00000012] transition-all
                 ${
                   filters[name] === option._id
-                    ? "bg-blue-600 text-white border-blue-600"
-                    : "bg-white text-gray-700 border-gray-300 hover:bg-blue-100"
+                    ? "bg-buttonp text-textd border-bord"
+                    : "hover:bg-blue-100 bg-bgl2 dark:bg-bgd1 text-textl dark:text-textd border border-borl dark:border-bord"
                 }
               `}
                         aria-pressed={filters[name] === option.name}
@@ -300,7 +300,7 @@ const DepartmentBooks = ({ departmentPath }) => {
 
               {/* MRP Range Slider */}
               <div className="flex flex-col">
-                <label className="text-sm font-semibold text-gray-800 mb-2">
+                <label className="text-sm font-semibold text-textl dark:text-textd mb-2">
                   MRP Range
                 </label>
                 <div className="space-y-3">
@@ -340,7 +340,7 @@ const DepartmentBooks = ({ departmentPath }) => {
           <div className="pt-4 flex justify-center">
             <button
               type="button"
-              className="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-md shadow"
+              className="bg-buttonw hover:bg-buttona text-white px-5 py-2 rounded-md shadow"
               onClick={() => {
                 const defaultFilters = {
                   bookName: "",
@@ -378,7 +378,7 @@ const DepartmentBooks = ({ departmentPath }) => {
               <Link
                 key={index}
                 href={`/books/${book.slug}`}
-                className="max-w-[300px] bg-white border rounded-xl shadow-md hover:shadow-xl transition-transform duration-300 hover:scale-[1.02] overflow-hidden flex flex-col w-full h-[340px]"
+                className="max-w-[300px] bg-bgl1 dark:bg-bgd2 border dark:border-bord rounded-xl shadow-md hover:shadow-xl transition-transform duration-300 hover:scale-[1.02] overflow-hidden flex flex-col w-full h-[340px]"
               >
                 {book?.images?.[0]?.url ? (
                   <img
@@ -394,7 +394,7 @@ const DepartmentBooks = ({ departmentPath }) => {
 
                 <div className="p-4 flex-1 flex flex-col justify-between">
                   <div>
-                    <h2 className="text-lg font-semibold text-gray-800 line-clamp-1">
+                    <h2 className="text-lg font-semibold text-textl dark:text-textd line-clamp-1">
                       {book.bookName}
                     </h2>
                     <p className="text-sm text-gray-600 line-clamp-1">
@@ -450,12 +450,12 @@ const DepartmentBooks = ({ departmentPath }) => {
             pageCount={Math.ceil(books.total / filters.limit)}
             forcePage={filters.page - 1}
             previousLabel="← Previous"
-            containerClassName="flex flex-wrap gap-2 items-center justify-center sm:justify-start"
-            pageClassName="px-3 py-1 rounded bg-gray-200 text-sm"
-            activeClassName="bg-green-100 text-black"
-            previousClassName="px-3 py-1 rounded bg-gray-300 text-sm"
-            nextClassName="px-3 py-1 rounded bg-gray-300 text-sm"
-            breakClassName="px-3 py-1 rounded bg-gray-100"
+            containerClassName="flex flex-wrap gap-2 items-center justify-center"
+            pageClassName="px-3 py-1 rounded text-sm transition-colors bg-bgl2 dark:bg-bgd2 border border-borl dark:border-bord text-bgd2 dark:text-bgl2 hover:bg-gray-100 dark:hover:bg-gray-800"
+            activeClassName="bg-buttonp text-textd dark:bg-buttonp dark:text-bgd1"
+            previousClassName="px-3 py-1 rounded text-sm transition-colors bg-bgl2 dark:bg-bgd2 border border-borl dark:border-bord text-bgd2 dark:text-bgl2 hover:bg-gray-100 dark:hover:bg-gray-800"
+            nextClassName="px-3 py-1 rounded text-sm transition-colors bg-bgl2 dark:bg-bgd2 border border-borl dark:border-bord text-bgd2 dark:text-bgl2 hover:bg-gray-100 dark:hover:bg-gray-800"
+            breakClassName="px-3 py-1 rounded text-bgd2 dark:text-bgl2 bg-bgl2 dark:bg-bgd2 border border-borl dark:border-bord"
             disabledClassName="opacity-50 cursor-not-allowed"
           />
         </div>

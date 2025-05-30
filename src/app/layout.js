@@ -1,11 +1,13 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { FaFacebookF, FaLinkedinIn, FaGithub } from "react-icons/fa";
 
 import { StoreProvider } from "@/store/StoreProvider.jsx";
 import Toast from "@/components/Toast";
 import Authentication from "@/components/Authentication";
 import Loading from "@/components/Loading";
 import Link from "next/link";
+import { ThemeProvider } from "next-themes";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,34 +27,94 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <StoreProvider>
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <Loading />
-          <Toast />
-          <Authentication />
-          <main className="min-h-screen">{children}</main>
-          <footer className="bg-indigo-900 text-indigo-100 py-6 text-center text-sm space-y-2">
-            <p>
-              © {new Date().getFullYear()} Bogura Polytechnic Institute Digital
-              Library. All rights reserved.
-            </p>
-            <p>
-              Managed by the Library Committee, BPI | Email:
-              bogra_poly@yahoo.com
-            </p>
-            <p>
-              Developed by{" "}
-              <Link
-                href="/developers"
-                className="text-purple-300 hover:underline"
-              >
-                CST Department
-              </Link>
-            </p>
-          </footer>
+          <ThemeProvider attribute="class" enableSystem defaultTheme="system">
+            <Loading />
+            <Toast />
+            <Authentication />
+            <main className="min-h-screen bg-bgl1 text-textl dark:bg-bgd1 dark:textd flex flex-col justify-center">
+              {children}
+            </main>
+            <footer className="bg-bgl2 dark:bg-bgd2 border-t dark:border-bord text-textl dark:text-textd px-6 py-10 text-sm">
+              <div className="max-w-7xl mx-auto grid gap-6 md:grid-cols-3 text-center md:text-left">
+                {/* Institute Info */}
+                <div>
+                  <h3 className="text-base font-semibold text-purple-500 mb-2">
+                    About
+                  </h3>
+                  <p>
+                    © {new Date().getFullYear()} Bogura Polytechnic Institute
+                    Digital Library.
+                  </p>
+                  <p>All rights reserved.</p>
+                </div>
+
+                {/* Contact Info */}
+                <div>
+                  <h3 className="text-base font-semibold text-purple-500 mb-2">
+                    Contact
+                  </h3>
+                  <p>Managed by: Library Committee, BPI</p>
+                  <p>
+                    Email:{" "}
+                    <a
+                      href="mailto:bogra_poly@yahoo.com"
+                      className="hover:underline text-purple-300"
+                    >
+                      bogra_poly@yahoo.com
+                    </a>
+                  </p>
+                </div>
+
+                {/* Developer Info */}
+                <div>
+                  <h3 className="text-base font-semibold text-purple-500 mb-2">
+                    Developers
+                  </h3>
+                  <p>
+                    Crafted with ❤️ by{" "}
+                    <Link
+                      href="/developers"
+                      className="text-purple-500 hover:underline"
+                    >
+                      CST Department
+                    </Link>
+                  </p>
+                  <div className="flex justify-center md:justify-start gap-4 mt-3 text-lg">
+                    <Link
+                      href="https://www.facebook.com/md.abdus.sabur.sayam"
+                      target="_blank"
+                      className="hover:text-purple-400 transition"
+                    >
+                      <FaFacebookF />
+                    </Link>
+                    <Link
+                      href="https://www.linkedin.com/in/md-abdus-sabur-engineer/"
+                      target="_blank"
+                      className="hover:text-purple-400 transition"
+                    >
+                      <FaLinkedinIn />
+                    </Link>
+                    <Link
+                      href="https://github.com/absabur"
+                      target="_blank"
+                      className="hover:text-purple-400 transition"
+                    >
+                      <FaGithub />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+
+              <div className="text-center text-xs mt-8 text-gray-400 dark:text-gray-500">
+                Last updated: {new Date().toLocaleDateString()}
+              </div>
+            </footer>
+          </ThemeProvider>
         </body>
       </StoreProvider>
     </html>

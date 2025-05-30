@@ -19,13 +19,13 @@ const BookImage = ({ images }) => {
             <img
               src={images[currentIndex]?.url}
               alt={`Book image ${currentIndex + 1}`}
-              className="absolute top-0 left-0 w-full h-full object-contain rounded-xl shadow-xl"
+              className="absolute top-0 left-0 w-full h-full object-contain rounded-xl shadow-xl bg-bgl1 dark:bg-bgd2 border dark:border-bord shadow-shadl dark:shadow-shadd"
             />
 
             {/* Prev Button */}
             <button
               onClick={handlePrev}
-              className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-black bg-opacity-30 text-white p-2 rounded-full hover:bg-opacity-60"
+              className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-bgd1 dark:bg-bgl1 bg-opacity-30 text-textd dark:text-textl border border-bord dark:border-borl p-2 rounded-full hover:bg-opacity-60"
             >
               ‹
             </button>
@@ -33,7 +33,7 @@ const BookImage = ({ images }) => {
             {/* Next Button */}
             <button
               onClick={handleNext}
-              className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-black bg-opacity-30 text-white p-2 rounded-full hover:bg-opacity-60"
+              className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-bgd1 dark:bg-bgl1 bg-opacity-30 text-textd dark:text-textl border border-bord dark:border-borl p-2 rounded-full hover:bg-opacity-60"
             >
               ›
             </button>

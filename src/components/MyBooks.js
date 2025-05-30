@@ -3,11 +3,13 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  authenticated,
   cancelReturnRequest,
   getRequestedBooks,
   gettingRequestCancel,
   returnRequest,
 } from "@/store/Action.js";
+import { useRouter } from "next/navigation";
 
 const MyBooks = () => {
   const [filters, setFilters] = useState({});
@@ -16,6 +18,20 @@ const MyBooks = () => {
   const myBooks = useSelector((state) => state.myBooks);
   const role = useSelector((state) => state.role);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const isLoading = useSelector((state) => state.isLoading);
+  const auth_loaded = useSelector((state) => state.auth_loaded);
+  const isAuthenticated = useSelector((state) => state.isAuthenticated);
+  const router = useRouter();
+
+  useEffect(() => {
+    dispatch(authenticated());
+  }, []);
+
+  useEffect(() => {
+    if (auth_loaded && !isLoading && !isAuthenticated) {
+      router.push("/auth/login?next=/books/my-books");
+    }
+  }, [isAuthenticated, auth_loaded, isLoading]);
 
   useEffect(() => {
     if (role) {
@@ -31,10 +47,10 @@ const MyBooks = () => {
   };
 
   return (
-    <div className=" max-w-7xl mx-auto">
+    <div className=" max-w-7xl mx-auto mb-auto">
       {/* Header */}
       <div className="mb-8 mt-6">
-        <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4 text-center">
+        <h1 className="text-2xl md:text-3xl font-bold text-textl dark:text-textd mb-4 text-center">
           My Books
         </h1>
 
@@ -75,8 +91,8 @@ const MyBooks = () => {
               }}
               className={`px-4 py-2 rounded-full text-sm md:text-base whitespace-nowrap transition-all duration-200 ${
                 activeFilter === id
-                  ? "bg-blue-600 text-white shadow-md"
-                  : "bg-white text-gray-700 border border-gray-200 hover:bg-gray-50"
+                ? "bg-buttonp text-textd border-bord"
+                : "hover:bg-blue-100 bg-bgl2 dark:bg-bgd2 text-textl dark:text-textd border border-borl dark:border-bord"
               }`}
             >
               {label}
@@ -94,7 +110,7 @@ const MyBooks = () => {
           )?.map((item, index) => (
             <div
               key={index}
-              className="max-w-[600px] w-full bg-white rounded-lg shadow-lg hover:bg-gray-100 transition-all duration-300 overflow-hidden border border-gray-100"
+              className="max-w-[600px] w-full bg-bgl1 dark:bg-bgd2 rounded-lg shadow-lg hover:bg-gray-100 transition-all duration-300 overflow-hidden border dark:border-bord border-borl dark:border-bord"
             >
               <div className="flex flex-col md:flex-row items-center">
                 {/* Book Image */}
@@ -128,7 +144,7 @@ const MyBooks = () => {
                 {/* Book Details */}
                 <div className="p-4 flex-1 flex flex-col">
                   <div className="flex-1">
-                    <h2 className="line-clamp-1 text-lg md:text-xl font-semibold text-gray-800 mb-1 hover:text-blue-600 transition-colors">
+                    <h2 className="line-clamp-1 text-lg md:text-xl font-semibold text-textl dark:text-textd mb-1 hover:text-blue-600 transition-colors">
                       <Link href={`/books/${item?.book?.slug}`}>
                         {item?.book?.bookName}
                       </Link>
@@ -155,7 +171,7 @@ const MyBooks = () => {
                     </p>
                   </div>
 
-                  <div className="pt-3 border-t border-gray-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                  <div className="pt-3 mt-2 border-t dark:border-bord flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                     <span className="text-base font-medium text-green-700">
                       ৳{item?.book?.mrp}
                     </span>

@@ -4,6 +4,7 @@ import { XCircle } from "lucide-react"; // Optional: icon library
 import { useDispatch, useSelector } from "react-redux";
 import { authenticated } from "@/store/Action";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const page = () => {
   const router = useRouter();
@@ -39,12 +40,12 @@ const page = () => {
           support.
         </p>
         <div className="mt-6">
-          <a
+          <Link
             href="/"
             className="inline-block bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
           >
             Go to Homepage
-          </a>
+          </Link>
         </div>
       </div>
     </div>

@@ -129,13 +129,13 @@ const CompleteStudent = () => {
   });
 
   return (
-    <div className=" flex justify-center items-start bg-gray-50 py-8 px-4">
+    <div className="flex justify-center items-start py-8 px-4">
       <form
         onSubmit={formik.handleSubmit}
         encType="multipart/form-data"
-        className="bg-white w-full max-w-4xl p-8 rounded-lg shadow-lg grid grid-cols-1 md:grid-cols-2 gap-6"
+        className="bg-bgl1 dark:bg-bgd2 border dark:border-bord w-full max-w-4xl p-8 rounded-lg shadow-lg grid grid-cols-1 md:grid-cols-2 gap-6"
       >
-        <h2 className="text-3xl font-bold text-center mb-6 col-span-2">
+        <h2 className="text-3xl font-bold text-center mb-6 col-span-2 text-textl dark:text-textd">
           Add Profile Details
         </h2>
 
@@ -152,8 +152,8 @@ const CompleteStudent = () => {
           { label: "Union", name: "union", type: "text" },
           { label: "Village", name: "village", type: "text" },
         ].map((field) => (
-          <div key={field.name} className="flex flex-col">
-            <label className="text-sm font-medium text-gray-700 mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2">
+          <div key={field.name} className="flex flex-col col-span-2 md:col-span-1">
+            <label className="text-sm font-medium bg-bgl1 dark:bg-bgd2 text-textl dark:text-textd mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2">
               {field.label}
             </label>
             <input
@@ -162,7 +162,7 @@ const CompleteStudent = () => {
               value={formik.values[field.name]}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              className="border border-gray-300 rounded-md p-3"
+              className="border bg-bgl1 dark:bg-bgd1 text-textl dark:text-textd border dark:border-bord  rounded-md p-3"
             />
             {formik.touched[field.name] && formik.errors[field.name] && (
               <p className="text-red-500 text-sm mt-1">
@@ -173,10 +173,10 @@ const CompleteStudent = () => {
         ))}
 
         {/* Post */}
-        <div className="flex flex-col">
+        <div className="flex flex-col col-span-2 md:col-span-1">
           <label
             htmlFor="session"
-            className="text-sm font-medium text-gray-700 mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2"
+            className="text-sm font-medium bg-bgl1 dark:bg-bgd2 text-textl dark:text-textd mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2"
           >
             Session
           </label>
@@ -186,7 +186,7 @@ const CompleteStudent = () => {
             value={formik.values.session}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="border bg-bgl1 dark:bg-bgd1 text-textl dark:text-textd border dark:border-bord  rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="">-- Select Session --</option>
             {fixedValues?.sessions?.map((option) => (
@@ -196,10 +196,10 @@ const CompleteStudent = () => {
             ))}
           </select>
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col col-span-2 md:col-span-1">
           <label
             htmlFor="shift"
-            className="text-sm font-medium text-gray-700 mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2"
+            className="text-sm font-medium bg-bgl1 dark:bg-bgd2 text-textl dark:text-textd mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2"
           >
             Shift
           </label>
@@ -209,7 +209,7 @@ const CompleteStudent = () => {
             value={formik.values.shift}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="border bg-bgl1 dark:bg-bgd1 text-textl dark:text-textd border dark:border-bord  rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="">-- Select Shift --</option>
             {fixedValues?.shifts?.map((option) => (
@@ -221,10 +221,10 @@ const CompleteStudent = () => {
         </div>
 
         {/* Department */}
-        <div className="flex flex-col">
+        <div className="flex flex-col col-span-2 md:col-span-1">
           <label
             htmlFor="department"
-            className="text-sm font-medium text-gray-700 mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2"
+            className="text-sm font-medium bg-bgl1 dark:bg-bgd2 text-textl dark:text-textd mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2"
           >
             Department
           </label>
@@ -234,7 +234,7 @@ const CompleteStudent = () => {
             value={formik.values.department}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="border bg-bgl1 dark:bg-bgd1 text-textl dark:text-textd border dark:border-bord  rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="">-- Select Department --</option>
             {fixedValues?.departments?.map((option) => (
@@ -247,10 +247,10 @@ const CompleteStudent = () => {
 
         {[["district", "District", fixedValues?.districts]].map(
           ([name, label, options]) => (
-            <div key={name} className="flex flex-col">
+            <div key={name} className="flex flex-col col-span-2 md:col-span-1">
               <label
                 htmlFor={name}
-                className="text-sm font-medium text-gray-700 mb-1"
+                className="text-sm font-medium bg-bgl1 dark:bg-bgd2 text-textl dark:text-textd mb-1"
               >
                 {label}
               </label>
@@ -260,7 +260,7 @@ const CompleteStudent = () => {
                 value={formik.values[name]}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="border bg-bgl1 dark:bg-bgd1 text-textl dark:text-textd border dark:border-bord  rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value="">Select {label}</option>
                 {options?.map((option) => (
@@ -280,10 +280,10 @@ const CompleteStudent = () => {
 
         {[["upazila", "Upazila", fixedValues?.upazilas]].map(
           ([name, label, options]) => (
-            <div key={name} className="flex flex-col">
+            <div key={name} className="flex flex-col col-span-2 md:col-span-1">
               <label
                 htmlFor={name}
-                className="text-sm font-medium text-gray-700 mb-1"
+                className="text-sm font-medium bg-bgl1 dark:bg-bgd2 text-textl dark:text-textd mb-1"
               >
                 {label}
               </label>
@@ -293,7 +293,7 @@ const CompleteStudent = () => {
                 value={formik.values[name]}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="border bg-bgl1 dark:bg-bgd1 text-textl dark:text-textd border dark:border-bord  rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value="">Select {label}</option>
                 {options
@@ -318,7 +318,7 @@ const CompleteStudent = () => {
 
         {/* Address (full width) */}
         <div className="flex flex-col col-span-2">
-          <label className="text-sm font-medium text-gray-700 mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2">
+          <label className="text-sm font-medium bg-bgl1 dark:bg-bgd2 text-textl dark:text-textd mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2">
             Address
           </label>
           <textarea
@@ -327,7 +327,7 @@ const CompleteStudent = () => {
             value={formik.values.address}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className="border border-gray-300 rounded-md p-3 resize-none"
+            className="border bg-bgl1 dark:bg-bgd1 text-textl dark:text-textd border dark:border-bord  rounded-md p-3 resize-none"
           />
           {formik.touched.address && formik.errors.address && (
             <p className="text-red-500 text-sm mt-1">{formik.errors.address}</p>
@@ -340,7 +340,7 @@ const CompleteStudent = () => {
             <img
               src={URL.createObjectURL(formik.values.image)}
               alt={`Preview`}
-              className="w-24 h-24 object-cover rounded-md border border-gray-300"
+              className="w-24 h-24 object-cover rounded-md border bg-bgl1 dark:bg-bgd1 text-textl dark:text-textd border dark:border-bord "
               onLoad={(e) => URL.revokeObjectURL(e.target.src)}
             />
           )}
@@ -348,7 +348,7 @@ const CompleteStudent = () => {
 
         {/* Image Upload (full width) */}
         <div className="flex flex-col col-span-2">
-          <label className="text-sm font-medium text-gray-700 mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2">
+          <label className="text-sm font-medium bg-bgl1 dark:bg-bgd2 text-textl dark:text-textd mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2">
             Image (Upload new image)
           </label>
           <input
@@ -358,7 +358,7 @@ const CompleteStudent = () => {
             onChange={(event) => {
               formik.setFieldValue("image", event.currentTarget.files[0]);
             }}
-            className="border border-gray-300 rounded-md p-2"
+            className="border bg-bgl1 dark:bg-bgd1 text-textl dark:text-textd border dark:border-bord  rounded-md p-2"
           />
         </div>
 

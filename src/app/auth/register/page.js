@@ -48,15 +48,15 @@ export default function Register() {
   };
 
   return (
-    <div className=" flex items-center justify-center px-4 sm:px-6 lg:px-8">
-      <div className="w-full max-w-md bg-white p-8 sm:p-10 rounded-2xl shadow-2xl">
-        <h2 className="text-3xl font-extrabold text-center text-gray-800 mb-6">
+    <div className="flex items-center justify-center px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-md p-8 sm:p-10 rounded-2xl shadow-2xl border dark:border-bord bg-bgl1 dark:bg-bgd2">
+        <h2 className="text-3xl font-extrabold text-center text-textl dark:text-textd mb-6">
           Create your account
         </h2>
 
         {/* Role Selection */}
         <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-textl dark:text-textd mb-2">
             Register As
           </label>
           <div className="flex gap-6">
@@ -72,7 +72,7 @@ export default function Register() {
                     r === "student" ? "blue" : "purple"
                   }-600`}
                 />
-                <span className="text-gray-700 capitalize">{r}</span>
+                <span className=" text-textl dark:text-textd capitalize">{r}</span>
               </label>
             ))}
           </div>
@@ -84,7 +84,7 @@ export default function Register() {
           <div className="mb-4">
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-gray-700 mb-1"
+              className="block text-sm font-medium text-textl dark:text-textd mb-1"
             >
               Email
             </label>
@@ -96,7 +96,7 @@ export default function Register() {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.email}
-                className="flex-1 px-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="flex-1 px-4 py-2 border rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-bgl1 dark:bg-bgd1 text-textl dark:text-textd border dark:border-bord "
                 placeholder="your@email.com"
               />
               <button
@@ -121,7 +121,7 @@ export default function Register() {
           <div className="mb-4">
             <label
               htmlFor="otp"
-              className="block text-sm font-medium text-gray-700 mb-1"
+              className="block text-sm font-medium text-textl dark:text-textd mb-1"
             >
               OTP
             </label>
@@ -131,7 +131,7 @@ export default function Register() {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.otp}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-bgl1 dark:bg-bgd1 text-textl dark:text-textd border dark:border-bord "
               placeholder="Enter OTP"
             />
             {formik.touched.otp && formik.errors.otp && (
@@ -143,7 +143,7 @@ export default function Register() {
           <div className="mb-4">
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-gray-700 mb-1"
+              className="block text-sm font-medium text-textl dark:text-textd mb-1"
             >
               Password
             </label>
@@ -154,7 +154,7 @@ export default function Register() {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.password}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 bg-bgl1 dark:bg-bgd1 text-textl dark:text-textd border dark:border-bord "
               placeholder="Create a password"
             />
             {formik.touched.password && formik.errors.password && (
@@ -168,7 +168,7 @@ export default function Register() {
           <div className="mb-6">
             <label
               htmlFor="confirmPassword"
-              className="block text-sm font-medium text-gray-700 mb-1"
+              className="block text-sm font-medium text-textl dark:text-textd mb-1"
             >
               Confirm Password
             </label>
@@ -179,7 +179,7 @@ export default function Register() {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.confirmPassword}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 bg-bgl1 dark:bg-bgd1 text-textl dark:text-textd border dark:border-bord "
               placeholder="Confirm your password"
             />
             {formik.touched.confirmPassword &&

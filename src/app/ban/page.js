@@ -4,6 +4,7 @@ import { Ban as BanIcon } from "lucide-react"; // Optional icon
 import { authenticated } from "@/store/Action";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const Ban = () => {
   const router = useRouter();
@@ -38,12 +39,12 @@ const Ban = () => {
           If you believe this is a mistake, please contact to librarian.
         </p>
         <div className="mt-6">
-          <a
+          <Link
             href="/"
             className="inline-block bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition"
           >
             Return to Home
-          </a>
+          </Link>
         </div>
       </div>
     </div>

@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { FaChevronCircleRight, FaChevronCircleLeft } from "react-icons/fa";
 import { fixdeValues } from "@/store/Action";
 
-const BooksFilterFrom = ({ filters, setFilters, getBooks }) => {
+const BooksFilterFrom = ({ filters, setFilters, setBooks, getBooks }) => {
   const fixedValues = useSelector((state) => state.fixedValues);
   const dispatch = useDispatch();
   const [collaps, setCollaps] = useState(true);
@@ -26,7 +26,7 @@ const BooksFilterFrom = ({ filters, setFilters, getBooks }) => {
     const newFilters = { ...filters, [name]: value, page: 1 };
     setFilters(newFilters);
     sessionStorage.setItem("bookFilters", JSON.stringify(newFilters));
-    getBooks(newFilters);
+    getBooks(newFilters, dispatch, setBooks);
   };
 
   useEffect(() => {
@@ -57,10 +57,10 @@ const BooksFilterFrom = ({ filters, setFilters, getBooks }) => {
           collaps
             ? "left-[-80vw] top-[64px] rounded-none"
             : "left-[0px] top-[64px] rounded-none"
-        } lg:w-[30%] h-[calc(100dvh-64px)] lg:h-[calc(100dvh-220px)] overflow-auto custom-scrollbar`}
+        } lg:w-[30%] h-[calc(100dvh-64px)] lg:h-[calc(100dvh-220px)] overflow-auto custom-scrollbar bg-bgl1 dark:bg-bgd2 border dark:border-bord dark:shadow-shadl`}
       >
         <div className="flex justify-center items-center">
-          <h2 className="text-2xl">Filters</h2>
+          <h2 className="text-2xl text-textl dark:text-textd">Filters</h2>
           <button
             className="z-[42] lg:hidden rounded-full border-none bg-white shadow-[0_0_10px_#00000036] px-2 flex items-center gap-2 fixed top-[93px] right-[5px]"
             onClick={() => setCollaps(!collaps)}
@@ -82,10 +82,10 @@ const BooksFilterFrom = ({ filters, setFilters, getBooks }) => {
         <div className="">
           {/* Search Inputs + Button Filters + Slider */}
           <div className="grid grid-cols-1 gap-2">
-            <div className="w-full bg-white rounded-2xl flex flex-wrap sm:items-start sm:justify-between gap-3">
+            <div className="w-full rounded-2xl flex flex-wrap sm:items-start sm:justify-between gap-3">
               {/* Sort By */}
               <fieldset className="w-full sm:w-auto">
-                <legend className="mb-2 text-sm font-semibold text-gray-700">
+                <legend className="mb-2 text-sm font-semibold text-textl dark:text-textd">
                   Sort By
                 </legend>
                 <div className="flex flex-wrap gap-2 justify-start">
@@ -102,8 +102,8 @@ const BooksFilterFrom = ({ filters, setFilters, getBooks }) => {
                       className={`text-sm flex items-center justify-center px-4 py-2 rounded-full border cursor-pointer transition 
             ${
               filters.sortBy === value
-                ? "bg-blue-600 text-white border-blue-600"
-                : "bg-gray-100 text-gray-700 hover:bg-blue-100 border-gray-300"
+                ? "bg-buttonp text-textd border-bord"
+                : "hover:bg-blue-100 bg-bgl2 dark:bg-bgd1 text-textl dark:text-textd border border-borl dark:border-bord"
             }`}
                     >
                       <input
@@ -122,7 +122,7 @@ const BooksFilterFrom = ({ filters, setFilters, getBooks }) => {
 
               {/* Sort Order */}
               <fieldset className="w-full sm:w-auto">
-                <legend className="mb-2 text-sm font-semibold text-gray-700">
+                <legend className="mb-2 text-sm font-semibold text-textl dark:text-textd">
                   Sort Order
                 </legend>
                 <div className="flex gap-4">
@@ -135,8 +135,8 @@ const BooksFilterFrom = ({ filters, setFilters, getBooks }) => {
                       className={`text-sm flex items-center justify-center px-4 py-2 rounded-full border cursor-pointer transition 
             ${
               filters.sortOrder === value
-                ? "bg-green-600 text-white border-green-600"
-                : "bg-gray-100 text-gray-700 hover:bg-green-100 border-gray-300"
+                ? "bg-buttonp text-textd border-bord"
+                : "hover:bg-blue-100 bg-bgl2 dark:bg-bgd1 text-textl dark:text-textd border border-borl dark:border-bord"
             }`}
                     >
                       <input
@@ -160,7 +160,7 @@ const BooksFilterFrom = ({ filters, setFilters, getBooks }) => {
               <div key={name} className="flex flex-col">
                 <label
                   htmlFor={name}
-                  className="text-sm font-semibold text-gray-800 mb-2"
+                  className="text-sm font-semibold text-textl dark:text-textd mb-2"
                 >
                   {label}
                 </label>
@@ -183,7 +183,7 @@ const BooksFilterFrom = ({ filters, setFilters, getBooks }) => {
               ["language", "Language", fixedValues?.languages],
             ].map(([name, label, options]) => (
               <div key={name} className="flex flex-col">
-                <label className="text-sm font-semibold text-gray-800 mb-2">
+                <label className="text-sm font-semibold text-textl dark:text-textd mb-2">
                   {label}
                 </label>
                 <div className="w-full flex items-center justify-center flex-wrap gap-2">
@@ -195,8 +195,8 @@ const BooksFilterFrom = ({ filters, setFilters, getBooks }) => {
                     className={`flex-auto w-max p-[5px] text-[15px] text-center rounded-[10px] shadow-[0_0_3px_#00000012] transition-all
               ${
                 filters[name] === ""
-                  ? "bg-blue-600 text-white border-blue-600"
-                  : "bg-white text-gray-700 border-gray-300 hover:bg-blue-100"
+                  ? "bg-buttonp text-textd border-bord"
+                  : "hover:bg-blue-100 bg-bgl2 dark:bg-bgd1 text-textl dark:text-textd border border-borl dark:border-bord"
               }
             `}
                     aria-pressed={filters[name] === ""}
@@ -215,8 +215,8 @@ const BooksFilterFrom = ({ filters, setFilters, getBooks }) => {
                       className={`flex-auto w-max p-[5px] text-[15px] text-center rounded-[10px] shadow-[0_0_3px_#00000012] transition-all
                 ${
                   filters[name] === option._id
-                    ? "bg-blue-600 text-white border-blue-600"
-                    : "bg-white text-gray-700 border-gray-300 hover:bg-blue-100"
+                    ? "bg-buttonp text-textd border-bord"
+                    : "hover:bg-blue-100 bg-bgl2 dark:bg-bgd1 text-textl dark:text-textd border border-borl dark:border-bord"
                 }
               `}
                       aria-pressed={filters[name] === option.name}
@@ -231,7 +231,7 @@ const BooksFilterFrom = ({ filters, setFilters, getBooks }) => {
 
             {/* MRP Range Slider */}
             <div className="flex flex-col">
-              <label className="text-sm font-semibold text-gray-800 mb-2">
+              <label className="text-sm font-semibold text-textl dark:text-textd mb-2">
                 MRP Range
               </label>
               <div className="space-y-3">
@@ -271,7 +271,7 @@ const BooksFilterFrom = ({ filters, setFilters, getBooks }) => {
         <div className="pt-4 flex justify-center">
           <button
             type="button"
-            className="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-md shadow"
+            className="bg-buttonw hover:bg-buttona text-white px-5 py-2 rounded-md shadow"
             onClick={() => {
               const defaultFilters = {
                 bookName: "",
@@ -295,7 +295,7 @@ const BooksFilterFrom = ({ filters, setFilters, getBooks }) => {
               };
               setFilters(defaultFilters);
               sessionStorage.removeItem("bookFilters");
-              getBooks(defaultFilters);
+              getBooks(defaultFilters, dispatch, setBooks);
             }}
           >
             Reset Filters

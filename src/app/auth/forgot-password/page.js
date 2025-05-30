@@ -1,6 +1,7 @@
 "use client";
 
 import { forgotPassword } from "@/store/Action";
+import { LOADING_END } from "@/store/constant";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
@@ -19,7 +20,7 @@ export default function ForgotPasswordForm() {
   };
 
   return (
-    <div className=" flex items-center justify-center px-4 sm:px-6 lg:px-8">
+    <div className="flex items-center justify-center px-4 sm:px-6 lg:px-8">
       <form
         onSubmit={handleSubmit}
         className="space-y-6 bg-white p-6 sm:p-8 rounded-2xl shadow-lg w-full max-w-md mx-auto"
@@ -89,12 +90,12 @@ export default function ForgotPasswordForm() {
         {/* Optional login link */}
         <p className="text-sm text-center text-gray-500">
           Remembered password?{" "}
-          <a
+          <LOADING_END
             href="/auth/login"
             className="text-blue-600 hover:underline font-medium"
           >
             Login here
-          </a>
+          </LOADING_END>
         </p>
       </form>
     </div>

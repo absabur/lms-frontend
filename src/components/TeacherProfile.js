@@ -10,7 +10,7 @@ const TeacherCard = () => {
   const teacher = useSelector((state) => state.profile);
 
   return (
-    <div className="relative w-full max-w-3xl mx-auto bg-white shadow-md rounded-2xl p-6 space-y-4">
+    <div className="relative w-full max-w-3xl mx-auto bg-bgl1 dark:bg-bgd2 border dark:border-bord shadow-md dark:shadow-shadd rounded-2xl p-6 space-y-4">
       <button
         onClick={() => dispatch(logout(role))}
         className="absolute top-[20px] right-[20px] bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-1 rounded"
@@ -28,7 +28,7 @@ const TeacherCard = () => {
 
         {/* Info */}
         <div className="flex-1 text-center md:text-left">
-          <h2 className="text-2xl font-bold text-gray-800">{teacher?.name}</h2>
+          <h2 className="text-2xl font-bold text-textl dark:text-textd">{teacher?.name}</h2>
           <p className="text-sm text-gray-500">{teacher?.post?.name}</p>
           <p className="text-sm text-gray-500">{teacher?.department?.name}</p>
         </div>
@@ -70,8 +70,8 @@ const TeacherCard = () => {
 // Helper Components
 const Info = ({ label, value }) => (
   <div>
-    <p className="text-gray-600 text-sm font-medium">{label}</p>
-    <p className="text-gray-800 font-semibold">{value}</p>
+    <p className="text-textl dark:text-textd opacity-70 text-sm font-medium">{label}</p>
+    <p className="text-textl dark:text-textd font-semibold">{value}</p>
   </div>
 );
 

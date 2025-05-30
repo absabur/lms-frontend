@@ -35,12 +35,12 @@ const ChangePasswordPage = () => {
   });
 
   return (
-    <div className=" flex justify-center items-start bg-gray-50 py-12 px-4">
+    <div className=" flex justify-center items-start py-12 px-4">
       <form
         onSubmit={formik.handleSubmit}
-        className="bg-white w-full max-w-xl p-8 rounded-lg shadow-lg flex flex-col gap-6"
+        className="bg-bgl1 dark:bg-bgd2 w-full max-w-xl p-8 rounded-lg shadow-lg border dark:border-bord flex flex-col gap-6"
       >
-        <h2 className="text-2xl font-bold text-center">Change Password</h2>
+        <h2 className="text-2xl text-textl dark:text-textd font-bold text-center">Change Password</h2>
 
         {[
           { name: "oldPassword", label: "Old Password" },
@@ -50,7 +50,7 @@ const ChangePasswordPage = () => {
           <div key={name} className="flex flex-col">
             <label
               htmlFor={name}
-              className="text-sm font-medium text-gray-700 mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2"
+              className="text-sm font-medium text-textl dark:text-textd mb-1 relative top-[15px] left-[5px] bg-bgl1 dark:bg-bgd1 z-10 w-fit px-2"
             >
               {label}
             </label>
@@ -61,7 +61,7 @@ const ChangePasswordPage = () => {
               value={formik.values[name]}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              className={`border rounded-md p-3 ${
+              className={`border rounded-md p-3 bg-bgl1 dark:bg-bgd1 text-textl dark:text-textd ${
                 formik.touched[name] && formik.errors[name]
                   ? "border-red-500"
                   : "border-gray-300"

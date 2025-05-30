@@ -1,13 +1,15 @@
 "use client";
 import React from "react";
 import ReactPaginate from "react-paginate";
+import { useDispatch } from "react-redux";
 
-const BookPagination = ({ filters, setFilters, books, getBooks }) => {
+const BookPagination = ({ filters, setFilters, books, setBooks, getBooks }) => {
+  const dispatch = useDispatch();
   const changePage = (newPage) => {
     const newFilters = { ...filters, page: newPage };
     setFilters(newFilters);
     sessionStorage.setItem("bookFilters", JSON.stringify(newFilters));
-    getBooks(newFilters);
+    getBooks(newFilters, dispatch, setBooks);
   };
   return (
     <>
@@ -23,12 +25,12 @@ const BookPagination = ({ filters, setFilters, books, getBooks }) => {
             pageCount={Math.ceil(books.total / filters.limit)}
             forcePage={filters.page - 1}
             previousLabel="← Previous"
-            containerClassName="flex flex-wrap gap-2 items-center justify-center sm:justify-start"
-            pageClassName="px-3 py-1 rounded bg-gray-200 text-sm"
-            activeClassName="bg-green-100 text-black"
-            previousClassName="px-3 py-1 rounded bg-gray-300 text-sm"
-            nextClassName="px-3 py-1 rounded bg-gray-300 text-sm"
-            breakClassName="px-3 py-1 rounded bg-gray-100"
+            containerClassName="flex flex-wrap gap-2 items-center justify-center"
+            pageClassName="px-3 py-1 rounded text-sm transition-colors bg-bgl2 dark:bg-bgd2 border border-borl dark:border-bord text-bgd2 dark:text-bgl2 hover:bg-gray-100 dark:hover:bg-gray-800"
+            activeClassName="bg-buttonp text-textd dark:bg-buttonp dark:text-bgd1"
+            previousClassName="px-3 py-1 rounded text-sm transition-colors bg-bgl2 dark:bg-bgd2 border border-borl dark:border-bord text-bgd2 dark:text-bgl2 hover:bg-gray-100 dark:hover:bg-gray-800"
+            nextClassName="px-3 py-1 rounded text-sm transition-colors bg-bgl2 dark:bg-bgd2 border border-borl dark:border-bord text-bgd2 dark:text-bgl2 hover:bg-gray-100 dark:hover:bg-gray-800"
+            breakClassName="px-3 py-1 rounded text-bgd2 dark:text-bgl2 bg-bgl2 dark:bg-bgd2 border border-borl dark:border-bord"
             disabledClassName="opacity-50 cursor-not-allowed"
           />
         </div>

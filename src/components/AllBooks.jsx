@@ -68,13 +68,14 @@ const AllBooks = () => {
 
   return (
     <div className="">
-      <h1 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-6">
+      <h1 className="text-2xl sm:text-3xl font-bold text-center text-textl dark:text-textd mb-6">
         📚 Books
       </h1>
       <div className="flex flex-row gap-6 items-start">
         <BooksFilterFrom
           filters={filters}
           setFilters={setFilters}
+          setBooks={setBooks}
           getBooks={getBooks}
         />
 
@@ -84,7 +85,7 @@ const AllBooks = () => {
               <Link
                 key={index}
                 href={`/books/${book.slug}`}
-                className="max-w-[300px] bg-white border rounded-xl shadow-md hover:shadow-xl transition-transform duration-300 hover:scale-[1.02] overflow-hidden flex flex-col w-full h-[340px]"
+                className="max-w-[300px] bg-bgl1 dark:bg-bgd2 border dark:border-bord rounded-xl shadow-md hover:shadow-xl transition-transform duration-300 hover:scale-[1.02] overflow-hidden flex flex-col w-full h-[340px]"
               >
                 {book?.images?.[0]?.url ? (
                   <img
@@ -100,7 +101,7 @@ const AllBooks = () => {
 
                 <div className="p-4 flex-1 flex flex-col justify-between">
                   <div>
-                    <h2 className="text-lg font-semibold text-gray-800 line-clamp-1">
+                    <h2 className="text-lg font-semibold text-textl dark:text-textd line-clamp-1">
                       {book.bookName}
                     </h2>
                     <p className="text-sm text-gray-600 line-clamp-1">
@@ -149,6 +150,7 @@ const AllBooks = () => {
         filters={filters}
         setFilters={setFilters}
         books={books}
+        setBooks={setBooks}
         getBooks={getBooks}
       />
     </div>

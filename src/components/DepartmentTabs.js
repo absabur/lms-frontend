@@ -1,5 +1,6 @@
 "use client";
 import { fixdeValues } from "@/store/Action";
+import Link from "next/link";
 import { useRef, useEffect, useState } from "react";
 
 const DepartmentTabs = ({ activeDepartment }) => {
@@ -101,11 +102,9 @@ const DepartmentTabs = ({ activeDepartment }) => {
   return (
     <>
       {departments.length <= 0 ? (
-        <div className="bg-white shadow-lg mb-4 flex items-center select-none py-2">
-          {/* Left scroll button skeleton (hidden on small screens) */}
+        <div className="bg-bgl1 text-textl dark:bg-bgd1 dark:text-textd shadow-lg shadow-shadl dark:shadow-shadd mb-4 flex items-center select-none py-2">
+          {/* Left scroll button skeleton */}
           <div className="hidden lg:flex items-center justify-center px-3 py-2 mr-2 rounded-md border border-gray-300 bg-gray-100 animate-pulse w-[40px] h-[40px]" />
-
-          {/* Scrollable area skeleton */}
           <div className="overflow-x-auto no-scrollbar flex-1">
             <div className="flex whitespace-nowrap gap-10 px-4 py-3">
               {[...Array(10)].map((_, i) => (
@@ -116,18 +115,16 @@ const DepartmentTabs = ({ activeDepartment }) => {
               ))}
             </div>
           </div>
-
-          {/* Right scroll button skeleton (hidden on small screens) */}
           <div className="hidden lg:flex items-center justify-center px-3 py-2 ml-2 rounded-md border border-gray-300 bg-gray-100 animate-pulse w-[40px] h-[40px]" />
         </div>
       ) : (
-        <div className="bg-white shadow-lg mb-4 flex items-center select-none">
-          {/* Left scroll button (hidden on small screens) */}
+        <div className="bg-bgl1 text-textl dark:bg-bgd1 dark:text-textd shadow-md shadow-shadl dark:shadow-shadd mb-4 flex items-center select-none shadd border-b dark:border-b-bord">
+          {/* Left scroll button */}
           <button
             onClick={() => scrollBy(-150)}
             disabled={!canScrollLeft}
             aria-label="Scroll left"
-            className={`hidden lg:flex items-center justify-center px-3 py-2 mr-2 rounded-md border border-gray-300 bg-white hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed`}
+            className="hidden lg:flex items-center justify-center px-3 py-2 mr-2 rounded-md border border-gray-300 bg-bgl1 hover:bg-gray-100 dark:bg-bgd1 disabled:opacity-40 disabled:cursor-not-allowed"
           >
             <svg
               className="w-5 h-5 text-gray-600"
@@ -135,13 +132,12 @@ const DepartmentTabs = ({ activeDepartment }) => {
               stroke="currentColor"
               strokeWidth="2"
               viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
             >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 d="M15 19l-7-7 7-7"
-              ></path>
+              />
             </svg>
           </button>
 
@@ -152,27 +148,27 @@ const DepartmentTabs = ({ activeDepartment }) => {
           >
             <div className="flex whitespace-nowrap gap-10 px-4 py-3">
               {departments.map(({ name, _id }) => (
-                <a
+                <Link
                   key={_id}
                   href={`/books/department/${name}`}
-                  className={`pb-2 border-b-2 ${
+                  className={`pb-2 border-b-2 transition-colors duration-200 ${
                     activeDepartment === name
-                      ? "border-blue-500"
-                      : "border-transparent text-gray-700 hover:text-blue-600 hover:border-blue-400"
-                  } transition-colors duration-200`}
+                      ? "text-buttonp border-buttonp"
+                      : "border-transparent hover:text-buttonp hover:border-buttonp"
+                  }`}
                 >
                   {name}
-                </a>
+                </Link>
               ))}
             </div>
           </div>
 
-          {/* Right scroll button (hidden on small screens) */}
+          {/* Right scroll button */}
           <button
             onClick={() => scrollBy(150)}
             disabled={!canScrollRight}
             aria-label="Scroll right"
-            className={`hidden lg:flex items-center justify-center px-3 py-2 ml-2 rounded-md border border-gray-300 bg-white hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed`}
+            className="hidden lg:flex items-center justify-center px-3 py-2 ml-2 rounded-md border border-gray-300 bg-bgl1 hover:bg-gray-100 dark:bg-bgd1 disabled:opacity-40 disabled:cursor-not-allowed"
           >
             <svg
               className="w-5 h-5 text-gray-600"
@@ -180,13 +176,12 @@ const DepartmentTabs = ({ activeDepartment }) => {
               stroke="currentColor"
               strokeWidth="2"
               viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
             >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 d="M9 5l7 7-7 7"
-              ></path>
+              />
             </svg>
           </button>
         </div>

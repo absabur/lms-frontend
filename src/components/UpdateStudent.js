@@ -78,11 +78,11 @@ const UpdateStudentPage = () => {
   });
 
   return (
-    <div className=" flex justify-center items-start bg-gray-50 py-8 px-4">
+    <div className=" flex justify-center items-start  py-8 px-4">
       <form
         onSubmit={formik.handleSubmit}
         encType="multipart/form-data"
-        className="bg-white w-full max-w-5xl p-8 rounded-lg shadow-lg grid grid-cols-1 md:grid-cols-2 gap-6"
+        className="bg-bgl1 dark:bg-bgd2 border dark:border-bord w-full max-w-5xl p-8 rounded-lg shadow-lg grid grid-cols-1 md:grid-cols-2 gap-6"
         noValidate
       >
         <h2 className="text-3xl font-bold text-center mb-8 col-span-2 text-gray-800">
@@ -102,10 +102,10 @@ const UpdateStudentPage = () => {
           { label: "Union", name: "union", type: "text" },
           { label: "Village", name: "village", type: "text" },
         ].map(({ label, name, type }) => (
-          <div key={name} className="flex flex-col">
+          <div key={name} className="flex flex-col col-span-2 md:col-span-1">
             <label
               htmlFor={name}
-              className="text-sm font-semibold text-gray-700 mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2 cursor-pointer"
+              className="text-sm font-semibold text-textl dark:text-textd mb-1 relative top-[15px] left-[5px] bg-bgl1 dark:bg-bgd1 z-10 w-fit px-2 cursor-pointer"
             >
               {label}
             </label>
@@ -119,7 +119,7 @@ const UpdateStudentPage = () => {
               onBlur={formik.handleBlur}
               aria-describedby={`${name}-error`}
               disabled={profile[name]}
-              className={`border rounded-md p-3 transition 
+              className={`border rounded-md p-3 transition bg-bgl1 dark:bg-bgd1 text-textl dark:text-textd
                 ${
                   formik.touched[name] && formik.errors[name]
                     ? "border-red-500 focus:ring-red-500"
@@ -157,10 +157,10 @@ const UpdateStudentPage = () => {
             options: fixedValues?.departments || [],
           },
         ].map(({ name, label, options }) => (
-          <div key={name} className="flex flex-col">
+          <div key={name} className="flex flex-col col-span-2 md:col-span-1">
             <label
               htmlFor={name}
-              className="text-sm font-semibold text-gray-700 mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2 cursor-pointer"
+              className="text-textl dark:text-textd text-sm font-semibold mb-1 relative top-[15px] left-[5px] bg-bgl1 dark:bg-bgd1 z-10 w-fit px-2 cursor-pointer"
             >
               {label}
             </label>
@@ -173,7 +173,7 @@ const UpdateStudentPage = () => {
               onBlur={formik.handleBlur}
               aria-describedby={`${name}-error`}
               disabled={profile[name]}
-              className={`border rounded-md px-3 py-2 transition
+              className={`border rounded-md px-3 py-2 transition bg-bgl1 dark:bg-bgd1 text-textl dark:text-textd
                 ${
                   formik.touched[name] && formik.errors[name]
                     ? "border-red-500 focus:ring-red-500"
@@ -205,10 +205,10 @@ const UpdateStudentPage = () => {
           ["district", "District", fixedValues?.districts],
           ["upazila", "Upazila", fixedValues?.upazilas],
         ].map(([name, label, options]) => (
-          <div key={name} className="flex flex-col">
+          <div key={name} className="flex flex-col col-span-2 md:col-span-1">
             <label
               htmlFor={name}
-              className="text-sm font-semibold text-gray-700 mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2 cursor-pointer"
+              className="text-sm font-semibold text-textl dark:text-textd mb-1 relative top-[15px] left-[5px] bg-bgl1 dark:bg-bgd1 z-10 w-fit px-2 cursor-pointer"
             >
               {label}
             </label>
@@ -221,7 +221,7 @@ const UpdateStudentPage = () => {
               onBlur={formik.handleBlur}
               aria-describedby={`${name}-error`}
               disabled={profile[name]}
-              className={`border rounded-md px-3 py-2 transition bg-white
+              className={`border rounded-md px-3 py-2 transition bg-bgl1 dark:bg-bgd1 text-textl dark:text-textd
         ${
           formik.touched[name] && formik.errors[name]
             ? "border-red-500 focus:ring-red-500"
@@ -251,10 +251,10 @@ const UpdateStudentPage = () => {
         ))}
 
         {/* Address Textarea */}
-        <div className="flex flex-col col-span-1 md:col-span-2">
+        <div className="flex flex-col col-span-2">
           <label
             htmlFor="address"
-            className="text-sm font-semibold text-gray-700 mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2 cursor-pointer"
+            className="text-sm font-semibold text-textl dark:text-textd mb-1 relative top-[15px] left-[5px] bg-bgl1 dark:bg-bgd1 z-10 w-fit px-2 cursor-pointer"
           >
             Address
           </label>
@@ -268,7 +268,7 @@ const UpdateStudentPage = () => {
             onBlur={formik.handleBlur}
             aria-describedby="address-error"
             disabled={profile.address}
-            className={`border rounded-md p-3 resize-none transition
+            className={`border rounded-md p-3 resize-none transition bg-bgl1 dark:bg-bgd1 text-textl dark:text-textd
               ${
                 formik.touched.address && formik.errors.address
                   ? "border-red-500 focus:ring-red-500"
@@ -288,7 +288,7 @@ const UpdateStudentPage = () => {
         </div>
 
         {/* Image Preview */}
-        <div className="col-span-1 md:col-span-2 mb-4 flex flex-wrap gap-4">
+        <div className="col-span-2 mb-4 flex flex-wrap gap-4">
           {formik.values.image ? (
             <img
               src={URL.createObjectURL(formik.values.image)}
@@ -308,7 +308,7 @@ const UpdateStudentPage = () => {
         </div>
 
         {/* File Input */}
-        <div className="col-span-1 md:col-span-2">
+        <div className="col-span-2">
           <label
             htmlFor="image"
             className="block mb-2 text-sm font-semibold text-gray-700 cursor-pointer"
@@ -326,14 +326,14 @@ const UpdateStudentPage = () => {
                 formik.setFieldValue("image", event.currentTarget.files[0]);
               }
             }}
-            className="w-full cursor-pointer rounded border border-gray-300 p-2"
+            className="w-full cursor-pointer rounded border border-gray-300 p-2  bg-bgl1 dark:bg-bgd1 text-textl dark:text-textd"
           />
         </div>
 
         {/* Submit Button */}
         <button
           type="submit"
-          className="col-span-1 md:col-span-2 bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 transition font-semibold text-lg"
+          className="col-span-2 bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 transition font-semibold text-lg"
           disabled={formik.isSubmitting || true}
         >
           Update

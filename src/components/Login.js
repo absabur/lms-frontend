@@ -40,15 +40,15 @@ export default function Login() {
     <div className="flex items-center justify-center px-4 sm:px-6 lg:px-8">
       <form
         onSubmit={formik.handleSubmit}
-        className="w-full max-w-md bg-white rounded-2xl shadow-2xl p-8 sm:p-10"
+        className="w-full max-w-md rounded-2xl shadow-2xl p-8 sm:p-10 border dark:border-bord bg-bgl1 dark:bg-bgd2"
       >
-        <h2 className="text-3xl font-extrabold text-gray-800 text-center mb-6">
+        <h2 className="text-3xl font-extrabold text-textl dark:text-textd text-center mb-6">
           Sign in to your account
         </h2>
 
         {/* Role selection */}
         <div className="mb-6">
-          <label className="text-sm font-medium text-gray-700 mb-2 block">
+          <label className="text-sm font-medium text-textl dark:text-textd mb-2 block">
             Login as
           </label>
           <div className="flex gap-6">
@@ -62,7 +62,7 @@ export default function Login() {
                   onChange={formik.handleChange}
                   className="accent-purple-600"
                 />
-                <span className="capitalize text-gray-700">{r}</span>
+                <span className="capitalize text-textl dark:text-textd">{r}</span>
               </label>
             ))}
           </div>
@@ -75,7 +75,7 @@ export default function Login() {
         <div className="mb-4">
           <label
             htmlFor="email"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-sm font-medium text-textl dark:text-textd mb-1"
           >
             Email
           </label>
@@ -86,7 +86,7 @@ export default function Login() {
             value={formik.values.email}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className={`w-full px-4 py-2 border rounded-md shadow-sm transition focus:ring-2 focus:ring-purple-400 focus:outline-none ${
+            className={`w-full px-4 py-2 border rounded-md shadow-sm transition focus:ring-2 focus:ring-purple-400 focus:outline-none bg-bgl1 dark:bg-bgd1 text-textl dark:text-textd border dark:border-bord ${
               formik.touched.email && formik.errors.email
                 ? "border-red-500"
                 : "border-gray-300"
@@ -102,7 +102,7 @@ export default function Login() {
         <div className="mb-6">
           <label
             htmlFor="password"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-sm font-medium text-textl dark:text-textd mb-1"
           >
             Password
           </label>
@@ -113,7 +113,7 @@ export default function Login() {
             value={formik.values.password}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className={`w-full px-4 py-2 border rounded-md shadow-sm transition focus:ring-2 focus:ring-purple-400 focus:outline-none ${
+            className={`w-full px-4 py-2 border rounded-md shadow-sm transition focus:ring-2 focus:ring-purple-400 focus:outline-none  bg-bgl1 dark:bg-bgd1 text-textl dark:text-textd border dark:border-bord ${
               formik.touched.password && formik.errors.password
                 ? "border-red-500"
                 : "border-gray-300"

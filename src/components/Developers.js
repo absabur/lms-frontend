@@ -1,7 +1,9 @@
+import Link from "next/link";
+
 export default function DeveloperPage() {
   return (
-    <main className="min-h-screen bg-gradient-to-tr from-white to-purple-100 text-indigo-900 px-6 py-10 flex flex-col items-center justify-center">
-      <div className="max-w-3xl w-full bg-white rounded-3xl shadow-xl p-8 md:p-12 text-center">
+    <main className="min-h-screen bg-gradient-to-tr from-bgl1 to-bgl2 dark:from-bgd1 dark:to-bgd2 text-indigo-900 px-6 py-10 flex flex-col items-center justify-center">
+      <div className="max-w-3xl w-full bg-bgl1 dark:bg-bgd2 border dark:border-bord shadow dark:shadow-shadl rounded-3xl p-8 md:p-12 text-center">
         <img
           src="https://absabur.vercel.app/me.png" // Replace with your image
           alt="Md Abdus Sabur"
@@ -21,23 +23,23 @@ export default function DeveloperPage() {
         </p>
 
         <div className="mt-6 flex justify-center gap-4 flex-wrap">
-          <a
+          <Link
             href="mailto:abdussabur929@gmail.com"
             className="text-purple-700 hover:underline"
           >
             📧 abdussabur929@gmail.com
-          </a>
-          <a
+          </Link>
+          <Link
             href="https://linkedin.com/in/md-abdus-sabur-engineer"
             target="_blank"
             className="text-purple-700 hover:underline"
           >
             🔗 LinkedIn
-          </a>
+          </Link>
         </div>
 
         <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
-          <div className="p-4 bg-purple-50 rounded-lg shadow-sm">
+          <div className="p-4 bg-bgl2 dark:bg-bgd1 border dark:border-bord rounded-lg shadow-sm">
             <h3 className="font-semibold text-purple-800 mb-2">Frontend</h3>
             <ul className="list-disc list-inside text-gray-700">
               <li>React.js</li>
@@ -46,7 +48,7 @@ export default function DeveloperPage() {
               <li>Next.js (Static Export)</li>
             </ul>
           </div>
-          <div className="p-4 bg-purple-50 rounded-lg shadow-sm">
+          <div className="p-4 bg-bgl2 dark:bg-bgd1 border dark:border-bord rounded-lg shadow-sm">
             <h3 className="font-semibold text-purple-800 mb-2">
               Backend & Tools
             </h3>
@@ -57,7 +59,7 @@ export default function DeveloperPage() {
               <li>Python 3.12</li>
             </ul>
           </div>
-          <div className="p-4 bg-purple-50 rounded-lg shadow-sm">
+          <div className="p-4 bg-bgl2 dark:bg-bgd1 border dark:border-bord rounded-lg shadow-sm">
             <h3 className="font-semibold text-purple-800 mb-2">
               Special Interests
             </h3>
@@ -68,7 +70,7 @@ export default function DeveloperPage() {
               <li>Jersey Design with React & SVG</li>
             </ul>
           </div>
-          <div className="p-4 bg-purple-50 rounded-lg shadow-sm">
+          <div className="p-4 bg-bgl2 dark:bg-bgd1 border dark:border-bord rounded-lg shadow-sm">
             <h3 className="font-semibold text-purple-800 mb-2">
               Values & Goals
             </h3>

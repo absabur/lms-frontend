@@ -55,14 +55,14 @@ const UpdateTeacherPage = () => {
   });
 
   return (
-    <div className=" flex justify-center items-start bg-gray-50 py-8 px-4">
+    <div className=" flex justify-center items-start  py-8 px-4">
       <form
         onSubmit={formik.handleSubmit}
         encType="multipart/form-data"
         noValidate
-        className="bg-white w-full max-w-4xl p-8 rounded-lg shadow-lg grid grid-cols-1 md:grid-cols-2 gap-6"
+        className=" border dark:border-bord bg-bgl1 dark:bg-bgd2 w-full max-w-4xl p-8 rounded-lg shadow-lg grid grid-cols-1 md:grid-cols-2 gap-6"
       >
-        <h2 className="text-3xl font-bold text-center mb-6 col-span-2">
+        <h2 className="text-3xl font-bold text-textl dark:text-textd text-center mb-6 col-span-2">
           Update Profile
         </h2>
 
@@ -75,10 +75,10 @@ const UpdateTeacherPage = () => {
         ].map(({ label, name, type }) => {
           const errorId = `${name}-error`;
           return (
-            <div key={name} className="flex flex-col">
+            <div key={name} className="flex flex-col col-span-2 md:col-span-1">
               <label
                 htmlFor={name}
-                className="text-sm font-medium text-gray-700 mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2"
+                className="text-sm font-medium bg-bgl1 dark:bg-bgd1 text-textl dark:text-textd mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2"
               >
                 {label}
               </label>
@@ -98,7 +98,7 @@ const UpdateTeacherPage = () => {
                 aria-invalid={
                   formik.touched[name] && formik.errors[name] ? "true" : "false"
                 }
-                className={`border rounded-md p-3 ${
+                className={`border rounded-md p-3 bg-bgl1 dark:bg-bgd1 text-textl dark:text-textd border dark:border-bord ${
                   formik.touched[name] && formik.errors[name]
                     ? "border-red-500"
                     : "border-gray-300"
@@ -118,10 +118,10 @@ const UpdateTeacherPage = () => {
         })}
 
         {/* Post */}
-        <div className="flex flex-col">
+        <div className="flex flex-col col-span-2 md:col-span-1">
           <label
             htmlFor="post"
-            className="text-sm font-medium text-gray-700 mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2"
+            className="text-sm font-medium bg-bgl1 dark:bg-bgd1 text-textl dark:text-textd mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2"
           >
             Posts
           </label>
@@ -140,7 +140,7 @@ const UpdateTeacherPage = () => {
             aria-invalid={
               formik.touched.post && formik.errors.post ? "true" : "false"
             }
-            className={`border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+            className={`border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-bgl1 dark:bg-bgd1 text-textl dark:text-textd border dark:border-bord ${
               formik.touched.post && formik.errors.post
                 ? "border-red-500"
                 : "border-gray-300"
@@ -165,10 +165,10 @@ const UpdateTeacherPage = () => {
         </div>
 
         {/* Department */}
-        <div className="flex flex-col">
+        <div className="flex flex-col col-span-2 md:col-span-1">
           <label
             htmlFor="department"
-            className="text-sm font-medium text-gray-700 mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2"
+            className="text-sm font-medium bg-bgl1 dark:bg-bgd1 text-textl dark:text-textd mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2"
           >
             Department
           </label>
@@ -189,7 +189,7 @@ const UpdateTeacherPage = () => {
                 ? "true"
                 : "false"
             }
-            className={`border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+            className={`border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-bgl1 dark:bg-bgd1 text-textl dark:text-textd border dark:border-bord ${
               formik.touched.department && formik.errors.department
                 ? "border-red-500"
                 : "border-gray-300"
@@ -217,7 +217,7 @@ const UpdateTeacherPage = () => {
         <div className="flex flex-col col-span-2">
           <label
             htmlFor="address"
-            className="text-sm font-medium text-gray-700 mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2"
+            className="text-sm font-medium bg-bgl1 dark:bg-bgd1 text-textl dark:text-textd mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2"
           >
             Address
           </label>
@@ -237,7 +237,7 @@ const UpdateTeacherPage = () => {
             aria-invalid={
               formik.touched.address && formik.errors.address ? "true" : "false"
             }
-            className={`border rounded-md p-3 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+            className={`border rounded-md p-3  bg-bgl1 dark:bg-bgd1 text-textl dark:text-textd border dark:border-bord resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 ${
               formik.touched.address && formik.errors.address
                 ? "border-red-500"
                 : "border-gray-300"
@@ -276,7 +276,7 @@ const UpdateTeacherPage = () => {
         <div className="flex flex-col col-span-2">
           <label
             htmlFor="image"
-            className="text-sm font-medium text-gray-700 mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2"
+            className="text-sm font-medium bg-bgl1 dark:bg-bgd1 text-textl dark:text-textd mb-1 relative top-[15px] left-[5px] bg-white z-10 w-fit px-2"
           >
             Image (Upload new image)
           </label>

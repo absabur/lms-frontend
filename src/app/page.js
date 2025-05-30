@@ -1,4 +1,5 @@
 import DepartmentTabs from "@/components/DepartmentTabs";
+import Link from "next/link";
 
 export default async function Home() {
   const response = await fetch(
@@ -11,36 +12,37 @@ export default async function Home() {
   const result = await response.json();
 
   return (
-    <main className=" bg-gradient-to-br from-indigo-50 via-white to-purple-50 text-gray-800 font-sans">
+    <main className="font-sans">
       {/* Hero Section */}
       <DepartmentTabs activeDepartment={"all"} />
       <section className="flex flex-col-reverse md:flex-row items-center max-w-7xl mx-auto px-6 py-20 gap-10">
         {/* Left Content */}
         <div className="flex-1 space-y-6">
-          <h1 className="text-4xl md:text-5xl font-extrabold leading-tight text-indigo-900">
-            Welcome to the Digital Library of <br />
+          <h1 className="text-3xl font-extrabold leading-loose text-indigo-900 dark:text-textd">
             <span className="text-purple-600">
-              Bogura Polytechnic Institute
+              বগুড়া পলিটেকনিক ইনস্টিটিউটের
             </span>
+            <br />
+            ডিজিটাল লাইব্রেরিতে আপনাকে স্বাগতম।
           </h1>
-          <p className="text-lg md:text-xl max-w-xl text-indigo-700">
-            An official platform for students and teachers to access textbooks,
-            academic resources, and research materials — all for free.
+          <p className="text-lg md:text-xl max-w-xl text-indigo-700 dark:text-textd">
+            শিক্ষার্থী এবং শিক্ষকদের জন্য লাইব্রেরি থেকে পাঠ্যপুস্তক সংগ্রহের
+            জন্য একটি অফিসিয়াল প্ল্যাটফর্ম — সবই বিনামূল্যে।
           </p>
 
           <div className="flex flex-wrap gap-4 mt-6">
-            <a
+            <Link
               href="/books"
               className="px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg shadow-lg transition"
             >
               Browse Books
-            </a>
-            <a
+            </Link>
+            <Link
               href="/auth/register"
               className="px-6 py-3 border-2 border-purple-600 text-purple-600 rounded-lg hover:bg-purple-100 transition"
             >
               Get Started
-            </a>
+            </Link>
           </div>
         </div>
 
@@ -55,16 +57,16 @@ export default async function Home() {
       </section>
 
       {/* Why Choose Section */}
-      <section className="bg-white py-16 shadow-inner">
+      <section className="bg-white py-16 shadow-inner bg-bgl2 dark:bg-bgd2">
         <div className="max-w-6xl mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold text-indigo-900 mb-8">
-            Why Use the BPI Library Platform?
+          <h2 className="text-3xl font-bold text-indigo-900 dark:text-textd mb-8">
+            কেন BPI লাইব্রেরি প্ল্যাটফর্ম ব্যবহার করবেন?
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 text-indigo-700">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 text-buttonp dark:text-textd">
             {[
               {
-                title: "Free & Open Access",
-                desc: "No fees or subscriptions — just instant access to a vast collection of academic books and materials.",
+                title: "✅ ফ্রি আর উন্মুক্ত ব্যবহার",
+                desc: "কোনো রকম টাকা-পয়সা লাগবে না — এক ক্লিকেই অনেকগুলো একাডেমিক বই আর দরকারি জিনিসপত্র পাওয়া যাবে।",
                 icon: (
                   <svg
                     className="w-10 h-10 mx-auto mb-3 text-purple-600"
@@ -82,8 +84,8 @@ export default async function Home() {
                 ),
               },
               {
-                title: "For Students & Teachers",
-                desc: "Designed to support both learners and educators with curated resources and personalized accounts.",
+                title: "🎓 ছাত্র-শিক্ষকের জন্যই বানানো",
+                desc: "ছাত্র আর স্যার-ম্যাডামদের কাজে লাগবে এমনভাবে সাজানো — নিজের মতো করে একাউন্ট আর দরকারি রিসোর্স পাওয়া যাবে।",
                 icon: (
                   <svg
                     className="w-10 h-10 mx-auto mb-3 text-purple-600"
@@ -100,8 +102,8 @@ export default async function Home() {
                 ),
               },
               {
-                title: "Easy Book Borrowing",
-                desc: "Borrow digital copies effortlessly with instant approval — read on any device, anytime.",
+                title: "📚 সহজে বই ধার নেওয়া যায়",
+                desc: "ডিজিটাল বই খুব সহজেই ধার নিতে পারবেন, সাথে সাথে মিলে যাবে — যেকোনো ডিভাইসে, যখন খুশি পড়া যাবে।",
                 icon: (
                   <svg
                     className="w-10 h-10 mx-auto mb-3 text-purple-600"
@@ -118,8 +120,8 @@ export default async function Home() {
                 ),
               },
               {
-                title: "Organized by Department",
-                desc: "Find books easily by department, subject, or author for streamlined study and research.",
+                title: "🏛️ বিভাগ অনুযায়ী সাজানো",
+                desc: "কোন ডিপার্টমেন্ট, বিষয় বা লেখকের বই লাগবে — খুঁজে পাওয়া যাবে একদম সহজে।",
                 icon: (
                   <svg
                     className="w-10 h-10 mx-auto mb-3 text-purple-600"
@@ -138,7 +140,7 @@ export default async function Home() {
             ].map(({ title, desc, icon }) => (
               <div
                 key={title}
-                className="bg-indigo-50 rounded-xl p-6 shadow-md hover:shadow-lg transition cursor-default"
+                className="bg-bgl1 dark:bg-bgd1 shadow-shadl dark:shadow-shadd border dark:border-bord rounded-xl p-6 shadow-md hover:shadow-lg transition cursor-default"
               >
                 {icon}
                 <h3 className="text-xl font-semibold mb-2">{title}</h3>
@@ -151,29 +153,30 @@ export default async function Home() {
 
       {/* about */}
       <section className="max-w-4xl mx-auto px-6 py-20 text-center">
-        <h2 className="text-3xl font-bold text-indigo-900 mb-6">
-          About Bogura Polytechnic Institute Library
+        <h2 className="text-3xl font-bold text-indigo-900 dark:text-textd mb-6">
+          বগুড়া পলিটেকনিক ইনস্টিটিউট লাইব্রেরি সম্পর্কে
         </h2>
         <p className="text-lg text-gray-700 leading-relaxed">
-          The <strong>Digital Library of Bogura Polytechnic Institute</strong>{" "}
-          is created to help our students and faculty access quality academic
-          resources anywhere, anytime. With a wide range of departmental books
-          and research materials, this platform ensures everyone has equal
-          access to learning tools — 100% free and easy to use.
+          <strong>বগুড়া পলিটেকনিক ইনস্টিটিউটের ডিজিটাল লাইব্রেরিটি</strong>{" "}
+          আমাদের শিক্ষার্থীদের এবং অনুষদদের যেকোনো জায়গায়, যেকোনো সময় মানসম্পন্ন
+          শিক্ষাগত সম্পদ অ্যাক্সেস করতে সাহায্য করার জন্য তৈরি করা হয়েছে।{" "}
+          <br />
+          লাইব্রেরির যেকোনো বই সহজে নেওয়া, ফেরত দেওয়া ইত্যাদি এবং এসব কিছুর তথ্য
+          সংরক্ষণ করে রাখার জন্য তৈরী করা হয়েছে।
         </p>
       </section>
 
       {/* How It Works */}
       <section className="max-w-7xl mx-auto px-6 py-20">
-        <h2 className="text-3xl font-bold text-indigo-900 mb-12 text-center">
-          How It Works
+        <h2 className="text-3xl font-bold text-indigo-900 dark:text-textd mb-12 text-center">
+          কিভাবে এটা কাজ করে
         </h2>
         <div className="flex flex-col md:flex-row justify-center gap-10">
           {[
             {
-              step: "1",
-              title: "Create Your Account",
-              desc: "Sign up easily as a student or teacher with your college credentials.",
+              step: "১",
+              title: "অ্যাকাউন্ট তৈরি করুন",
+              desc: "ছাত্র বা শিক্ষক হিসেবে কলেজের তথ্য দিয়ে সহজেই রেজিস্ট্রেশন করুন।",
               icon: (
                 <svg
                   className="w-12 h-12 mx-auto mb-4 text-purple-600"
@@ -190,9 +193,9 @@ export default async function Home() {
               ),
             },
             {
-              step: "2",
-              title: "Browse & Search Books",
-              desc: "Explore books by department, title, or author using our intuitive search system.",
+              step: "২",
+              title: "বই খুঁজুন ও দেখুন",
+              desc: "বিভাগ, বইয়ের নাম বা লেখকের নাম দিয়ে সহজে বই খুঁজে নিন আমাদের স্মার্ট সার্চ ব্যবহার করে।",
               icon: (
                 <svg
                   className="w-12 h-12 mx-auto mb-4 text-purple-600"
@@ -209,9 +212,9 @@ export default async function Home() {
               ),
             },
             {
-              step: "3",
-              title: "Borrow & Read Free",
-              desc: "Request any book and read instantly online or download for offline reading.",
+              step: "৩",
+              title: "বই ধার নিন ও পড়ুন",
+              desc: "যেকোনো বই সহজে অনুরোধ করুন এবং লাইব্রেরি থেকে সংগ্রহ করুন। ",
               icon: (
                 <svg
                   className="w-12 h-12 mx-auto mb-4 text-purple-600"
@@ -231,7 +234,7 @@ export default async function Home() {
           ].map(({ step, title, desc, icon }) => (
             <div
               key={title}
-              className="flex-1 bg-white rounded-xl shadow-md p-8 text-center hover:shadow-lg transition"
+              className="flex-1 bg-bgl2 dark:bg-bgd2 text-textl dark:text-textd border dark:border-bord rounded-xl shadow-md p-8 text-center hover:shadow-lg transition"
             >
               <div className="text-4xl font-bold text-purple-600 mb-4">
                 {step}
@@ -246,21 +249,21 @@ export default async function Home() {
 
       {/* Departments Preview */}
       <section className="max-w-7xl mx-auto px-6 py-16">
-        <h2 className="text-3xl font-bold text-indigo-900 mb-12 text-center">
-          Explore Books by Department
+        <h2 className="text-3xl font-bold text-indigo-900 dark:text-textd mb-12 text-center">
+          বিভাগ অনুসারে বইগুলি অন্বেষণ করুন
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
           {result?.departments?.map(({ name, _id }) => (
-            <a
+            <Link
               key={_id}
               href={`/books/department/${name}`}
               className="block bg-gradient-to-tr from-purple-600 to-indigo-600 text-white rounded-2xl p-8 shadow-lg hover:scale-105 transform transition"
             >
-              <h3 className="text-xl font-semibold">{name}</h3>
+              <h3 className="text-xl font-semibold text-center">{name}</h3>
               <p className="mt-2 text-sm opacity-90">
-                Find textbooks, research, and notes for {name}.
+                {name} এর জন্য পাঠ্যপুস্তক, গবেষণা এবং নোট খুঁজুন.
               </p>
-            </a>
+            </Link>
           ))}
         </div>
       </section>
