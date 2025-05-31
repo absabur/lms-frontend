@@ -18,8 +18,6 @@ const Toast = () => {
 
       if (message?.message === "You must login first.") {
         router.push(`/auth/login?next=${encodeURIComponent(pathname)}`);
-      } else if (message?.message?.includes("Complete Your Profile")) {
-        router.push(`/profile/complete`);
       } else if (message?.message === "Your account is not approved.") {
         router.push(`/not-approved`);
       } else if (

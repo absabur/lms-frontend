@@ -63,72 +63,62 @@ export const otpSend = (email, role) => async (dispatch) => {
   }
 };
 
-export const register =
-  ({ email, password, confirmPassword, verificationCode }, role) =>
-  async (dispatch) => {
-    dispatch({
-      type: LOADING_START,
-    });
+export const register = (data, role) => async (dispatch) => {
+  dispatch({
+    type: LOADING_START,
+  });
 
-    try {
-      let backend_path;
-      if (role == "teacher") {
-        backend_path = "/api/teacher";
-      } else {
-        backend_path = "/api/student";
+  try {
+    let backend_path;
+    if (role == "teacher") {
+      backend_path = "/api/teacher";
+    } else {
+      backend_path = "/api/student";
+    }
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}${backend_path}/register`,
+      {
+        method: "POST",
+        body: data,
       }
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}${backend_path}/register`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email,
-            password,
-            confirmPassword,
-            verificationCode,
-          }),
-        }
-      );
+    );
 
-      const result = await response.json();
+    const result = await response.json();
 
-      if (result.success) {
-        dispatch({
-          type: MESSAGE,
-          payload: {
-            message: result.message || "Account Creation Succesfull",
-            status: "success",
-            path: "/auth/login",
-          },
-        });
-      } else {
-        dispatch({
-          type: MESSAGE,
-          payload: {
-            message: result.error || "Registration failed",
-            status: "error",
-            path: "",
-          },
-        });
-      }
-    } catch (error) {
+    if (result.success) {
       dispatch({
         type: MESSAGE,
         payload: {
-          message: error.message || "Something went wrong",
+          message: result.message || "Account Creation Succesfull",
+          status: "success",
+          path: "/auth/login",
+        },
+      });
+    } else {
+      dispatch({
+        type: MESSAGE,
+        payload: {
+          message: result.error || "Registration failed",
           status: "error",
           path: "",
         },
       });
-    } finally {
-      dispatch({
-        type: LOADING_END,
-      });
     }
-  };
+  } catch (error) {
+    dispatch({
+      type: MESSAGE,
+      payload: {
+        message: error.message || "Something went wrong",
+        status: "error",
+        path: "",
+      },
+    });
+  } finally {
+    dispatch({
+      type: LOADING_END,
+    });
+  }
+};
 export const login =
   ({ email, password }, role, next) =>
   async (dispatch) => {
