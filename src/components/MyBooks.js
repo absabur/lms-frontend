@@ -47,7 +47,7 @@ const MyBooks = () => {
   };
 
   return (
-    <div className=" max-w-7xl mx-auto mb-auto">
+    <div className="w-full mx-auto mb-auto">
       {/* Header */}
       <div className="mb-8 mt-6">
         <h1 className="text-2xl md:text-3xl font-bold text-textl dark:text-textd mb-4 text-center">
@@ -55,7 +55,7 @@ const MyBooks = () => {
         </h1>
 
         {/* Filter Buttons - Responsive */}
-        <div className="flex flex-wrap gap-2 overflow-x-auto pb-2">
+        <div className="flex flex-wrap gap-2 justify-center pb-2">
           {[
             { id: "all", label: "All" },
             {
@@ -110,7 +110,7 @@ const MyBooks = () => {
           )?.map((item, index) => (
             <div
               key={index}
-              className="max-w-[600px] w-full bg-bgl1 dark:bg-bgd2 rounded-lg shadow-lg hover:bg-gray-100 transition-all duration-300 overflow-hidden border dark:border-bord border-borl dark:border-bord"
+              className="max-w-[550px] w-full bg-bgl1 dark:bg-bgd2 rounded-lg shadow-lg hover:bg-gray-100 transition-all duration-300 overflow-hidden border dark:border-bord border-borl dark:border-bord"
             >
               <div className="flex flex-col md:flex-row items-center">
                 {/* Book Image */}

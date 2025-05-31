@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useEffect, useState } from "react";
+import { MESSAGE } from "@/store/constant";
 
 export default function Register() {
   const dispatch = useDispatch();
@@ -54,9 +55,7 @@ export default function Register() {
           formData.append(key, values[key]);
         }
       }
-
       formData.append("verificationCode", values.otp);
-
       dispatch(register(formData, role));
     },
   });
@@ -146,8 +145,8 @@ export default function Register() {
           .nullable()
           .test(
             "fileSize",
-            "File too large (max 2MB)",
-            (value) => !value || (value && value.size <= 2 * 1024 * 1024)
+            "File too large (max 5MB)",
+            (value) => !value || (value && value.size <= 5 * 1024 * 1024)
           )
           .test(
             "fileType",
@@ -582,11 +581,11 @@ export default function Register() {
                               );
                             }}
                             className="block w-full text-sm text-textl dark:text-textd
-  file:mr-4 file:py-2 file:px-4
-  file:rounded-md file:border-0
-  file:text-sm file:font-semibold
-  file:bg-bgl2 dark:file:bg-bgd2 file:text-buttonp dark:file:text-textd
-  hover:file:bg-bgl1 dark:hover:file:bg-bgd1"
+                                        file:mr-4 file:py-2 file:px-4
+                                        file:rounded-md file:border-0
+                                        file:text-sm file:font-semibold
+                                        file:bg-bgl2 dark:file:bg-bgd2 file:text-buttonp dark:file:text-textd
+                                        hover:file:bg-bgl1 dark:hover:file:bg-bgd1"
                           />
                         </div>
                       </div>
@@ -713,14 +712,19 @@ export default function Register() {
                               );
                             }}
                             className="block w-full text-sm text-textl dark:text-textd
-  file:mr-4 file:py-2 file:px-4
-  file:rounded-md file:border-0
-  file:text-sm file:font-semibold
-  file:bg-bgl2 dark:file:bg-bgd2 file:text-buttonp dark:file:text-textd
-  hover:file:bg-bgl1 dark:hover:file:bg-bgd1"
+                                        file:mr-4 file:py-2 file:px-4
+                                        file:rounded-md file:border-0
+                                        file:text-sm file:font-semibold
+                                        file:bg-bgl2 dark:file:bg-bgd2 file:text-buttonp dark:file:text-textd
+                                        hover:file:bg-bgl1 dark:hover:file:bg-bgd1"
                           />
                         </div>
                       </div>
+                      {formik.touched.image && formik.errors.image && (
+                        <p className="mt-1 text-sm text-red-600">
+                          {formik.errors.image}
+                        </p>
+                      )}
                     </div>
                   </>
                 )}
