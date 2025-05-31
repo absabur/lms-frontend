@@ -12,7 +12,7 @@ export default async function Home() {
   const result = await response.json();
 
   return (
-    <main className="font-sans">
+    <main className="font-sans bg-bgl2 dark:bg-bgd1 text-textl dark:text-textd">
       {/* Hero Section */}
       <DepartmentTabs activeDepartment={"all"} />
       <section className="flex flex-col-reverse md:flex-row items-center max-w-7xl mx-auto px-6 py-20 gap-10">
@@ -234,7 +234,7 @@ export default async function Home() {
           ].map(({ step, title, desc, icon }) => (
             <div
               key={title}
-              className="flex-1 bg-bgl2 dark:bg-bgd2 text-textl dark:text-textd border dark:border-bord rounded-xl shadow-md p-8 text-center hover:shadow-lg transition"
+              className="flex-1 bg-bgl1 dark:bg-bgd2 text-textl dark:text-textd border dark:border-bord rounded-xl shadow-md p-8 text-center hover:shadow-lg transition"
             >
               <div className="text-4xl font-bold text-purple-600 mb-4">
                 {step}

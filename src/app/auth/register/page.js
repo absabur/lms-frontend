@@ -183,9 +183,9 @@ export default function Register() {
   }, [role]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-8 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-900">
-      <div className="w-full max-w-6xl">
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center px-4 py-8 sm:px-6 lg:px-8 bg-bgl1 dark:bg-bgd1">
+      <div className="w-full max-w-6xl border border-borl rounded-lg shadow dark:border-bord">
+        <div className="bg-bgl2 dark:bg-bgd2 rounded-lg shadow-xl overflow-hidden">
           <div className="md:flex">
             {/* Left side - Registration form */}
             <div className="w-full md:w-1/2 p-6 sm:p-8 md:p-10">
@@ -195,21 +195,28 @@ export default function Register() {
 
               {/* Role Selection */}
               <div className="mb-6">
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-bgd1 dark:text-gray-300 mb-2">
                   Register As
                 </label>
                 <div className="flex gap-6">
                   {["student", "teacher"].map((r) => (
-                    <label key={r} className="flex items-center gap-2 cursor-pointer">
+                    <label
+                      key={r}
+                      className="flex items-center gap-2 cursor-pointer"
+                    >
                       <input
                         type="radio"
                         name="role"
                         value={r}
                         checked={role === r}
                         onChange={() => setRole(r)}
-                        className={`accent-${r === "student" ? "blue" : "purple"}-600`}
+                        className={
+                          r === "student"
+                            ? "accent-blue-600"
+                            : "accent-purple-600"
+                        }
                       />
-                      <span className="text-gray-700 dark:text-gray-300 capitalize">
+                      <span className="text-bgd1 dark:text-gray-300 capitalize">
                         {r}
                       </span>
                     </label>
@@ -221,7 +228,10 @@ export default function Register() {
               <form onSubmit={formik.handleSubmit} className="space-y-4">
                 {/* Email + Send OTP */}
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-textl dark:text-textd mb-1"
+                  >
                     Email
                   </label>
                   <div className="flex rounded-md shadow-sm">
@@ -232,16 +242,16 @@ export default function Register() {
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                       value={formik.values.email}
-                      className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md border border-gray-300 dark:border-gray-600 focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                      className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md border border-borl dark:border-bord focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500 sm:text-sm bg-bgl2 dark:bg-bgd1 text-gray-900 dark:text-white"
                       placeholder="your@email.com"
                     />
                     <button
                       type="button"
                       onClick={handleSendOtp}
                       disabled={!formik.values.email || !!formik.errors.email}
-                      className={`inline-flex items-center px-4 py-2 border border-l-0 border-gray-300 dark:border-gray-600 rounded-r-md text-sm font-medium ${
+                      className={`inline-flex items-center px-4 py-2 border border-l-0 border-borl dark:border-bord rounded-r-md text-sm font-medium ${
                         !formik.values.email || !!formik.errors.email
-                          ? "bg-gray-100 dark:bg-gray-600 text-gray-400 dark:text-gray-300 cursor-not-allowed"
+                          ? "bg-gray-100 dark:bg-textl text-textd dark:text-gray-300 cursor-not-allowed"
                           : "bg-blue-600 hover:bg-blue-700 text-white"
                       }`}
                     >
@@ -249,13 +259,18 @@ export default function Register() {
                     </button>
                   </div>
                   {formik.touched.email && formik.errors.email && (
-                    <p className="mt-1 text-sm text-red-600">{formik.errors.email}</p>
+                    <p className="mt-1 text-sm text-red-600">
+                      {formik.errors.email}
+                    </p>
                   )}
                 </div>
 
                 {/* OTP */}
                 <div>
-                  <label htmlFor="otp" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <label
+                    htmlFor="otp"
+                    className="block text-sm font-medium text-textl dark:text-textd mb-1"
+                  >
                     OTP
                   </label>
                   <input
@@ -264,17 +279,22 @@ export default function Register() {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.otp}
-                    className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                    className="block w-full px-3 py-2 border border-borl dark:border-bord rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500 sm:text-sm bg-bgl2 dark:bg-bgd1 text-gray-900 dark:text-white"
                     placeholder="Enter OTP"
                   />
                   {formik.touched.otp && formik.errors.otp && (
-                    <p className="mt-1 text-sm text-red-600">{formik.errors.otp}</p>
+                    <p className="mt-1 text-sm text-red-600">
+                      {formik.errors.otp}
+                    </p>
                   )}
                 </div>
 
                 {/* Password */}
                 <div>
-                  <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <label
+                    htmlFor="password"
+                    className="block text-sm font-medium text-textl dark:text-textd mb-1"
+                  >
                     Password
                   </label>
                   <input
@@ -284,17 +304,22 @@ export default function Register() {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.password}
-                    className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                    className="block w-full px-3 py-2 border border-borl dark:border-bord rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500 sm:text-sm bg-bgl2 dark:bg-bgd1 text-gray-900 dark:text-white"
                     placeholder="Create a password"
                   />
                   {formik.touched.password && formik.errors.password && (
-                    <p className="mt-1 text-sm text-red-600">{formik.errors.password}</p>
+                    <p className="mt-1 text-sm text-red-600">
+                      {formik.errors.password}
+                    </p>
                   )}
                 </div>
 
                 {/* Confirm Password */}
                 <div>
-                  <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <label
+                    htmlFor="confirmPassword"
+                    className="block text-sm font-medium text-textl dark:text-textd mb-1"
+                  >
                     Confirm Password
                   </label>
                   <input
@@ -304,32 +329,38 @@ export default function Register() {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.confirmPassword}
-                    className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                    className="block w-full px-3 py-2 border border-borl dark:border-bord rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500 sm:text-sm bg-bgl2 dark:bg-bgd1 text-gray-900 dark:text-white"
                     placeholder="Confirm your password"
                   />
-                  {formik.touched.confirmPassword && formik.errors.confirmPassword && (
-                    <p className="mt-1 text-sm text-red-600">{formik.errors.confirmPassword}</p>
-                  )}
+                  {formik.touched.confirmPassword &&
+                    formik.errors.confirmPassword && (
+                      <p className="mt-1 text-sm text-red-600">
+                        {formik.errors.confirmPassword}
+                      </p>
+                    )}
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-buttona hover:bg-buttona focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-buttona"
                 >
                   Create Account
                 </button>
               </form>
 
-              <p className="mt-4 text-center text-sm text-gray-600 dark:text-gray-400">
+              <p className="mt-4 text-center text-sm text-textl dark:text-textd">
                 Already have an account?{" "}
-                <Link href="/auth/login" className="font-medium text-purple-600 hover:text-purple-500 dark:hover:text-purple-400">
+                <Link
+                  href="/auth/login"
+                  className="font-medium text-purple-600 hover:text-purple-500 dark:hover:text-purple-400"
+                >
                   Login
                 </Link>
               </p>
             </div>
 
             {/* Right side - Profile details */}
-            <div className="w-full md:w-1/2 bg-gray-50 dark:bg-gray-700 p-6 sm:p-8 md:p-10 overflow-y-auto">
+            <div className="w-full md:w-1/2 bg-bgl1 dark:bg-bgd1 p-6 sm:p-8 md:p-10 overflow-y-auto">
               <h2 className="text-2xl sm:text-3xl font-extrabold text-center text-gray-900 dark:text-white mb-6">
                 Profile Details
               </h2>
@@ -341,17 +372,41 @@ export default function Register() {
                       {[
                         { label: "Name", name: "name", type: "text" },
                         { label: "Phone", name: "phone", type: "text" },
-                        { label: "Bangla Name", name: "banglaName", type: "text" },
-                        { label: "Fathers Name", name: "fathersName", type: "text" },
-                        { label: "Mothers Name", name: "mothersName", type: "text" },
-                        { label: "Addmission Roll", name: "addmissionRoll", type: "text" },
-                        { label: "Board Roll", name: "boardRoll", type: "text" },
-                        { label: "Registration", name: "registration", type: "text" },
+                        {
+                          label: "Bangla Name",
+                          name: "banglaName",
+                          type: "text",
+                        },
+                        {
+                          label: "Fathers Name",
+                          name: "fathersName",
+                          type: "text",
+                        },
+                        {
+                          label: "Mothers Name",
+                          name: "mothersName",
+                          type: "text",
+                        },
+                        {
+                          label: "Addmission Roll",
+                          name: "addmissionRoll",
+                          type: "text",
+                        },
+                        {
+                          label: "Board Roll",
+                          name: "boardRoll",
+                          type: "text",
+                        },
+                        {
+                          label: "Registration",
+                          name: "registration",
+                          type: "text",
+                        },
                         { label: "Union", name: "union", type: "text" },
                         { label: "Village", name: "village", type: "text" },
                       ].map((field) => (
                         <div key={field.name}>
-                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                          <label className="block text-sm font-medium text-textl dark:text-textd mb-1">
                             {field.label}
                           </label>
                           <input
@@ -360,11 +415,14 @@ export default function Register() {
                             value={formik.values[field.name]}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
-                            className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                            className="block w-full px-3 py-2 border border-borl dark:border-bord rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500 sm:text-sm bg-bgl2 dark:bg-bgd1 text-gray-900 dark:text-white"
                           />
-                          {formik.touched[field.name] && formik.errors[field.name] && (
-                            <p className="mt-1 text-sm text-red-600">{formik.errors[field.name]}</p>
-                          )}
+                          {formik.touched[field.name] &&
+                            formik.errors[field.name] && (
+                              <p className="mt-1 text-sm text-red-600">
+                                {formik.errors[field.name]}
+                              </p>
+                            )}
                         </div>
                       ))}
                     </div>
@@ -372,7 +430,7 @@ export default function Register() {
                     {/* Dropdowns */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        <label className="block text-sm font-medium text-textl dark:text-textd mb-1">
                           Session
                         </label>
                         <select
@@ -380,7 +438,7 @@ export default function Register() {
                           value={formik.values.session}
                           onChange={formik.handleChange}
                           onBlur={formik.handleBlur}
-                          className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                          className="block w-full px-3 py-2 border border-borl dark:border-bord rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500 sm:text-sm bg-bgl2 dark:bg-bgd1 text-gray-900 dark:text-white"
                         >
                           <option value="">-- Select Session --</option>
                           {fixedValues?.sessions?.map((option) => (
@@ -392,7 +450,7 @@ export default function Register() {
                       </div>
 
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        <label className="block text-sm font-medium text-textl dark:text-textd mb-1">
                           Shift
                         </label>
                         <select
@@ -400,7 +458,7 @@ export default function Register() {
                           value={formik.values.shift}
                           onChange={formik.handleChange}
                           onBlur={formik.handleBlur}
-                          className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                          className="block w-full px-3 py-2 border border-borl dark:border-bord rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500 sm:text-sm bg-bgl2 dark:bg-bgd1 text-gray-900 dark:text-white"
                         >
                           <option value="">-- Select Shift --</option>
                           {fixedValues?.shifts?.map((option) => (
@@ -412,7 +470,7 @@ export default function Register() {
                       </div>
 
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        <label className="block text-sm font-medium text-textl dark:text-textd mb-1">
                           Department
                         </label>
                         <select
@@ -420,7 +478,7 @@ export default function Register() {
                           value={formik.values.department}
                           onChange={formik.handleChange}
                           onBlur={formik.handleBlur}
-                          className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                          className="block w-full px-3 py-2 border border-borl dark:border-bord rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500 sm:text-sm bg-bgl2 dark:bg-bgd1 text-gray-900 dark:text-white"
                         >
                           <option value="">-- Select Department --</option>
                           {fixedValues?.departments?.map((option) => (
@@ -432,7 +490,7 @@ export default function Register() {
                       </div>
 
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        <label className="block text-sm font-medium text-textl dark:text-textd mb-1">
                           District
                         </label>
                         <select
@@ -440,7 +498,7 @@ export default function Register() {
                           value={formik.values.district}
                           onChange={formik.handleChange}
                           onBlur={formik.handleBlur}
-                          className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                          className="block w-full px-3 py-2 border border-borl dark:border-bord rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500 sm:text-sm bg-bgl2 dark:bg-bgd1 text-gray-900 dark:text-white"
                         >
                           <option value="">-- Select District --</option>
                           {fixedValues?.districts?.map((option) => (
@@ -452,7 +510,7 @@ export default function Register() {
                       </div>
 
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        <label className="block text-sm font-medium text-textl dark:text-textd mb-1">
                           Upazila
                         </label>
                         <select
@@ -460,13 +518,14 @@ export default function Register() {
                           value={formik.values.upazila}
                           onChange={formik.handleChange}
                           onBlur={formik.handleBlur}
-                          className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                          className="block w-full px-3 py-2 border border-borl dark:border-bord rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500 sm:text-sm bg-bgl2 dark:bg-bgd1 text-gray-900 dark:text-white"
                         >
                           <option value="">-- Select Upazila --</option>
                           {fixedValues?.upazilas
                             ?.filter(
                               (option) =>
-                                option?.districtId?._id === formik.values.district
+                                option?.districtId?._id ===
+                                formik.values.district
                             )
                             .map((option) => (
                               <option key={option._id} value={option._id}>
@@ -479,7 +538,7 @@ export default function Register() {
 
                     {/* Address */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      <label className="block text-sm font-medium text-textl dark:text-textd mb-1">
                         Address
                       </label>
                       <textarea
@@ -488,16 +547,18 @@ export default function Register() {
                         value={formik.values.address}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                        className="block w-full px-3 py-2 border border-borl dark:border-bord rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500 sm:text-sm bg-bgl2 dark:bg-bgd1 text-gray-900 dark:text-white"
                       />
                       {formik.touched.address && formik.errors.address && (
-                        <p className="mt-1 text-sm text-red-600">{formik.errors.address}</p>
+                        <p className="mt-1 text-sm text-red-600">
+                          {formik.errors.address}
+                        </p>
                       )}
                     </div>
 
                     {/* Image Upload */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      <label className="block text-sm font-medium text-textl dark:text-textd mb-1">
                         Profile Image
                       </label>
                       <div className="flex items-center space-x-4">
@@ -505,7 +566,7 @@ export default function Register() {
                           <img
                             src={URL.createObjectURL(formik.values.image)}
                             alt="Preview"
-                            className="w-16 h-16 rounded-full object-cover border border-gray-300 dark:border-gray-600"
+                            className="w-16 h-16 rounded-full object-cover border border-borl dark:border-bord"
                             onLoad={(e) => URL.revokeObjectURL(e.target.src)}
                           />
                         )}
@@ -515,14 +576,17 @@ export default function Register() {
                             name="image"
                             accept="image/*"
                             onChange={(event) => {
-                              formik.setFieldValue("image", event.currentTarget.files[0]);
+                              formik.setFieldValue(
+                                "image",
+                                event.currentTarget.files[0]
+                              );
                             }}
-                            className="block w-full text-sm text-gray-500 dark:text-gray-400
-                              file:mr-4 file:py-2 file:px-4
-                              file:rounded-md file:border-0
-                              file:text-sm file:font-semibold
-                              file:bg-blue-50 dark:file:bg-gray-600 file:text-blue-700 dark:file:text-gray-200
-                              hover:file:bg-blue-100 dark:hover:file:bg-gray-500"
+                            className="block w-full text-sm text-textl dark:text-textd
+  file:mr-4 file:py-2 file:px-4
+  file:rounded-md file:border-0
+  file:text-sm file:font-semibold
+  file:bg-bgl2 dark:file:bg-bgd2 file:text-buttonp dark:file:text-textd
+  hover:file:bg-bgl1 dark:hover:file:bg-bgd1"
                           />
                         </div>
                       </div>
@@ -535,10 +599,14 @@ export default function Register() {
                         { label: "Name", name: "name", type: "text" },
                         { label: "Phone", name: "phone", type: "text" },
                         { label: "NID", name: "nId", type: "text" },
-                        { label: "Teacher ID", name: "teacherId", type: "text" },
+                        {
+                          label: "Teacher ID",
+                          name: "teacherId",
+                          type: "text",
+                        },
                       ].map((field) => (
                         <div key={field.name}>
-                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                          <label className="block text-sm font-medium text-textl dark:text-textd mb-1">
                             {field.label}
                           </label>
                           <input
@@ -547,16 +615,19 @@ export default function Register() {
                             value={formik.values[field.name]}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
-                            className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                            className="block w-full px-3 py-2 border border-borl dark:border-bord rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500 sm:text-sm bg-bgl2 dark:bg-bgd1 text-gray-900 dark:text-white"
                           />
-                          {formik.touched[field.name] && formik.errors[field.name] && (
-                            <p className="mt-1 text-sm text-red-600">{formik.errors[field.name]}</p>
-                          )}
+                          {formik.touched[field.name] &&
+                            formik.errors[field.name] && (
+                              <p className="mt-1 text-sm text-red-600">
+                                {formik.errors[field.name]}
+                              </p>
+                            )}
                         </div>
                       ))}
 
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        <label className="block text-sm font-medium text-textl dark:text-textd mb-1">
                           Post
                         </label>
                         <select
@@ -564,7 +635,7 @@ export default function Register() {
                           value={formik.values.post}
                           onChange={formik.handleChange}
                           onBlur={formik.handleBlur}
-                          className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                          className="block w-full px-3 py-2 border border-borl dark:border-bord rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500 sm:text-sm bg-bgl2 dark:bg-bgd1 text-gray-900 dark:text-white"
                         >
                           <option value="">-- Select Post --</option>
                           {fixedValues?.posts?.map((option) => (
@@ -576,7 +647,7 @@ export default function Register() {
                       </div>
 
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        <label className="block text-sm font-medium text-textl dark:text-textd mb-1">
                           Department
                         </label>
                         <select
@@ -584,7 +655,7 @@ export default function Register() {
                           value={formik.values.department}
                           onChange={formik.handleChange}
                           onBlur={formik.handleBlur}
-                          className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                          className="block w-full px-3 py-2 border border-borl dark:border-bord rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500 sm:text-sm bg-bgl2 dark:bg-bgd1 text-gray-900 dark:text-white"
                         >
                           <option value="">-- Select Department --</option>
                           {fixedValues?.departments?.map((option) => (
@@ -598,7 +669,7 @@ export default function Register() {
 
                     {/* Address */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      <label className="block text-sm font-medium text-textl dark:text-textd mb-1">
                         Address
                       </label>
                       <textarea
@@ -607,16 +678,18 @@ export default function Register() {
                         value={formik.values.address}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                        className="block w-full px-3 py-2 border border-borl dark:border-bord rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500 sm:text-sm bg-bgl2 dark:bg-bgd1 text-gray-900 dark:text-white"
                       />
                       {formik.touched.address && formik.errors.address && (
-                        <p className="mt-1 text-sm text-red-600">{formik.errors.address}</p>
+                        <p className="mt-1 text-sm text-red-600">
+                          {formik.errors.address}
+                        </p>
                       )}
                     </div>
 
                     {/* Image Upload */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      <label className="block text-sm font-medium text-textl dark:text-textd mb-1">
                         Profile Image
                       </label>
                       <div className="flex items-center space-x-4">
@@ -624,7 +697,7 @@ export default function Register() {
                           <img
                             src={URL.createObjectURL(formik.values.image)}
                             alt="Preview"
-                            className="w-16 h-16 rounded-full object-cover border border-gray-300 dark:border-gray-600"
+                            className="w-16 h-16 rounded-full object-cover border border-borl dark:border-bord"
                             onLoad={(e) => URL.revokeObjectURL(e.target.src)}
                           />
                         )}
@@ -634,14 +707,17 @@ export default function Register() {
                             name="image"
                             accept="image/*"
                             onChange={(event) => {
-                              formik.setFieldValue("image", event.currentTarget.files[0]);
+                              formik.setFieldValue(
+                                "image",
+                                event.currentTarget.files[0]
+                              );
                             }}
-                            className="block w-full text-sm text-gray-500 dark:text-gray-400
-                              file:mr-4 file:py-2 file:px-4
-                              file:rounded-md file:border-0
-                              file:text-sm file:font-semibold
-                              file:bg-blue-50 dark:file:bg-gray-600 file:text-blue-700 dark:file:text-gray-200
-                              hover:file:bg-blue-100 dark:hover:file:bg-gray-500"
+                            className="block w-full text-sm text-textl dark:text-textd
+  file:mr-4 file:py-2 file:px-4
+  file:rounded-md file:border-0
+  file:text-sm file:font-semibold
+  file:bg-bgl2 dark:file:bg-bgd2 file:text-buttonp dark:file:text-textd
+  hover:file:bg-bgl1 dark:hover:file:bg-bgd1"
                           />
                         </div>
                       </div>

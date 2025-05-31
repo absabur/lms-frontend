@@ -39,8 +39,8 @@ export default function RootLayout({ children }) {
             <main className="min-h-screen bg-bgl1 text-textl dark:bg-bgd1 dark:textd flex flex-col justify-center">
               {children}
             </main>
-            <footer className="bg-bgl2 dark:bg-bgd2 border-t dark:border-bord text-textl dark:text-textd px-6 py-10 text-sm">
-              <div className="max-w-7xl mx-auto grid gap-6 md:grid-cols-3 text-center md:text-left">
+            <footer className="bg-bgl1 dark:bg-bgd2 border-t dark:border-bord text-textl dark:text-textd shadow px-6 py-10 text-sm">
+              <div className="max-w-7xl mx-auto grid gap-6 md:grid-cols-3 text-center">
                 {/* Institute Info */}
                 <div>
                   <h3 className="text-base font-semibold text-purple-500 mb-2">
@@ -84,7 +84,7 @@ export default function RootLayout({ children }) {
                       CST Department
                     </Link>
                   </p>
-                  <div className="flex justify-center md:justify-start gap-4 mt-3 text-lg">
+                  <div className="flex justify-center gap-4 mt-3 text-lg">
                     <Link
                       href="https://www.facebook.com/md.abdus.sabur.sayam"
                       target="_blank"

@@ -31,16 +31,20 @@ export default function Login() {
     }),
     onSubmit: (values, { setSubmitting }) => {
       dispatch(
-        login({ email: values.email, password: values.password }, values.role, next)
+        login(
+          { email: values.email, password: values.password },
+          values.role,
+          next
+        )
       ).finally(() => setSubmitting(false));
     },
   });
 
   return (
-    <div className="flex items-center justify-center px-4 sm:px-6 lg:px-8">
+    <div className="flex items-center justify-center px-4 sm:px-6 lg:px-8 bg-bgl1 dark:bg-bgd1">
       <form
         onSubmit={formik.handleSubmit}
-        className="w-full max-w-md rounded-2xl shadow-2xl p-8 sm:p-10 border dark:border-bord bg-bgl1 dark:bg-bgd2"
+        className="w-full max-w-md rounded-2xl shadow-xl p-8 sm:p-10 border border-borl dark:border-bord bg-bgl2 dark:bg-bgd2"
       >
         <h2 className="text-3xl font-extrabold text-textl dark:text-textd text-center mb-6">
           Sign in to your account
@@ -60,14 +64,18 @@ export default function Login() {
                   value={r}
                   checked={formik.values.role === r}
                   onChange={formik.handleChange}
-                  className="accent-purple-600"
+                  className={
+                    r === "student" ? "accent-buttonp" : "accent-buttona"
+                  }
                 />
-                <span className="capitalize text-textl dark:text-textd">{r}</span>
+                <span className="capitalize text-textl dark:text-textd">
+                  {r}
+                </span>
               </label>
             ))}
           </div>
           {formik.touched.role && formik.errors.role && (
-            <p className="text-red-500 text-sm mt-1">{formik.errors.role}</p>
+            <p className="text-buttonw text-sm mt-1">{formik.errors.role}</p>
           )}
         </div>
 
@@ -86,15 +94,15 @@ export default function Login() {
             value={formik.values.email}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className={`w-full px-4 py-2 border rounded-md shadow-sm transition focus:ring-2 focus:ring-purple-400 focus:outline-none bg-bgl1 dark:bg-bgd1 text-textl dark:text-textd border dark:border-bord ${
+            className={`w-full px-4 py-2 border rounded-md shadow-sm transition focus:ring-2 focus:ring-buttona focus:outline-none bg-bgl1 dark:bg-bgd1 text-textl dark:text-textd ${
               formik.touched.email && formik.errors.email
-                ? "border-red-500"
-                : "border-gray-300"
+                ? "border-buttonw"
+                : "border-borl dark:border-bord"
             }`}
             placeholder="your@email.com"
           />
           {formik.touched.email && formik.errors.email && (
-            <p className="text-red-500 text-sm mt-1">{formik.errors.email}</p>
+            <p className="text-buttonw text-sm mt-1">{formik.errors.email}</p>
           )}
         </div>
 
@@ -113,15 +121,15 @@ export default function Login() {
             value={formik.values.password}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className={`w-full px-4 py-2 border rounded-md shadow-sm transition focus:ring-2 focus:ring-purple-400 focus:outline-none  bg-bgl1 dark:bg-bgd1 text-textl dark:text-textd border dark:border-bord ${
+            className={`w-full px-4 py-2 border rounded-md shadow-sm transition focus:ring-2 focus:ring-buttona focus:outline-none bg-bgl1 dark:bg-bgd1 text-textl dark:text-textd ${
               formik.touched.password && formik.errors.password
-                ? "border-red-500"
-                : "border-gray-300"
+                ? "border-buttonw"
+                : "border-borl dark:border-bord"
             }`}
             placeholder="Enter your password"
           />
           {formik.touched.password && formik.errors.password && (
-            <p className="text-red-500 text-sm mt-1">
+            <p className="text-buttonw text-sm mt-1">
               {formik.errors.password}
             </p>
           )}
@@ -129,7 +137,7 @@ export default function Login() {
         <div className="mb-2 mt-[-15px] ml-auto">
           <Link
             href="/auth/forgot-password"
-            className="text-purple-600 hover:underline font-medium"
+            className="text-buttona hover:underline font-medium"
           >
             Forgot Password?
           </Link>
@@ -139,17 +147,17 @@ export default function Login() {
         <button
           type="submit"
           disabled={formik.isSubmitting}
-          className="w-full bg-purple-600 text-white py-2 rounded-md font-semibold hover:bg-purple-700 focus:ring-2 focus:ring-purple-400 focus:outline-none transition disabled:opacity-50"
+          className="w-full bg-buttona text-white py-2 rounded-md font-semibold hover:bg-[color:var(--buttona)] focus:ring-2 focus:ring-buttona focus:outline-none transition disabled:opacity-50"
         >
           {formik.isSubmitting ? "Logging in..." : "Login"}
         </button>
 
         {/* Redirect */}
-        <p className="text-sm text-center text-gray-600 mt-4">
+        <p className="text-sm text-center text-textl dark:text-textd mt-4">
           Don't have an account?{" "}
           <Link
             href="/auth/register"
-            className="text-purple-600 hover:underline font-medium"
+            className="text-buttona hover:underline font-medium"
           >
             Register
           </Link>
