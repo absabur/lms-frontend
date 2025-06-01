@@ -1,13 +1,11 @@
-import ProfileRedirect from "@/components/ProfileRedirect";
-
 export const metadata = {
-  title: "LMS | Profile",
+  title: "LMS | Register",
+  description: "Register to access the LMS platform",
 };
 
 export default function RootLayout({ children }) {
   return (
     <>
-      <ProfileRedirect />
       {children}
     </>
   );

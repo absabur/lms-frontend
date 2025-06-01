@@ -1,13 +1,11 @@
-import ProfileRedirect from "@/components/ProfileRedirect";
-
 export const metadata = {
-  title: "LMS | Profile",
+  title: "LMS | Forgot Password",
+  description: "Send a password reset link to your email",
 };
 
 export default function RootLayout({ children }) {
   return (
     <>
-      <ProfileRedirect />
       {children}
     </>
   );

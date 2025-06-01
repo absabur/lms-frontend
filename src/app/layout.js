@@ -20,9 +20,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Libraty Management client",
+  title: "Library Management System, Bogura Polytechnic Institute",
   description:
-    "This is a library management system that is used to manage the library.",
+    "A digital library management system for Bogura Polytechnic Institute, providing easy access to library resources and services.",
 };
 
 export default function RootLayout({ children }) {
@@ -108,10 +108,6 @@ export default function RootLayout({ children }) {
                     </Link>
                   </div>
                 </div>
-              </div>
-
-              <div className="text-center text-xs mt-8 text-gray-400 dark:text-gray-500">
-                Last updated: {new Date().toLocaleDateString()}
               </div>
             </footer>
           </ThemeProvider>

@@ -1,13 +1,10 @@
-import ProfileRedirect from "@/components/ProfileRedirect";
-
 export const metadata = {
-  title: "LMS | Profile",
+  title: "LMS | Change Password",
 };
 
 export default function RootLayout({ children }) {
   return (
     <>
-      <ProfileRedirect />
       {children}
     </>
   );
