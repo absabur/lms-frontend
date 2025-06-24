@@ -5,7 +5,7 @@ export default function DeveloperPage() {
     <main className="min-h-screen bg-gradient-to-tr from-bgl1 to-bgl2 dark:from-bgd1 dark:to-bgd2 text-indigo-900 px-6 py-10 flex flex-col items-center justify-center">
       <div className="max-w-3xl w-full bg-bgl1 dark:bg-bgd2 border dark:border-bord shadow dark:shadow-shadl rounded-3xl p-8 md:p-12 text-center">
         <img
-          src="https://absabur.vercel.app/me.png" // Replace with your image
+          src="https://absabur.vercel.app/Md_Abdus_Sabur.png" // Replace with your image
           alt="Md Abdus Sabur"
           className="w-32 h-32 rounded-full mx-auto shadow-md mb-6 border-4 border-purple-300 object-cover"
         />

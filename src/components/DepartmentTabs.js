@@ -102,7 +102,7 @@ const DepartmentTabs = ({ activeDepartment }) => {
   return (
     <>
       {departments.length <= 0 ? (
-        <div className="bg-bgl1 text-textl max-h-[58px] dark:bg-bgd1 dark:text-textd shadow-lg shadow-shadl dark:shadow-shadd mb-4 flex items-center select-none py-2">
+        <div className="bg-bgl1 text-textl max-h-[50px] dark:bg-bgd1 dark:text-textd shadow-lg shadow-shadl dark:shadow-shadd mb-4 flex items-center select-none py-2">
           {/* Left scroll button skeleton */}
           <div className="hidden lg:flex items-center justify-center px-3 py-2 mr-2 rounded-md border border-gray-300 bg-gray-100 animate-pulse w-[40px] h-[40px]" />
           <div className="overflow-x-auto no-scrollbar flex-1">
@@ -118,7 +118,7 @@ const DepartmentTabs = ({ activeDepartment }) => {
           <div className="hidden lg:flex items-center justify-center px-3 py-2 ml-2 rounded-md border border-gray-300 bg-gray-100 animate-pulse w-[40px] h-[40px]" />
         </div>
       ) : (
-        <div className="bg-bgl1 text-textl dark:bg-bgd1 dark:text-textd shadow-md shadow-shadl dark:shadow-shadd mb-4 flex items-center select-none shadd border-b dark:border-b-bord">
+        <div className="bg-bgl1 text-textl max-h-[50px] dark:bg-bgd1 dark:text-textd shadow-md shadow-shadl dark:shadow-shadd mb-4 flex items-center select-none shadd border-b dark:border-b-bord">
           {/* Left scroll button */}
           <button
             onClick={() => scrollBy(-150)}
@@ -151,7 +151,7 @@ const DepartmentTabs = ({ activeDepartment }) => {
                 <Link
                   key={_id}
                   href={`/books/department/${name}`}
-                  className={`pb-2 border-b-2 transition-colors duration-200 ${
+                  className={`pb-0 border-b-2 transition-colors duration-200 ${
                     activeDepartment === name
                       ? "text-buttonp border-buttonp"
                       : "border-transparent hover:text-buttonp hover:border-buttonp"

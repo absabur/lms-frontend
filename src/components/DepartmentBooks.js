@@ -239,7 +239,7 @@ const DepartmentBooks = ({ departmentPath }) => {
                     name={name}
                     value={filters[name]}
                     onChange={handleInputChange}
-                    placeholder={`Enter ${label}`}
+                    placeholder={`Search Book`}
                     className="border border-gray-300 rounded-md px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
                   />
                 </div>
@@ -378,7 +378,7 @@ const DepartmentBooks = ({ departmentPath }) => {
               <Link
                 key={index}
                 href={`/books/${book.slug}`}
-                className="max-w-[300px] bg-bgl1 dark:bg-bgd2 border dark:border-bord rounded-xl shadow-md hover:shadow-xl transition-transform duration-300 hover:scale-[1.02] overflow-hidden flex flex-col w-full h-[340px]"
+                className="max-w-[300px] bg-bgl1 dark:bg-bgd2 border dark:border-bord rounded-xl shadow-md hover:shadow-xl transition-all duration-300  hover:border-buttona dark:hover:border-buttona overflow-hidden flex flex-col w-full h-[340px]"
               >
                 {book?.images?.[0]?.url ? (
                   <img

@@ -169,7 +169,7 @@ const BooksFilterFrom = ({ filters, setFilters, setBooks, getBooks }) => {
                   name={name}
                   value={filters[name]}
                   onChange={handleInputChange}
-                  placeholder={`Enter ${label}`}
+                  placeholder={`Search Book`}
                   className="border border-gray-300 rounded-md px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
                 />
               </div>

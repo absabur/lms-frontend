@@ -17,7 +17,7 @@ export default async function Home() {
       <DepartmentTabs activeDepartment={"all"} />
       <section className="flex flex-col-reverse md:flex-row items-center max-w-7xl mx-auto px-6 py-20 gap-10">
         {/* Left Content */}
-        <div className="flex-1 space-y-6">
+        <div className="flex-1 space-y-6 text-center md:text-left">
           <h1 className="text-3xl font-extrabold leading-loose text-indigo-900 dark:text-textd">
             <span className="text-purple-600">
               বগুড়া পলিটেকনিক ইনস্টিটিউটের
@@ -30,7 +30,7 @@ export default async function Home() {
             জন্য একটি অফিসিয়াল প্ল্যাটফর্ম — সবই বিনামূল্যে।
           </p>
 
-          <div className="flex flex-wrap gap-4 mt-6">
+          <div className="flex flex-wrap gap-4 mt-6 justify-center md:justify-start">
             <Link
               href="/books"
               className="px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg shadow-lg transition"

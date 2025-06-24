@@ -224,7 +224,7 @@ export default function Register() {
               </div>
 
               {/* Form */}
-              <form onSubmit={formik.handleSubmit} className="space-y-4">
+              <form className="space-y-4">
                 {/* Email + Send OTP */}
                 <div>
                   <label
@@ -338,13 +338,6 @@ export default function Register() {
                       </p>
                     )}
                 </div>
-
-                <button
-                  type="submit"
-                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-buttona hover:bg-buttona focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-buttona"
-                >
-                  Create Account
-                </button>
               </form>
 
               <p className="mt-4 text-center text-sm text-textl dark:text-textd">
@@ -357,52 +350,77 @@ export default function Register() {
                 </Link>
               </p>
             </div>
-
             {/* Right side - Profile details */}
             <div className="w-full md:w-1/2 bg-bgl1 dark:bg-bgd1 p-6 sm:p-8 md:p-10 overflow-y-auto">
               <h2 className="text-2xl sm:text-3xl font-extrabold text-center text-gray-900 dark:text-white mb-6">
                 Profile Details
               </h2>
 
-              <form className="space-y-4">
+              <form onSubmit={formik.handleSubmit} className="space-y-4">
                 {role === "student" ? (
                   <>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {[
-                        { label: "Name", name: "name", type: "text" },
-                        { label: "Phone", name: "phone", type: "text" },
+                        {
+                          label: "Name",
+                          name: "name",
+                          type: "text",
+                          placeholder: "Md Abdus Sabur",
+                        },
+                        {
+                          label: "Phone",
+                          name: "phone",
+                          type: "text",
+                          placeholder: "01712345678",
+                        },
                         {
                           label: "Bangla Name",
                           name: "banglaName",
                           type: "text",
+                          placeholder: "মোঃ আব্দুস সবুর",
                         },
                         {
                           label: "Fathers Name",
                           name: "fathersName",
                           type: "text",
+                          placeholder: "Enter Your Father's Name",
                         },
                         {
                           label: "Mothers Name",
                           name: "mothersName",
                           type: "text",
+                          placeholder: "Enter Your Mother's Name",
                         },
                         {
                           label: "Addmission Roll",
                           name: "addmissionRoll",
                           type: "text",
+                          placeholder: "818390",
                         },
                         {
                           label: "Board Roll",
                           name: "boardRoll",
                           type: "text",
+                          placeholder: "616402",
                         },
                         {
                           label: "Registration",
                           name: "registration",
                           type: "text",
+                          placeholder: "1502175556",
                         },
-                        { label: "Union", name: "union", type: "text" },
-                        { label: "Village", name: "village", type: "text" },
+                        {
+                          label: "Union",
+                          name: "union",
+                          type: "text",
+                          placeholder: "Zianagar",
+                        },
+                        {
+                          label: "Village",
+                          name: "village",
+                          type: "text",
+                          placeholder: "Boria",
+                        },
                       ].map((field) => (
                         <div key={field.name}>
                           <label className="block text-sm font-medium text-textl dark:text-textd mb-1">
@@ -414,6 +432,7 @@ export default function Register() {
                             value={formik.values[field.name]}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
+                            placeholder={field.placeholder}
                             className="block w-full px-3 py-2 border border-borl dark:border-bord rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500 sm:text-sm bg-bgl2 dark:bg-bgd1 text-gray-900 dark:text-white"
                           />
                           {formik.touched[field.name] &&
@@ -728,6 +747,13 @@ export default function Register() {
                     </div>
                   </>
                 )}
+
+                <button
+                  type="submit"
+                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-buttona hover:bg-buttona focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-buttona"
+                >
+                  Create Account
+                </button>
               </form>
             </div>
           </div>
