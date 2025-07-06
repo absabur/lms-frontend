@@ -61,12 +61,12 @@ export default function RootLayout({ children }) {
                   <p>Managed by: Library Committee, BPI</p>
                   <p>
                     Email:{" "}
-                    <a
+                    <Link
                       href="mailto:bogra_poly@yahoo.com"
                       className="hover:underline text-purple-300"
                     >
                       bogra_poly@yahoo.com
-                    </a>
+                    </Link>
                   </p>
                 </div>
 

@@ -1,11 +1,16 @@
+// components/BooksFilterFrom.js (Client Component)
 "use client";
 
 import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
 import { FaChevronCircleRight, FaChevronCircleLeft } from "react-icons/fa";
 import { fixdeValues } from "@/store/Action";
+import { useRouter, useSearchParams } from "next/navigation";
 
-const BooksFilterFrom = ({ filters, setFilters, setBooks, getBooks }) => {
+const BooksFilterFrom = ({ initialFilters }) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [filters, setFilters] = useState(initialFilters);
   const fixedValues = useSelector((state) => state.fixedValues);
   const dispatch = useDispatch();
   const [collaps, setCollaps] = useState(true);
@@ -21,17 +26,32 @@ const BooksFilterFrom = ({ filters, setFilters, setBooks, getBooks }) => {
     );
   }, []);
 
+  const updateSearchParams = (newFilters) => {
+    const params = new URLSearchParams(searchParams);
+    
+    // Remove all existing params
+    Array.from(params.keys()).forEach(key => params.delete(key));
+    
+    // Set new params
+    Object.entries(newFilters).forEach(([key, value]) => {
+      if (value !== undefined && value !== "" && value !== null) {
+        params.set(key, value.toString());
+      }
+    });
+
+    router.push(`?${params.toString()}`);
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     const newFilters = { ...filters, [name]: value, page: 1 };
     setFilters(newFilters);
-    sessionStorage.setItem("bookFilters", JSON.stringify(newFilters));
-    getBooks(newFilters, dispatch, setBooks);
+    updateSearchParams(newFilters);
   };
 
   useEffect(() => {
     if (!collaps) {
-      const all = document.querySelectorAll("body, html, #__next, main"); // add others if needed
+      const all = document.querySelectorAll("body, html, #__next, main");
       all.forEach((el) => (el.style.overflow = "hidden"));
     } else {
       const all = document.querySelectorAll("body, html, #__next, main");
@@ -80,10 +100,8 @@ const BooksFilterFrom = ({ filters, setFilters, setBooks, getBooks }) => {
         </div>
 
         <div className="">
-          {/* Search Inputs + Button Filters + Slider */}
           <div className="grid grid-cols-1 gap-2">
             <div className="w-full rounded-2xl flex flex-wrap sm:items-start sm:justify-between gap-3">
-              {/* Sort By */}
               <fieldset className="w-full sm:w-auto">
                 <legend className="mb-2 text-sm font-semibold text-textl dark:text-textd">
                   Sort By
@@ -120,7 +138,6 @@ const BooksFilterFrom = ({ filters, setFilters, setBooks, getBooks }) => {
                 </div>
               </fieldset>
 
-              {/* Sort Order */}
               <fieldset className="w-full sm:w-auto">
                 <legend className="mb-2 text-sm font-semibold text-textl dark:text-textd">
                   Sort Order
@@ -155,7 +172,6 @@ const BooksFilterFrom = ({ filters, setFilters, setBooks, getBooks }) => {
             </div>
 
             <hr className="border-t border-dashed border-gray-400 mt-3" />
-            {/* Text Inputs */}
             {[["search", "Search"]].map(([name, label]) => (
               <div key={name} className="flex flex-col">
                 <label
@@ -175,7 +191,6 @@ const BooksFilterFrom = ({ filters, setFilters, setBooks, getBooks }) => {
               </div>
             ))}
             <hr className="border-t border-dashed border-gray-400 mt-3" />
-            {/* Button Filters */}
             {[
               ["department", "Department", fixedValues?.departments],
               ["shelf", "Shelf", fixedValues?.shelves],
@@ -229,7 +244,6 @@ const BooksFilterFrom = ({ filters, setFilters, setBooks, getBooks }) => {
               </div>
             ))}
 
-            {/* MRP Range Slider */}
             <div className="flex flex-col">
               <label className="text-sm font-semibold text-textl dark:text-textd mb-2">
                 MRP Range
@@ -264,10 +278,8 @@ const BooksFilterFrom = ({ filters, setFilters, setBooks, getBooks }) => {
           </div>
 
           <hr className="border-t border-dashed border-gray-400 m-3" />
-          {/* Sort Options */}
         </div>
 
-        {/* Reset Button */}
         <div className="pt-4 flex justify-center">
           <button
             type="button"
@@ -294,8 +306,7 @@ const BooksFilterFrom = ({ filters, setFilters, setBooks, getBooks }) => {
                 limit: 10,
               };
               setFilters(defaultFilters);
-              sessionStorage.removeItem("bookFilters");
-              getBooks(defaultFilters, dispatch, setBooks);
+              updateSearchParams(defaultFilters);
             }}
           >
             Reset Filters

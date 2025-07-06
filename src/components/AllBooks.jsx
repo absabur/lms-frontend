@@ -1,70 +1,25 @@
-"use client";
-import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+// app/books/page.js (Server Component)
 import BooksFilterFrom from "@/components/BooksFilterFrom";
 import BookPagination from "./BookPagination";
-import { LOADING_END, LOADING_START } from "@/store/constant";
+import Link from "next/link";
 
-const AllBooks = () => {
-  const dispatch = useDispatch();
-  const [books, setBooks] = useState({});
+export default async function AllBooks({ searchParams }) {
+  const filters = {
+    search: searchParams?.search || "",
+    language: searchParams?.language || "",
+    department: searchParams?.department || "",
+    country: searchParams?.country || "",
+    shelf: searchParams?.shelf || "",
+    mrpMin: searchParams?.mrpMin || "",
+    mrpMax: searchParams?.mrpMax || "",
+    sortBy: searchParams?.sortBy || "",
+    sortOrder: searchParams?.sortOrder || "",
+    page: parseInt(searchParams?.page) || 1,
+    limit: parseInt(searchParams?.limit) || 10,
+  };
 
-  const [filters, setFilters] = useState(() => {
-    if (typeof window !== "undefined") {
-      const stored = sessionStorage.getItem("bookFilters");
-      return stored
-        ? JSON.parse(stored)
-        : {
-            bookName: "",
-            bookAuthor: "",
-            publisher: "",
-            search: "",
-            language: "",
-            department: "",
-            country: "",
-            shelf: "",
-            edition: "",
-            mrpMin: "",
-            mrpMax: "",
-            quantityMin: "",
-            quantityMax: "",
-            sortBy: "",
-            sortOrder: "",
-            page: 1,
-            limit: 10,
-          };
-    }
-    return {
-      bookName: "",
-      bookAuthor: "",
-      publisher: "",
-      search: "",
-      language: "",
-      department: "",
-      country: "",
-      shelf: "",
-      edition: "",
-      mrpMin: "",
-      mrpMax: "",
-      quantityMin: "",
-      quantityMax: "",
-      sortBy: "",
-      sortOrder: "",
-      page: 1,
-      limit: 10,
-    };
-  });
-
-  useEffect(() => {
-    const savedFilters = sessionStorage.getItem("bookFilters");
-    if (savedFilters) {
-      const parsedFilters = JSON.parse(savedFilters);
-      getBooks(parsedFilters, dispatch, setBooks);
-    } else {
-      getBooks({}, dispatch, setBooks);
-    }
-  }, []);
+  // Fetch books with the filters
+  const books = await getAllBooks(filters);
 
   return (
     <div className="">
@@ -72,12 +27,7 @@ const AllBooks = () => {
         📚 Books
       </h1>
       <div className="flex flex-row gap-6 items-start">
-        <BooksFilterFrom
-          filters={filters}
-          setFilters={setFilters}
-          setBooks={setBooks}
-          getBooks={getBooks}
-        />
+        <BooksFilterFrom initialFilters={filters} />
 
         {books?.books?.length > 0 ? (
           <div className="w-full lg:w-[70%] flex flex-wrap justify-center gap-6">
@@ -146,51 +96,35 @@ const AllBooks = () => {
           </div>
         )}
       </div>
-      <BookPagination
-        filters={filters}
-        setFilters={setFilters}
-        books={books}
-        setBooks={setBooks}
-        getBooks={getBooks}
-      />
+      <BookPagination filters={filters} total={books?.total || 0} />
     </div>
   );
-};
+}
 
-export default AllBooks;
+// lib/api.js
+async function getAllBooks(filters = {}) {
+  const params = new URLSearchParams();
 
-const getBooks = async (filters = {}, dispatch, setBooks) => {
-  dispatch({ type: LOADING_START });
+  Object.entries(filters).forEach(([key, value]) => {
+    if (value !== undefined && value !== "") {
+      params.append(key, value);
+    }
+  });
 
-  try {
-    // Convert filters object to query string
-    const params = new URLSearchParams();
+  const response = await fetch(
+    `${
+      process.env.NEXT_PUBLIC_BACKEND_URL
+    }/api/book/all-books?${params.toString()}`,
+    {
+      method: "GET",
+      credentials: "include",
+      cache: "no-store",
+    }
+  );
 
-    Object.entries(filters).forEach(([key, value]) => {
-      if (value !== undefined && value !== "") {
-        params.append(key, value);
-      }
-    });
-
-    // You can set page/limit dynamically if needed
-    params.set("page", filters.page || 1);
-    params.set("limit", filters.limit || 10);
-
-    const response = await fetch(
-      `${
-        process.env.NEXT_PUBLIC_BACKEND_URL
-      }/api/book/all-books?${params.toString()}`,
-      {
-        method: "GET",
-        credentials: "include",
-      }
-    );
-
-    const result = await response.json();
-    setBooks(result);
-  } catch (error) {
-    console.error("Error fetching books:", error);
-  } finally {
-    dispatch({ type: LOADING_END });
+  if (!response.ok) {
+    throw new Error("Failed to fetch books");
   }
-};
+
+  return response.json();
+}

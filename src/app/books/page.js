@@ -10,11 +10,12 @@ export async function generateMetadata() {
   };
 }
 
-const page = () => {
+const page = async ({ searchParams }) => {
+  let params = await searchParams;
   return (
     <>
       <DepartmentTabs activeDepartment={"all"} />
-      <AllBooks />;
+      <AllBooks searchParams={params} />;
     </>
   );
 };

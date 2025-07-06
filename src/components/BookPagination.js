@@ -1,20 +1,22 @@
+// components/BookPagination.js (Client Component)
 "use client";
 import React from "react";
 import ReactPaginate from "react-paginate";
-import { useDispatch } from "react-redux";
+import { useRouter, useSearchParams } from "next/navigation";
 
-const BookPagination = ({ filters, setFilters, books, setBooks, getBooks }) => {
-  const dispatch = useDispatch();
+const BookPagination = ({ filters, total }) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const changePage = (newPage) => {
-    const newFilters = { ...filters, page: newPage };
-    setFilters(newFilters);
-    sessionStorage.setItem("bookFilters", JSON.stringify(newFilters));
-    getBooks(newFilters, dispatch, setBooks);
+    const params = new URLSearchParams(searchParams);
+    params.set("page", newPage);
+    router.push(`?${params.toString()}`);
   };
+
   return (
     <>
-      {/* Pagination & Limit Selector */}
-      {books?.total > 0 && (
+      {total > 0 && (
         <div className="flex m-auto flex-col sm:flex-row sm:justify-center items-center gap-4 mt-8">
           <ReactPaginate
             breakLabel="..."
@@ -22,7 +24,7 @@ const BookPagination = ({ filters, setFilters, books, setBooks, getBooks }) => {
             onPageChange={({ selected }) => changePage(selected + 1)}
             pageRangeDisplayed={2}
             marginPagesDisplayed={1}
-            pageCount={Math.ceil(books.total / filters.limit)}
+            pageCount={Math.ceil(total / filters.limit)}
             forcePage={filters.page - 1}
             previousLabel="← Previous"
             containerClassName="flex flex-wrap gap-2 items-center justify-center"
