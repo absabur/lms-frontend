@@ -1,5 +1,7 @@
 import AllBooks from "@/components/AllBooks";
 import DepartmentTabs from "@/components/DepartmentTabs";
+import Loading from "@/components/Loading";
+import React, { Suspense } from "react";
 
 export async function generateMetadata() {
   return {
@@ -14,7 +16,9 @@ const page = async ({ searchParams }) => {
   return (
     <>
       <DepartmentTabs activeDepartment={"all"} />
-      <AllBooks searchParams={params} />;
+      <Suspense fallback={<Loading />}>
+        <AllBooks searchParams={params} />;
+      </Suspense>
     </>
   );
 };
