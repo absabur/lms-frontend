@@ -1,5 +1,4 @@
 // app/books/BooksList.jsx
-import { getAllBooks } from "@/lib/api";
 import Link from "next/link";
 
 async function getAllBooks(filters = {}) {
@@ -30,7 +29,7 @@ async function getAllBooks(filters = {}) {
 }
 
 export default async function BooksList({ filters, children }) {
-  const booksData = await getAllBooks(filters); // suspends
+  const booksData = await getAllBooks(filters);
 
   return (
     <>
