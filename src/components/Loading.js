@@ -10,6 +10,7 @@ const Loading = () => {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
+    setMessage("");
     setTimeout(() => {
       setMessage(
         "I'm currently using free hosting, so it may take a little time for the server to start up."
