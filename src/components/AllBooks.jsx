@@ -18,7 +18,6 @@ export default async function AllBooks({ searchParams }) {
     limit: parseInt(searchParams?.limit) || 10,
   };
 
-  // Fetch books with the filters
   const books = await getAllBooks(filters);
 
   return (
@@ -101,7 +100,6 @@ export default async function AllBooks({ searchParams }) {
   );
 }
 
-// lib/api.js
 async function getAllBooks(filters = {}) {
   const params = new URLSearchParams();
 
