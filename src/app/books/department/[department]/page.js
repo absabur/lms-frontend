@@ -1,8 +1,8 @@
 import DepartmentBooks from "@/components/DepartmentBooks";
 import DepartmentTabs from "@/components/DepartmentTabs";
-import Loading from "@/components/Loading";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import BooksSkeleton from "../../loading";
 
 export async function generateMetadata({ params }) {
   const { department } = await params;
@@ -43,7 +43,7 @@ export default async function Page({ params }) {
   return (
     <>
       <DepartmentTabs activeDepartment={decodeURIComponent(department)} />
-      <Suspense fallback={<Loading />}>
+      <Suspense fallback={<BooksSkeleton />}>
         <DepartmentBooks departmentPath={decodeURIComponent(department)} />;
       </Suspense>
     </>
