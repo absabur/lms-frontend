@@ -1,6 +1,7 @@
 import AllBooks from "@/components/AllBooks";
 import DepartmentTabs from "@/components/DepartmentTabs";
-import React from "react";
+import React, { Suspense } from "react";
+import BooksSkeleton from "./loading";
 
 export async function generateMetadata() {
   return {
@@ -15,7 +16,9 @@ const page = async ({ searchParams }) => {
   return (
     <>
       <DepartmentTabs activeDepartment={"all"} />
-      <AllBooks searchParams={params} />;
+      <Suspense key={JSON.stringify(params)} fallback={<BooksSkeleton />}>
+        <AllBooks searchParams={params} />;
+      </Suspense>
     </>
   );
 };

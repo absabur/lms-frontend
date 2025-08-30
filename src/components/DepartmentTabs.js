@@ -103,7 +103,6 @@ const DepartmentTabs = ({ activeDepartment }) => {
     <>
       {departments.length <= 0 ? (
         <div className="bg-bgl1 text-textl max-h-[50px] dark:bg-bgd1 dark:text-textd shadow-lg shadow-shadl dark:shadow-shadd mb-4 flex items-center select-none py-2">
-          {/* Left scroll button skeleton */}
           <div className="hidden lg:flex items-center justify-center px-3 py-2 mr-2 rounded-md border border-gray-300 bg-gray-100 animate-pulse w-[40px] h-[40px]" />
           <div className="overflow-x-auto no-scrollbar flex-1">
             <div className="flex whitespace-nowrap gap-10 px-4 py-3">
