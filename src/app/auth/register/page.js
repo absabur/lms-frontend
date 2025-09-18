@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useEffect, useState } from "react";
-import { MESSAGE } from "@/store/constant";
+import imageCompression from "browser-image-compression";
 
 export default function Register() {
   const dispatch = useDispatch();
@@ -46,16 +46,34 @@ export default function Register() {
         .required("Required"),
       ...validations,
     }),
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const formData = new FormData();
+
       for (const key in values) {
         if (key === "image" && values.image) {
-          formData.append("image", values.image);
+          try {
+            const options = {
+              maxSizeMB: 0.8,
+              maxWidthOrHeight: 1920,
+              useWebWorker: true,
+            };
+
+            const compressedFile = await imageCompression(
+              values.image,
+              options
+            );
+            formData.append("image", compressedFile);
+          } catch (error) {
+            console.error("Image compression failed:", error);
+            formData.append("image", values.image);
+          }
         } else {
           formData.append(key, values[key]);
         }
       }
+
       formData.append("verificationCode", values.otp);
+
       dispatch(register(formData, role));
     },
   });
@@ -465,6 +483,12 @@ export default function Register() {
                             </option>
                           ))}
                         </select>
+
+                        {formik.touched.session && formik.errors.session && (
+                          <p className="mt-1 text-sm text-red-600">
+                            {formik.errors.session}
+                          </p>
+                        )}
                       </div>
 
                       <div>
@@ -485,6 +509,12 @@ export default function Register() {
                             </option>
                           ))}
                         </select>
+
+                        {formik.touched.shift && formik.errors.shift && (
+                          <p className="mt-1 text-sm text-red-600">
+                            {formik.errors.shift}
+                          </p>
+                        )}
                       </div>
 
                       <div>
@@ -505,6 +535,12 @@ export default function Register() {
                             </option>
                           ))}
                         </select>
+                        {formik.touched.department &&
+                          formik.errors.department && (
+                            <p className="mt-1 text-sm text-red-600">
+                              {formik.errors.department}
+                            </p>
+                          )}
                       </div>
 
                       <div>
@@ -525,6 +561,11 @@ export default function Register() {
                             </option>
                           ))}
                         </select>
+                        {formik.touched.district && formik.errors.district && (
+                          <p className="mt-1 text-sm text-red-600">
+                            {formik.errors.district}
+                          </p>
+                        )}
                       </div>
 
                       <div>
@@ -551,6 +592,11 @@ export default function Register() {
                               </option>
                             ))}
                         </select>
+                        {formik.touched.upazila && formik.errors.upazila && (
+                          <p className="mt-1 text-sm text-red-600">
+                            {formik.errors.upazila}
+                          </p>
+                        )}
                       </div>
                     </div>
 
@@ -608,6 +654,11 @@ export default function Register() {
                           />
                         </div>
                       </div>
+                      {formik.touched.image && formik.errors.image && (
+                        <p className="mt-1 text-sm text-red-600">
+                          {formik.errors.image}
+                        </p>
+                      )}
                     </div>
                   </>
                 ) : (

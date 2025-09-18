@@ -73,11 +73,11 @@ const BooksFilterFrom = ({ initialFilters }) => {
         ></div>
       )}
       <div
-        className={`z-[40] absolute lg:static bg-white p-6 lg:rounded-xl shadow-[0_0_10px_#00000035] space-y-6 mb-3 transition-all duration-300 w-[80vw] ${
+        className={`z-[40] ml-0 lg:ml-[20px] absolute lg:static bg-white p-6 lg:rounded-xl shadow-[0_0_10px_#00000035] space-y-6 mb-3 transition-all duration-300 w-[80vw] ${
           collaps
             ? "left-[-80vw] top-[64px] rounded-none"
             : "left-[0px] top-[64px] rounded-none"
-        } lg:w-[30%] h-[calc(100dvh-64px)] lg:h-[calc(100dvh-220px)] overflow-auto custom-scrollbar bg-bgl1 dark:bg-bgd2 border dark:border-bord dark:shadow-shadl`}
+        } lg:w-[30%] h-[calc(100dvh-64px)] lg:h-[fit-content] overflow-auto custom-scrollbar bg-bgl1 dark:bg-bgd2 border dark:border-bord dark:shadow-shadl`}
       >
         <div className="flex justify-center items-center">
           <h2 className="text-2xl text-textl dark:text-textd">Filters</h2>
