@@ -117,7 +117,7 @@ const DepartmentTabs = ({ activeDepartment }) => {
           <div className="hidden lg:flex items-center justify-center px-3 py-2 ml-2 rounded-md border border-gray-300 bg-gray-100 animate-pulse w-[40px] h-[40px]" />
         </div>
       ) : (
-        <div className="bg-bgl1 text-textl max-h-[50px] dark:bg-bgd1 dark:text-textd shadow-md shadow-shadl dark:shadow-shadd mb-4 flex items-center select-none shadd border-b dark:border-b-bord">
+        <div className="bg-bgl1 text-textl max-h-[50px] dark:bg-bgd2 dark:text-textd shadow-md shadow-shadl dark:shadow-none mb-4 flex items-center select-none shadd border-b dark:border-b-bord">
           {/* Left scroll button */}
           <button
             onClick={() => scrollBy(-150)}

@@ -77,7 +77,7 @@ const BooksFilterFrom = ({ initialFilters }) => {
           collaps
             ? "left-[-80vw] top-[64px] rounded-none"
             : "left-[0px] top-[64px] rounded-none"
-        } lg:w-[30%] h-[calc(100dvh-64px)] lg:h-[fit-content] overflow-auto custom-scrollbar bg-bgl1 dark:bg-bgd2 border dark:border-bord dark:shadow-shadl`}
+        } lg:w-[30%] h-[calc(100dvh-64px)] lg:h-[fit-content] overflow-auto custom-scrollbar bg-bgl1 dark:bg-bgd2 border dark:border-bord dark:shadow-none`}
       >
         <div className="flex justify-center items-center">
           <h2 className="text-2xl text-textl dark:text-textd">Filters</h2>

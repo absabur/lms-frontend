@@ -4,7 +4,7 @@ import RequestForBook from "./RequestForBook";
 
 const BookDetails = ({ book }) => {
   return (
-    <div className="max-w-7xl mx-auto p-4">
+    <div className="max-w-7xl mx-auto p-4 px-6 pt-10">
       <div className="flex flex-wrap gap-4 justify-between">
         {/* Title */}
         <div className="w-[100%] flex justify-center items-center mb-3">
@@ -49,14 +49,16 @@ const BookDetails = ({ book }) => {
                 Book Numbers
               </h2>
               <div className="flex flex-wrap gap-2">
-                {book?.bookNumbers.map((num, i) => (
-                  <span
-                    key={i}
-                    className="px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-sm"
-                  >
-                    {num}
-                  </span>
-                ))}
+                {book?.bookNumbers
+                  .sort((a, b) => a - b)
+                  .map((num, i) => (
+                    <span
+                      key={i}
+                      className="px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-sm"
+                    >
+                      {num}
+                    </span>
+                  ))}
               </div>
             </div>
           )}
@@ -74,7 +76,7 @@ const BookDetails = ({ book }) => {
           </div>
         </div>
         {/* Description */}
-        <div className="mt-10">
+        <div className="mt-10 w-full">
           <h2 className="text-lg font-semibold text-textl dark:text-textd mb-2">
             Description
           </h2>
@@ -88,9 +90,11 @@ const BookDetails = ({ book }) => {
 };
 
 const DetailItem = ({ label, value }) => (
-  <div className="bg-bgl1 dark:bg-bgd2 border dark:border-bord shadow dark:shadow-shadl rounded-lg p-4">
+  <div className="bg-bgl1 dark:bg-bgd2 border dark:border-bord shadow dark:shadow-none rounded-lg p-4">
     <p className="text-xs text-textl dark:text-textd opacity-70">{label}</p>
-    <p className="text-base font-medium text-textl dark:text-textd">{value || "N/A"}</p>
+    <p className="text-base font-medium text-textl dark:text-textd">
+      {value || "N/A"}
+    </p>
   </div>
 );
 

@@ -18,7 +18,7 @@ const Authentication = () => {
   }, []);
 
   return (
-    <nav className="sticky top-0 z-[30] lg:z-[50] px-4 py-3 shadow-md bg-bgl1 dark:bg-bgd1 shadow-shadl dark:shadow-shadd border-b dark:border-b-bord">
+    <nav className="sticky top-0 z-[30] lg:z-[50] px-4 py-3 shadow-md bg-bgl1 dark:bg-bgd1 shadow-shadl dark:shadow-none border-b dark:border-b-bord">
       <div className="max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-4">
         {/* Logo */}
         <div className="flex items-center gap-2">
