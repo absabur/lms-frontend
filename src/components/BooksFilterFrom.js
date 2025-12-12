@@ -1,4 +1,4 @@
-// components/BooksFilterFrom.js (Client Component)
+// components/BooksFilterFrom.js
 "use client";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import { FaChevronCircleRight, FaChevronCircleLeft } from "react-icons/fa";
 import { fixdeValues } from "@/store/Action";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useDebouncedCallback } from "use-debounce";
 
 const BooksFilterFrom = ({ initialFilters }) => {
   const router = useRouter();
@@ -15,6 +16,7 @@ const BooksFilterFrom = ({ initialFilters }) => {
   const dispatch = useDispatch();
   const [collaps, setCollaps] = useState(true);
 
+  // Fetch initial fixed values (departments, etc.)
   useEffect(() => {
     dispatch(
       fixdeValues({
@@ -24,16 +26,19 @@ const BooksFilterFrom = ({ initialFilters }) => {
         languages: true,
       })
     );
-  }, []);
+  }, [dispatch]);
 
-  const updateSearchParams = (newFilters) => {
+  // --- URL Update Logic ---
+
+  // 1. Immediate Update Function (for Buttons/Selects)
+  const updateURL = (filterData) => {
     const params = new URLSearchParams(searchParams);
-    
-    // Remove all existing params
-    Array.from(params.keys()).forEach(key => params.delete(key));
-    
+
+    // Clear existing params
+    Array.from(params.keys()).forEach((key) => params.delete(key));
+
     // Set new params
-    Object.entries(newFilters).forEach(([key, value]) => {
+    Object.entries(filterData).forEach(([key, value]) => {
       if (value !== undefined && value !== "" && value !== null) {
         params.set(key, value.toString());
       }
@@ -42,13 +47,59 @@ const BooksFilterFrom = ({ initialFilters }) => {
     router.push(`?${params.toString()}`);
   };
 
+  // 2. Debounced Update Function (for Search/Ranges) - Waits 500ms
+  const debouncedUpdateURL = useDebouncedCallback((filterData) => {
+    updateURL(filterData);
+  }, 500);
+
+  // 3. Smart Input Handler
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+
+    // Update UI state immediately (so inputs don't lag)
     const newFilters = { ...filters, [name]: value, page: 1 };
     setFilters(newFilters);
-    updateSearchParams(newFilters);
+
+    // Decision: Debounce or Immediate?
+    if (["search", "mrpMin", "mrpMax"].includes(name)) {
+      // Delay URL update for typing or sliding
+      debouncedUpdateURL(newFilters);
+    } else {
+      // Cancel any pending debounce to avoid overwrites
+      debouncedUpdateURL.cancel();
+      // Update URL immediately for buttons/clicks
+      updateURL(newFilters);
+    }
   };
 
+  // 4. Reset Handler
+  const handleReset = () => {
+    const defaultFilters = {
+      bookName: "",
+      bookAuthor: "",
+      publisher: "",
+      search: "",
+      language: "",
+      department: "",
+      country: "",
+      shelf: "",
+      edition: "",
+      mrpMin: "",
+      mrpMax: "",
+      quantityMin: "",
+      quantityMax: "",
+      sortBy: "",
+      sortOrder: "",
+      page: 1,
+      limit: 12,
+    };
+
+    setFilters(defaultFilters);
+    debouncedUpdateURL.cancel();
+    updateURL(defaultFilters);
+  };
+
+  // --- Sidebar Collapse Logic ---
   useEffect(() => {
     if (!collaps) {
       const all = document.querySelectorAll("body, html, #__next, main");
@@ -73,7 +124,7 @@ const BooksFilterFrom = ({ initialFilters }) => {
         ></div>
       )}
       <div
-        className={`z-[40] ml-0 lg:ml-[20px] absolute lg:static bg-white p-6 lg:rounded-xl shadow-[0_0_10px_#00000035] space-y-6 mb-3 transition-all duration-300 w-[80vw] ${
+        className={`z-[40] absolute lg:static bg-white p-6 lg:rounded-xl shadow-[0_0_10px_#00000035] space-y-6 mb-3 transition-all duration-300 w-[80vw] ${
           collaps
             ? "left-[-80vw] top-[64px] rounded-none"
             : "left-[0px] top-[64px] rounded-none"
@@ -186,6 +237,7 @@ const BooksFilterFrom = ({ initialFilters }) => {
                   value={filters[name]}
                   onChange={handleInputChange}
                   placeholder={`Search Book`}
+                  autoFocus={name === "search"}
                   className="border border-gray-300 rounded-md px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
                 />
               </div>
@@ -259,7 +311,7 @@ const BooksFilterFrom = ({ initialFilters }) => {
                     name="mrpMin"
                     min={0}
                     max={filters.mrpMax || 3000}
-                    value={filters.mrpMin}
+                    value={filters.mrpMin || 0}
                     onChange={handleInputChange}
                     className="w-full h-2 rounded-lg cursor-pointer accent-blue-600"
                   />
@@ -268,7 +320,7 @@ const BooksFilterFrom = ({ initialFilters }) => {
                     name="mrpMax"
                     min={filters.mrpMin || 0}
                     max={3000}
-                    value={filters.mrpMax}
+                    value={filters.mrpMax || 3000}
                     onChange={handleInputChange}
                     className="w-full h-2 rounded-lg cursor-pointer accent-blue-600"
                   />
@@ -284,30 +336,7 @@ const BooksFilterFrom = ({ initialFilters }) => {
           <button
             type="button"
             className="bg-buttonw hover:bg-buttona text-white px-5 py-2 rounded-md shadow"
-            onClick={() => {
-              const defaultFilters = {
-                bookName: "",
-                bookAuthor: "",
-                publisher: "",
-                search: "",
-                language: "",
-                department: "",
-                country: "",
-                shelf: "",
-                edition: "",
-                mrpMin: "",
-                mrpMax: "",
-                quantityMin: "",
-                quantityMax: "",
-                search: "",
-                sortBy: "",
-                sortOrder: "",
-                page: 1,
-                limit: 12,
-              };
-              setFilters(defaultFilters);
-              updateSearchParams(defaultFilters);
-            }}
+            onClick={handleReset}
           >
             Reset Filters
           </button>

@@ -21,20 +21,20 @@ export default async function AllBooks({ searchParams }) {
   const books = await getAllBooks(filters);
 
   return (
-    <div className="">
+    <div className="max-w-[1900px] mx-auto px-4">
       <h1 className="text-2xl sm:text-3xl font-bold text-center text-textl dark:text-textd mb-6">
-         Books
+        Books
       </h1>
       <div className="flex flex-row gap-6 items-start">
         <BooksFilterFrom initialFilters={filters} />
 
         {books?.books?.length > 0 ? (
-          <div className="w-full lg:w-[70%] flex flex-wrap justify-center gap-6">
+          <div className="w-full lg:w-[70%] gap-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
             {books.books.map((book, index) => (
               <Link
                 key={index}
                 href={`/books/${book.slug}`}
-                className="max-w-[300px] bg-bgl1 dark:bg-bgd2 border dark:border-bord rounded-xl shadow-md hover:shadow-xl hover:border-buttona dark:hover:border-buttona transition-all duration-300 overflow-hidden flex flex-col w-full h-[340px]"
+                className="bg-bgl1 dark:bg-bgd2 border dark:border-bord rounded-xl shadow-md hover:shadow-xl hover:border-buttona dark:hover:border-buttona transition-all duration-300 overflow-hidden flex flex-col w-full h-[340px]"
               >
                 {book?.images?.[0]?.url ? (
                   <img

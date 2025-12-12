@@ -111,7 +111,7 @@ const DepartmentBooks = ({ departmentPath }) => {
   }, [collaps]);
 
   return (
-    <div className="">
+    <div className="max-w-[1900px] mx-auto px-4">
       {!collaps && (
         <div
           onClick={() => setCollaps(true)}
@@ -119,11 +119,11 @@ const DepartmentBooks = ({ departmentPath }) => {
         ></div>
       )}
       <h1 className="text-2xl sm:text-3xl font-bold text-center text-textl dark:text-textd mb-6">
-         {departmentPath}
+        {departmentPath}
       </h1>
       <div className="flex flex-row gap-6 items-start">
         <div
-          className={`z-[40] ml-0 lg:ml-[20px] absolute lg:static bg-white p-6 lg:rounded-xl space-y-6 mb-3 transition-all duration-300 w-[80vw] ${
+          className={`z-[40] absolute lg:static bg-white p-6 lg:rounded-xl space-y-6 mb-3 transition-all duration-300 w-[80vw] ${
             collaps
               ? "left-[-80vw] top-[64px] rounded-none"
               : "left-[0px] top-[64px] rounded-none"
@@ -373,12 +373,12 @@ const DepartmentBooks = ({ departmentPath }) => {
         </div>
 
         {books?.books?.length > 0 ? (
-          <div className="w-full lg:w-[70%] flex flex-wrap justify-center gap-6">
+          <div className="w-full lg:w-[70%] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {books.books.map((book, index) => (
               <Link
                 key={index}
                 href={`/books/${book.slug}`}
-                className="max-w-[300px] bg-bgl1 dark:bg-bgd2 border dark:border-bord rounded-xl shadow-md hover:shadow-xl transition-all duration-300  hover:border-buttona dark:hover:border-buttona overflow-hidden flex flex-col w-full h-[340px]"
+                className="bg-bgl1 dark:bg-bgd2 border dark:border-bord rounded-xl shadow-md hover:shadow-xl transition-all duration-300  hover:border-buttona dark:hover:border-buttona overflow-hidden flex flex-col w-full h-[340px]"
               >
                 {book?.images?.[0]?.url ? (
                   <img

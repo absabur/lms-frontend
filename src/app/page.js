@@ -1,265 +1,461 @@
 import DepartmentTabs from "@/components/DepartmentTabs";
 import HeroImageRotator from "@/components/HeroImage";
 import Link from "next/link";
+import {
+  Search,
+  BookOpen,
+  ArrowRight,
+  Library,
+  Users,
+  Clock,
+  Zap,
+  GraduationCap,
+  ChevronRight,
+  Bookmark,
+  Star,
+  BookOpenCheck,
+} from "lucide-react";
+import BookSearch from "@/components/BookSearch";
 
 export default async function Home() {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/fixed-values/all-values?departments=true`,
-    {
+  const [fixedValuesData, dashboardData] = await Promise.all([
+    // Request 1: Departments
+    fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/fixed-values/all-values?departments=true`,
+      { method: "GET", credentials: "include" }
+    ).then((res) => res.json()),
+
+    // Request 2: Dashboard Stats
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/dashboard`, {
       method: "GET",
       credentials: "include",
-    }
-  );
-  const result = await response.json();
+    }).then((res) => res.json()),
+  ]);
+
+  // Access your data directly
+  const departments = fixedValuesData?.departments || [];
+  const resultDashboard = dashboardData;
+  const topDepartments = Object.entries(
+    resultDashboard.bookCountByDepartment || {}
+  ).slice(0, 3);
 
   return (
-    <main className="font-sans bg-bgl2 dark:bg-bgd1 text-textl dark:text-textd">
-      {/* Hero Section */}
+    <main className="font-sans bg-bgl2 dark:bg-bgd1 text-textl dark:text-textd min-h-screen selection:bg-purple-500 selection:text-white">
+      {/* Decorative Background Gradients */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-purple-400/20 rounded-full blur-[100px] mix-blend-multiply dark:mix-blend-lighten animate-pulse" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-indigo-400/20 rounded-full blur-[100px] mix-blend-multiply dark:mix-blend-lighten" />
+      </div>
+
       <DepartmentTabs activeDepartment={"all"} />
-      <section className="flex flex-col-reverse md:flex-row items-center max-w-7xl mx-auto px-6 py-20 gap-10">
-        {/* Left Content */}
-        <div className="flex-1 space-y-6 text-center md:text-left">
-          <h1 className="text-3xl font-extrabold leading-loose text-indigo-900 dark:text-textd">
-            <span className="text-purple-600">
-              বগুড়া পলিটেকনিক ইনস্টিটিউটের
+
+      {/* --- HERO SECTION: Centered & Search Focused --- */}
+      <section className="relative pt-20 pb-32 px-6">
+        <div className="max-w-5xl mx-auto text-center space-y-8">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/50 dark:bg-bgd2/50 border border-purple-100 dark:border-purple-900/30 backdrop-blur-md shadow-sm mb-4 animate-fade-in-up">
+            <span className="flex h-2 w-2 rounded-full bg-green-500"></span>
+            <span className="text-sm font-medium text-gray-600 dark:text-gray-300">
+              অফিশিয়াল লাইব্রেরি পোর্টাল v2.0
             </span>
-            <br />
-            ডিজিটাল লাইব্রেরিতে আপনাকে স্বাগতম।
+          </div>
+
+          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-indigo-950 dark:text-white leading-[1.1]">
+            জ্ঞান এখন{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-indigo-500">
+              উন্মুক্ত
+            </span>{" "}
+            এবং <br className="hidden md:block" />
+            <span className="relative inline-block mt-2">
+              সহজলভ্য
+              <svg
+                className="absolute w-full h-3 -bottom-1 left-0 text-purple-400 opacity-50"
+                viewBox="0 0 200 9"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M2.00025 6.99997C2.00025 6.99997 43.6139 1.54226 102.825 2.12642C162.037 2.71058 198 4.5 198 4.5"
+                  stroke="currentColor"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </span>
           </h1>
-          <p className="text-lg md:text-xl max-w-xl text-indigo-700 dark:text-textd">
-            শিক্ষার্থী এবং শিক্ষকদের জন্য লাইব্রেরি থেকে পাঠ্যপুস্তক সংগ্রহের
-            জন্য একটি অফিসিয়াল প্ল্যাটফর্ম — সবই বিনামূল্যে।
+
+          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed">
+            বগুড়া পলিটেকনিকের হাজারো বইয়ের ভাণ্ডার এখন আপনার হাতের মুঠোয়।
+            খুঁজুন, পড়ুন এবং শিখুন—সবকিছু সম্পূর্ণ বিনামূল্যে।
           </p>
 
-          <div className="flex flex-wrap gap-4 mt-6 justify-center md:justify-start">
+          {/* Search Simulation Card */}
+          <BookSearch />
+
+          {/* Quick Actions */}
+          <div className="flex flex-wrap justify-center gap-4 pt-4 text-sm font-medium text-gray-500 dark:text-gray-400">
+            <span>জনপ্রিয়:</span>
             <Link
-              href="/books"
-              className="px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg shadow-lg transition"
+              href="/books/department/Computer"
+              className="hover:text-purple-600 underline decoration-dotted"
             >
-              Browse Books
+              Computer
             </Link>
             <Link
-              href="/auth/register"
-              className="px-6 py-3 border-2 border-purple-600 text-purple-600 rounded-lg hover:bg-purple-100 transition"
+              href="/books/department/Civil"
+              className="hover:text-purple-600 underline decoration-dotted"
             >
-              Get Started
+              Civil
             </Link>
-          </div>
-        </div>
-
-        {/* Right Image (Replaced with new component) */}
-        <HeroImageRotator />
-      </section>
-
-      {/* Why Choose Section */}
-      <section className="bg-white py-16 shadow-inner bg-bgl2 dark:bg-bgd2">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold text-indigo-900 dark:text-textd mb-8">
-            কেন BPI লাইব্রেরি প্ল্যাটফর্ম ব্যবহার করবেন?
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 text-buttonp dark:text-textd">
-            {[
-              {
-                title: "ফ্রি আর উন্মুক্ত ব্যবহার",
-                desc: "কোনো রকম টাকা-পয়সা লাগবে না — এক ক্লিকেই অনেকগুলো একাডেমিক বই আর দরকারি জিনিসপত্র পাওয়া যাবে।",
-                icon: (
-                  <svg
-                    className="w-10 h-10 mx-auto mb-3 text-purple-600"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M12 20h9" />
-                    <path d="M12 4v16" />
-                    <path d="M3 8h7" />
-                  </svg>
-                ),
-              },
-              {
-                title: "শিক্ষার্থী-শিক্ষকের জন্যই বানানো",
-                desc: "শিক্ষার্থী আর স্যার-ম্যাডামদের কাজে লাগবে এমনভাবে সাজানো — নিজের মতো করে একাউন্ট আর দরকারি রিসোর্স পাওয়া যাবে।",
-                icon: (
-                  <svg
-                    className="w-10 h-10 mx-auto mb-3 text-purple-600"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <path d="M12 6v6l4 2" />
-                  </svg>
-                ),
-              },
-              {
-                title: " সহজে বই ধার নেওয়া যায়",
-                desc: "ডিজিটাল বই খুব সহজেই ধার নিতে পারবেন, সাথে সাথে মিলে যাবে — যেকোনো ডিভাইসে, যখন খুশি পড়া যাবে।",
-                icon: (
-                  <svg
-                    className="w-10 h-10 mx-auto mb-3 text-purple-600"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                  </svg>
-                ),
-              },
-              {
-                title: "🏛️ বিভাগ অনুযায়ী সাজানো",
-                desc: "কোন ডিপার্টমেন্ট, বিষয় বা লেখকের বই লাগবে — খুঁজে পাওয়া যাবে একদম সহজে।",
-                icon: (
-                  <svg
-                    className="w-10 h-10 mx-auto mb-3 text-purple-600"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M3 12h18" />
-                    <path d="M12 3v18" />
-                  </svg>
-                ),
-              },
-            ].map(({ title, desc, icon }) => (
-              <div
-                key={title}
-                className="bg-bgl1 dark:bg-bgd1 shadow-shadl dark:shadow-shadd border dark:border-bord rounded-xl p-6 shadow-md hover:shadow-lg transition cursor-default"
-              >
-                {icon}
-                <h3 className="text-xl font-semibold mb-2">{title}</h3>
-                <p className="text-sm">{desc}</p>
-              </div>
-            ))}
+            <Link
+              href="/books/department/Electrical"
+              className="hover:text-purple-600 underline decoration-dotted"
+            >
+              Electrical
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* about */}
-      <section className="max-w-4xl mx-auto px-6 py-20 text-center">
-        <h2 className="text-3xl font-bold text-indigo-900 dark:text-textd mb-6">
-          বগুড়া পলিটেকনিক ইনস্টিটিউট লাইব্রেরি সম্পর্কে
-        </h2>
-        <p className="text-lg text-gray-700 leading-relaxed">
-          <strong>বগুড়া পলিটেকনিক ইনস্টিটিউটের ডিজিটাল লাইব্রেরিটি</strong>{" "}
-          আমাদের শিক্ষার্থীদের এবং অনুষদদের যেকোনো জায়গায়, যেকোনো সময় মানসম্পন্ন
-          শিক্ষাগত সম্পদ অ্যাক্সেস করতে সাহায্য করার জন্য তৈরি করা হয়েছে।{" "}
-          <br />
-          লাইব্রেরির যেকোনো বই সহজে নেওয়া, ফেরত দেওয়া ইত্যাদি এবং এসব কিছুর তথ্য
-          সংরক্ষণ করে রাখার জন্য তৈরী করা হয়েছে।
-        </p>
-      </section>
+      {/* --- STATS STRIP --- */}
+      <div className="bg-indigo-900 text-white py-12 transform -skew-y-2 origin-top-left mb-20 overflow-hidden relative">
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8 transform skew-y-2">
+          <div className="flex items-center gap-4">
+            <div className="p-3 bg-white/10 rounded-lg backdrop-blur-sm">
+              <BookOpen className="w-8 h-8" />
+            </div>
+            <div>
+              <h3 className="text-3xl font-bold">
+                {resultDashboard?.uniqueBooksCount}+
+              </h3>
+              <p className="text-indigo-200">বই</p>
+            </div>
+          </div>
+          <div className="w-px h-12 bg-white/20 hidden md:block"></div>
+          <div className="flex items-center gap-4">
+            <div className="p-3 bg-white/10 rounded-lg backdrop-blur-sm">
+              <Users className="w-8 h-8" />
+            </div>
+            <div>
+              <h3 className="text-3xl font-bold">
+                {resultDashboard?.studentsCount +
+                  resultDashboard?.teachersCount}
+                +
+              </h3>
+              <p className="text-indigo-200">সক্রিয় শিক্ষার্থী</p>
+            </div>
+          </div>
+          <div className="w-px h-12 bg-white/20 hidden md:block"></div>
+          <div className="flex items-center gap-4">
+            <div className="p-3 bg-white/10 rounded-lg backdrop-blur-sm">
+              <BookOpenCheck className="w-8 h-8" />
+            </div>
+            <div>
+              {/* Replace 'totalBorrowed' with your actual state or prop variable */}
+              <h3 className="text-3xl font-bold">
+                {resultDashboard?.totalBorrowStudentsCount +
+                  resultDashboard?.totalBorrowTeachersCount}
+                +
+              </h3>
+              <p className="text-indigo-200">মোট বই ধার</p>
+            </div>
+          </div>
+        </div>
+      </div>
 
-      {/* How It Works */}
+      {/* --- BENTO GRID DEPARTMENTS --- */}
       <section className="max-w-7xl mx-auto px-6 py-20">
-        <h2 className="text-3xl font-bold text-indigo-900 dark:text-textd mb-12 text-center">
-          কিভাবে এটা কাজ করে
-        </h2>
-        <div className="flex flex-col md:flex-row justify-center gap-10">
+        <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-4 mb-10">
+          {/* Left Side: Text */}
+          <div>
+            <h2 className="text-3xl font-bold text-indigo-950 dark:text-white">
+              বইয়ের জগৎ
+            </h2>
+            <p className="mt-2 text-gray-500">
+              আপনার ডিপার্টমেন্ট বেছে নিন এবং পড়াশোনা শুরু করুন
+            </p>
+          </div>
+
+          {/* Right Side: Link */}
+          {/* Added 'w-fit' so the button doesn't stretch full width on mobile */}
+          <Link
+            href="/books"
+            className="w-fit group flex items-center gap-2 text-purple-600 font-semibold hover:bg-purple-50 dark:hover:bg-bgd2 px-4 py-2 rounded-lg transition-all"
+          >
+            সব দেখুন{" "}
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </Link>
+        </div>
+
+        {/* The Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-4 grid-rows-2 gap-4 h-auto md:h-[500px]">
+          {/* Main Large Item */}
+          {departments[0] && (
+            <Link
+              href={`/books/department/${departments[0].name}`}
+              className="md:col-span-2 md:row-span-2 group relative overflow-hidden rounded-3xl bg-gray-900 text-white p-8 flex flex-col justify-end"
+            >
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10" />
+              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center transition-transform duration-700 group-hover:scale-110" />
+
+              <div className="relative z-20 translate-y-2 group-hover:translate-y-0 transition-transform">
+                <span className="bg-purple-600 text-xs font-bold px-2 py-1 rounded mb-2 inline-block">
+                  Top Pick
+                </span>
+                <h3 className="text-3xl font-bold mb-2">
+                  {departments[0].name}
+                </h3>
+                <p className="text-gray-300 line-clamp-2 opacity-0 group-hover:opacity-100 transition-opacity delay-100">
+                  {departments[0].name} এর জন্য সেরা সব রেফারেন্স বই এবং নোটস।
+                </p>
+              </div>
+            </Link>
+          )}
+
+          {/* Secondary Items */}
+          {departments.slice(1, 5).map((dept, idx) => (
+            <Link
+              key={dept._id}
+              href={`/books/department/${dept.name}`}
+              className={`relative overflow-hidden rounded-3xl p-6 flex flex-col justify-between border border-gray-100 dark:border-gray-800 bg-white dark:bg-bgd2 hover:shadow-xl transition-all duration-300 group ${
+                idx === 0 || idx === 3 ? "md:col-span-2" : ""
+              }`}
+            >
+              <div className="absolute top-0 right-0 w-32 h-32 bg-purple-50 dark:bg-purple-900/20 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-125"></div>
+
+              <div className="w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900/50 flex items-center justify-center text-purple-600 dark:text-purple-300 mb-4 group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                <Library className="w-5 h-5" />
+              </div>
+
+              <div>
+                <h3 className="text-xl font-bold text-gray-800 dark:text-white group-hover:text-purple-600 transition-colors">
+                  {dept.name}
+                </h3>
+                <div className="flex items-center gap-1 text-xs text-gray-500 mt-1">
+                  <span>Explore</span> <ChevronRight className="w-3 h-3" />
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* --- FEATURES: ZIGZAG LAYOUT --- */}
+      <section className="bg-white dark:bg-bgd2 py-24 border-y border-gray-100 dark:border-gray-800">
+        <div className="max-w-7xl mx-auto px-6 space-y-24">
+          {/* Feature 1 */}
+          <div className="flex flex-col md:flex-row items-center gap-16">
+            <div className="flex-1 order-2 md:order-1 relative">
+              <div className="absolute -left-10 -top-10 w-40 h-40 bg-yellow-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
+              <div className="bg-bgl1 dark:bg-bgd1 p-8 rounded-3xl shadow-2xl border border-gray-100 dark:border-gray-700 relative z-10 transform rotate-2 hover:rotate-0 transition-transform duration-500">
+                <HeroImageRotator />{" "}
+                {/* Reusing your component inside a card */}
+                <div className="bg-white/90 dark:bg-black/80 backdrop-blur rounded-xl flex items-center gap-3 pt-2">
+                  <div className="p-2 bg-green-100 text-green-600 rounded-lg">
+                    <Clock className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-500 font-bold uppercase">
+                      Average Time
+                    </p>
+                    <p className="font-bold text-sm text-gray-900 dark:text-white">
+                      ২ মিনিটের মধ্যে বই সংগ্রহ
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="flex-1 order-1 md:order-2 space-y-6">
+              <div className="w-12 h-12 bg-purple-100 rounded-2xl flex items-center justify-center text-purple-600 mb-4">
+                <Zap className="w-6 h-6" />
+              </div>
+              <h2 className="text-4xl font-bold text-gray-900 dark:text-white">
+                বিদ্যুতগতিতে সেবা
+              </h2>
+              <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
+                লাইব্রেরিতে আর লাইনে দাঁড়াতে হবে না। ক্লাসে বসেই বইয়ের
+                রিকুয়েস্ট পাঠান। লাইব্রেরিতে যান এবং সাথে সাথে বই সংগ্রহ করুন।
+                আমাদের সিস্টেম রিয়েল-টাইম ডাটা সিঙ্ক করে।
+              </p>
+              <ul className="space-y-3">
+                {[
+                  "১ ক্লিকে রিকুয়েস্ট",
+                  "রিয়েল-টাইম স্টক আপডেট",
+                  "অটোমেটিক ডিউ ডেট রিমাইন্ডার",
+                ].map((item, i) => (
+                  <li
+                    key={i}
+                    className="flex items-center gap-3 text-gray-700 dark:text-gray-300"
+                  >
+                    <div className="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center text-white text-xs">
+                      ✓
+                    </div>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Feature 2 */}
+          <div className="flex flex-col md:flex-row items-center gap-16">
+            <div className="flex-1 space-y-6">
+              <div className="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-600 mb-4">
+                <GraduationCap className="w-6 h-6" />
+              </div>
+              <h2 className="text-4xl font-bold text-gray-900 dark:text-white">
+                শুধুমাত্র শিক্ষার্থীদের জন্য
+              </h2>
+              <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
+                বগুড়া পলিটেকনিকের কারিকুলাম অনুযায়ী সাজানো আমাদের ডাটাবেস।
+                আপনার সেমিস্টারের জন্য প্রয়োজনীয় বইগুলো আমরা পিন করে রাখি
+                ড্যাশবোর্ডের শুরুতেই।
+              </p>
+              <div className="flex gap-4 pt-4">
+                <div className="text-center px-4 py-3 bg-gray-50 dark:bg-bgd1 rounded-xl border border-gray-200 dark:border-gray-700">
+                  <h4 className="font-bold text-xl text-indigo-600">১০০%</h4>
+                  <p className="text-xs text-gray-500">ফ্রি অ্যাক্সেস</p>
+                </div>
+                <div className="text-center px-4 py-3 bg-gray-50 dark:bg-bgd1 rounded-xl border border-gray-200 dark:border-gray-700">
+                  <h4 className="font-bold text-xl text-indigo-600">৭ দিন</h4>
+                  <p className="text-xs text-gray-500">রিটার্ন পলিসি</p>
+                </div>
+              </div>
+            </div>
+            <div className="flex-1 relative w-full">
+              {/* Decorative Elements mimicking a dashboard */}
+              <div className="bg-bgl1 dark:bg-bgd1 border border-gray-200 dark:border-gray-700 p-6 rounded-3xl shadow-2xl relative z-10 -rotate-2 hover:rotate-0 transition-transform duration-500">
+                {/* Header: Total Stats */}
+                <div className="flex items-center gap-4 mb-6 border-b border-gray-100 dark:border-gray-700 pb-4">
+                  <div className="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+                    <Library className="w-5 h-5" />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-sm font-bold text-gray-800 dark:text-gray-100">
+                      লাইব্রেরি সংগ্রহ
+                    </h4>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      সর্বমোট {resultDashboard.totalBooksCount} টি বই
+                    </p>
+                  </div>
+                </div>
+
+                {/* Body: Top 3 Departments List */}
+                <div className="space-y-3">
+                  {topDepartments.map(([deptName, count], i) => (
+                    <div
+                      key={i}
+                      className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-bgd2 rounded-xl group hover:bg-white dark:hover:bg-bgd1 transition-colors border border-transparent hover:border-gray-100 dark:hover:border-gray-700"
+                    >
+                      <div className="w-8 h-10 bg-purple-100 dark:bg-purple-900/30 rounded flex items-center justify-center text-purple-600 dark:text-purple-400">
+                        <BookOpen className="w-4 h-4" />
+                      </div>
+
+                      <div className="flex-1 overflow-hidden">
+                        <h5 className="text-xs font-semibold text-gray-700 dark:text-gray-200 truncate">
+                          {deptName}
+                        </h5>
+                        <p className="text-[10px] text-gray-400 truncate">
+                          Department Collection
+                        </p>
+                      </div>
+
+                      <div className="text-emerald-600 dark:text-emerald-400 text-xs font-bold whitespace-nowrap bg-emerald-50 dark:bg-emerald-900/20 px-2 py-1 rounded-md">
+                        {count} টি
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* --- HOW IT WORKS: TIMELINE --- */}
+      <section className="py-24 max-w-7xl mx-auto px-6">
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <h2 className="text-3xl font-bold text-indigo-950 dark:text-white">
+            সহজ ৩টি ধাপ
+          </h2>
+          <p className="mt-4 text-gray-500">
+            লাইব্রেরি ব্যবহার করা এখন ফেসবুক চালানোর মতোই সহজ
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
             {
-              step: "১",
-              title: "অ্যাকাউন্ট তৈরি করুন",
-              desc: "শিক্ষার্থী বা শিক্ষক হিসেবে কলেজের তথ্য দিয়ে সহজেই রেজিস্ট্রেশন করুন।",
-              icon: (
-                <svg
-                  className="w-12 h-12 mx-auto mb-4 text-purple-600"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M12 12c2.21 0 4-1.79 4-4S14.21 4 12 4 8 5.79 8 8s1.79 4 4 4z" />
-                  <path d="M6 20v-1c0-1.657 3.582-3 6-3s6 1.343 6 3v1" />
-                </svg>
-              ),
+              title: "রেজিস্ট্রেশন",
+              desc: "আপনার রোল ও তথ্য দিয়ে একাউন্ট খুলুন",
+              icon: Users,
+              color: "text-blue-500",
             },
             {
-              step: "২",
-              title: "বই খুঁজুন ও দেখুন",
-              desc: "বিভাগ, বইয়ের নাম বা লেখকের নাম দিয়ে সহজে বই খুঁজে নিন আমাদের স্মার্ট সার্চ ব্যবহার করে।",
-              icon: (
-                <svg
-                  className="w-12 h-12 mx-auto mb-4 text-purple-600"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <circle cx="11" cy="11" r="8" />
-                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
-                </svg>
-              ),
+              title: "বই নির্বাচন",
+              desc: "ক্যাটালগ থেকে পছন্দমতো বই কার্টে যোগ করুন",
+              icon: Bookmark,
+              color: "text-purple-500",
             },
             {
-              step: "৩",
-              title: "বই ধার নিন ও পড়ুন",
-              desc: "যেকোনো বই সহজে অনুরোধ করুন এবং লাইব্রেরি থেকে সংগ্রহ করুন। ",
-              icon: (
-                <svg
-                  className="w-12 h-12 mx-auto mb-4 text-purple-600"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M12 19l7-7 3 3-7 7-3-3z" />
-                  <path d="M18 13l-1-1" />
-                  <path d="M12 4v8" />
-                </svg>
-              ),
+              title: "লাইব্রেরি থেকে সংগ্রহ",
+              desc: "অ্যাডমিনের অ্যাপ্রুভাল পেলে বই নিয়ে নিন",
+              icon: Star,
+              color: "text-amber-500",
             },
-          ].map(({ step, title, desc, icon }) => (
-            <div
-              key={title}
-              className="flex-1 bg-bgl1 dark:bg-bgd2 text-textl dark:text-textd border dark:border-bord rounded-xl shadow-md p-8 text-center hover:shadow-lg transition"
-            >
-              <div className="text-4xl font-bold text-purple-600 mb-4">
-                {step}
+          ].map((step, idx) => (
+            <div key={idx} className="relative group text-center">
+              <div className="w-20 h-20 mx-auto bg-white dark:bg-bgd2 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-gray-100 dark:border-gray-700 flex items-center justify-center mb-6 group-hover:-translate-y-2 transition-transform duration-300">
+                <step.icon className={`w-8 h-8 ${step.color}`} />
               </div>
-              {icon}
-              <h3 className="text-xl font-semibold mb-2">{title}</h3>
-              <p className="text-sm text-gray-600">{desc}</p>
+              {/* Line connector */}
+              {idx !== 2 && (
+                <div className="hidden md:block absolute top-10 left-1/2 w-full h-0.5 bg-gradient-to-r from-transparent via-gray-300 to-transparent -z-10 opacity-30"></div>
+              )}
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+                {step.title}
+              </h3>
+              <p className="text-sm text-gray-500 dark:text-gray-400 max-w-xs mx-auto">
+                {step.desc}
+              </p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Departments Preview */}
-      <section className="max-w-7xl mx-auto px-6 py-16">
-        <h2 className="text-3xl font-bold text-indigo-900 dark:text-textd mb-12 text-center">
-          বিভাগ অনুসারে বইগুলি অন্বেষণ করুন
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-          {result?.departments?.map(({ name, _id }) => (
-            <Link
-              key={_id}
-              href={`/books/department/${name}`}
-              className="block bg-gradient-to-tr from-purple-600 to-indigo-600 text-white rounded-2xl p-8 shadow-lg hover:scale-105 transform transition"
-            >
-              <h3 className="text-xl font-semibold text-center">{name}</h3>
-              <p className="mt-2 text-sm opacity-90">
-                {name} এর জন্য পাঠ্যপুস্তক, গবেষণা এবং নোট খুঁজুন.
-              </p>
-            </Link>
-          ))}
+      {/* --- CTA FOOTER --- */}
+      <section className="px-6 pb-20">
+        <div className="max-w-7xl mx-auto bg-indigo-950 rounded-[2.5rem] p-12 md:p-24 text-center relative overflow-hidden">
+          {/* Background Effects */}
+          <div className="absolute top-0 left-0 w-full h-full">
+            <div className="absolute top-10 right-10 w-32 h-32 bg-purple-500 rounded-full blur-3xl opacity-20 animate-pulse"></div>
+            <div className="absolute bottom-10 left-10 w-40 h-40 bg-blue-500 rounded-full blur-3xl opacity-20"></div>
+          </div>
+
+          <div className="relative z-10 space-y-8">
+            <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
+              পড়া শুরু করতে প্রস্তুত?
+            </h2>
+            <p className="text-indigo-200 text-lg max-w-2xl mx-auto">
+              আজই জয়েন করুন আমাদের ডিজিটাল প্লাটফর্মে। কোনো ফি ছাড়াই উপভোগ করুন
+              আধুনিক লাইব্রেরি সুবিধা।
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/auth/register"
+                className="bg-white text-indigo-950 px-8 py-4 rounded-xl font-bold hover:bg-gray-100 transition shadow-lg hover:shadow-xl hover:-translate-y-1"
+              >
+                একাউন্ট তৈরি করুন
+              </Link>
+              <Link
+                href="/books"
+                className="border border-indigo-700 text-indigo-100 px-8 py-4 rounded-xl font-bold hover:bg-indigo-900 transition"
+              >
+                বইসমূহ দেখুন
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
     </main>
