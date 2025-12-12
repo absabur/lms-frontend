@@ -303,7 +303,7 @@ const BooksFilterFrom = ({ initialFilters }) => {
                 sortBy: "",
                 sortOrder: "",
                 page: 1,
-                limit: 10,
+                limit: 12,
               };
               setFilters(defaultFilters);
               updateSearchParams(defaultFilters);

@@ -54,7 +54,7 @@ const DepartmentBooks = ({ departmentPath }) => {
             sortBy: "",
             sortOrder: "",
             page: 1,
-            limit: 10,
+            limit: 12,
           };
     }
     return {
@@ -74,7 +74,7 @@ const DepartmentBooks = ({ departmentPath }) => {
       sortBy: "",
       sortOrder: "",
       page: 1,
-      limit: 10,
+      limit: 12,
     };
   });
 
@@ -119,15 +119,15 @@ const DepartmentBooks = ({ departmentPath }) => {
         ></div>
       )}
       <h1 className="text-2xl sm:text-3xl font-bold text-center text-textl dark:text-textd mb-6">
-        📚 {departmentPath}
+         {departmentPath}
       </h1>
       <div className="flex flex-row gap-6 items-start">
         <div
-          className={`z-[40] absolute lg:static bg-white p-6 lg:rounded-xl shadow-[0_0_10px_#00000035] space-y-6 mb-3 transition-all duration-300 w-[80vw] ${
+          className={`z-[40] ml-0 lg:ml-[20px] absolute lg:static bg-white p-6 lg:rounded-xl space-y-6 mb-3 transition-all duration-300 w-[80vw] ${
             collaps
               ? "left-[-80vw] top-[64px] rounded-none"
               : "left-[0px] top-[64px] rounded-none"
-          } lg:w-[30%] h-[calc(100dvh-64px)] lg:h-[calc(100dvh-220px)] overflow-auto custom-scrollbar bg-bgl1 dark:bg-bgd2 border dark:border-bord dark:shadow-shadl`}
+          } lg:w-[30%] h-[calc(100dvh-64px)] lg:h-[fit-content] overflow-auto custom-scrollbar bg-bgl1 dark:bg-bgd2 border dark:border-bord dark:shadow-shadl`}
         >
           <div className="flex justify-center items-center">
             <h2 className="text-2xl text-textl dark:text-textd">Filters</h2>
@@ -360,7 +360,7 @@ const DepartmentBooks = ({ departmentPath }) => {
                   sortBy: "",
                   sortOrder: "",
                   page: 1,
-                  limit: 10,
+                  limit: 12,
                 };
                 setFilters(defaultFilters);
                 sessionStorage.removeItem("bookFiltersDepartment");
@@ -493,7 +493,7 @@ const getDepartmentBooks = async (filters = {}, setBooks, dispatch) => {
 
     // You can set page/limit dynamically if needed
     params.set("page", filters.page || 1);
-    params.set("limit", filters.limit || 10);
+    params.set("limit", filters.limit || 12);
 
     const response = await fetch(
       `${
@@ -504,7 +504,6 @@ const getDepartmentBooks = async (filters = {}, setBooks, dispatch) => {
         credentials: "include",
       }
     );
-
     const result = await response.json();
     setBooks(result);
   } catch (error) {

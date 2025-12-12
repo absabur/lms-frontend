@@ -5,7 +5,6 @@ import { FaFacebookF, FaLinkedinIn, FaGithub } from "react-icons/fa";
 import { StoreProvider } from "@/store/StoreProvider.jsx";
 import Toast from "@/components/Toast";
 import Authentication from "@/components/Authentication";
-import Loading from "@/components/Loading";
 import Link from "next/link";
 import { ThemeProvider } from "next-themes";
 
@@ -33,7 +32,6 @@ export default function RootLayout({ children }) {
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <ThemeProvider attribute="class" enableSystem defaultTheme="system">
-            <Loading />
             <Toast />
             <Authentication />
             <main className="min-h-screen bg-bgl1 text-textl dark:bg-bgd1 dark:textd flex flex-col justify-center">

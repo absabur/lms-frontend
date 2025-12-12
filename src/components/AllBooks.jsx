@@ -15,7 +15,7 @@ export default async function AllBooks({ searchParams }) {
     sortBy: searchParams?.sortBy || "",
     sortOrder: searchParams?.sortOrder || "",
     page: parseInt(searchParams?.page) || 1,
-    limit: parseInt(searchParams?.limit) || 10,
+    limit: parseInt(searchParams?.limit) || 12,
   };
 
   const books = await getAllBooks(filters);
@@ -23,7 +23,7 @@ export default async function AllBooks({ searchParams }) {
   return (
     <div className="">
       <h1 className="text-2xl sm:text-3xl font-bold text-center text-textl dark:text-textd mb-6">
-        📚 Books
+         Books
       </h1>
       <div className="flex flex-row gap-6 items-start">
         <BooksFilterFrom initialFilters={filters} />
