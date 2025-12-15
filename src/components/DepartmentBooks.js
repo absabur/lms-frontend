@@ -54,7 +54,7 @@ const DepartmentBooks = ({ departmentPath }) => {
             sortBy: "",
             sortOrder: "",
             page: 1,
-            limit: 12,
+            limit: 24,
           };
     }
     return {
@@ -74,7 +74,7 @@ const DepartmentBooks = ({ departmentPath }) => {
       sortBy: "",
       sortOrder: "",
       page: 1,
-      limit: 12,
+      limit: 24,
     };
   });
 
@@ -123,7 +123,7 @@ const DepartmentBooks = ({ departmentPath }) => {
       </h1>
       <div className="flex flex-row gap-6 items-start">
         <div
-          className={`z-[40] absolute lg:static bg-white p-6 lg:rounded-xl space-y-6 mb-3 transition-all duration-300 w-[80vw] ${
+          className={`z-[40] fixed lg:static bg-white p-6 lg:rounded-xl space-y-6 mb-3 transition-all duration-300 w-[80vw] ${
             collaps
               ? "left-[-80vw] top-[64px] rounded-none"
               : "left-[0px] top-[64px] rounded-none"
@@ -360,7 +360,7 @@ const DepartmentBooks = ({ departmentPath }) => {
                   sortBy: "",
                   sortOrder: "",
                   page: 1,
-                  limit: 12,
+                  limit: 24,
                 };
                 setFilters(defaultFilters);
                 sessionStorage.removeItem("bookFiltersDepartment");
@@ -493,7 +493,7 @@ const getDepartmentBooks = async (filters = {}, setBooks, dispatch) => {
 
     // You can set page/limit dynamically if needed
     params.set("page", filters.page || 1);
-    params.set("limit", filters.limit || 12);
+    params.set("limit", filters.limit ||24);
 
     const response = await fetch(
       `${

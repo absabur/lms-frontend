@@ -17,7 +17,7 @@ const BookSearch = () => {
           className="flex-1 bg-transparent border-none outline-none text-lg text-gray-800 dark:text-white placeholder:text-gray-400"
         />
         <Link
-          href={`/books?search=${encodeURIComponent(search)}&page=1&limit=12`}
+          href={`/books?search=${encodeURIComponent(search)}&page=1&limit=24`}
           className="ml-auto md:flex bg-purple-600 hover:bg-purple-700 text-white px-6 py-2.5 rounded-xl font-medium transition-colors"
         >
           অনুসন্ধান

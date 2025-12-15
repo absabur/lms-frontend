@@ -91,7 +91,7 @@ const BooksFilterFrom = ({ initialFilters }) => {
       sortBy: "",
       sortOrder: "",
       page: 1,
-      limit: 12,
+      limit: 24,
     };
 
     setFilters(defaultFilters);
@@ -124,7 +124,7 @@ const BooksFilterFrom = ({ initialFilters }) => {
         ></div>
       )}
       <div
-        className={`z-[40] absolute lg:static bg-white p-6 lg:rounded-xl shadow-[0_0_10px_#00000035] space-y-6 mb-3 transition-all duration-300 w-[80vw] ${
+        className={`z-[40] fixed lg:static bg-white p-6 lg:rounded-xl shadow-[0_0_10px_#00000035] space-y-6 mb-3 transition-all duration-300 w-[80vw] ${
           collaps
             ? "left-[-80vw] top-[64px] rounded-none"
             : "left-[0px] top-[64px] rounded-none"

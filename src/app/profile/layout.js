@@ -1,3 +1,4 @@
+import Loading from "@/components/Loading";
 import ProfileRedirect from "@/components/ProfileRedirect";
 
 export const metadata = {
@@ -8,6 +9,7 @@ export default function RootLayout({ children }) {
   return (
     <>
       <ProfileRedirect />
+      <Loading />
       {children}
     </>
   );

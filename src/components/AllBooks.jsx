@@ -15,7 +15,7 @@ export default async function AllBooks({ searchParams }) {
     sortBy: searchParams?.sortBy || "",
     sortOrder: searchParams?.sortOrder || "",
     page: parseInt(searchParams?.page) || 1,
-    limit: parseInt(searchParams?.limit) || 12,
+    limit: parseInt(searchParams?.limit) || 24,
   };
 
   const books = await getAllBooks(filters);
